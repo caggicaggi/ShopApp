@@ -12,4 +12,6 @@ public class RegistrazioneDTO {
 	String name;
 	String password;
 	String email;
+	String phoneNumber;
+	String address;
 }

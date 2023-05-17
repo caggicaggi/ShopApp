@@ -1,5 +1,6 @@
 package shop_app.dto;
 
+import jakarta.persistence.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UtenteDTO {
 
-	String username;
+	String email;
 	String password;
 }
