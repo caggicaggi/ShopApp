@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/size_config.dart';
 //import 'package:shop_app/size_config.dart';
 
 const kPrimaryColor = Color(0xFFFF7643);
@@ -13,7 +14,7 @@ const kTextColor = Color(0xFF757575);
 
 const kAnimationDuration = Duration(milliseconds: 200);
 
-/*
+
 
 final headingStyle = TextStyle(
   fontSize: getProportionateScreenWidth(28),
@@ -50,4 +51,3 @@ OutlineInputBorder outlineInputBorder() {
     borderSide: BorderSide(color: kTextColor),
   );
 }
-*/
