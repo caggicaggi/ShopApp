@@ -1,5 +1,8 @@
 import 'package:flutter/widgets.dart';
 import 'package:shop_app/screens/complete_profile/complete_profile_screen.dart';
+import 'package:shop_app/screens/forgot_password/forgot_password_screen.dart';
+import 'package:shop_app/screens/home/home_screen.dart';
+import 'package:shop_app/screens/login_success/login_success_screen.dart';
 import 'package:shop_app/screens/sign_up/sign_up_screen.dart';
 import 'package:shop_app/screens/splash/splash_screen.dart';
 import 'screens/otp/otp_screen.dart';
@@ -10,15 +13,13 @@ import 'screens/sing_in/sing_in_screen.dart';
 final Map<String, WidgetBuilder> routes = {
   SplashScreen.routeName: (context) => SplashScreen(),
   SignInScreen.routeName: (context) => SignInScreen(),
-  SignUpScreen.routeName: (context) => SignUpScreen(),
-  OtpScreen.routeName: (context) => OtpScreen(),
-  CompleteProfileScreen.routeName: (context) => CompleteProfileScreen(),
-
-  /*
   ForgotPasswordScreen.routeName: (context) => ForgotPasswordScreen(),
   LoginSuccessScreen.routeName: (context) => LoginSuccessScreen(),
-  ProfileScreen.routeName: (context) => ProfileScreen(),  
-  DetailsScreen.routeName: (context) => DetailsScreen(),
-  CartScreen.routeName: (context) => CartScreen(),
-  */
+  SignUpScreen.routeName: (context) => SignUpScreen(),
+  CompleteProfileScreen.routeName: (context) => CompleteProfileScreen(),
+  OtpScreen.routeName: (context) => OtpScreen(),
+  HomeScreen.routeName: (context) => HomeScreen(),
+  //DetailsScreen.routeName: (context) => DetailsScreen(),
+  //CartScreen.routeName: (context) => CartScreen(),
+  //ProfileScreen.routeName: (context) => ProfileScreen(),
 };
