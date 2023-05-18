@@ -14,4 +14,5 @@ public class RegistrazioneDTO {
 	String email;
 	String phoneNumber;
 	String address;
+	String salt;
 }

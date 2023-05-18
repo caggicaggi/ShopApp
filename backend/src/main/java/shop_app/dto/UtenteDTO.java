@@ -13,4 +13,5 @@ public class UtenteDTO {
 
 	String email;
 	String password;
+	String salt;
 }
