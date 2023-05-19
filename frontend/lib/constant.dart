@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/size_config.dart';
-//import 'package:shop_app/size_config.dart';
 
-const kPrimaryColor = Color(0xFFFF7643);
+// Primary colors
+const kPrimaryColor = Color.fromARGB(255, 0, 137, 140);
+//const kPrimaryColor = Color(0xFFFF7643);
 const kPrimaryLightColor = Color(0xFFFFECDF);
 const kPrimaryGradientColor = LinearGradient(
   begin: Alignment.topLeft,
@@ -12,10 +13,10 @@ const kPrimaryGradientColor = LinearGradient(
 const kSecondaryColor = Color(0xFF979797);
 const kTextColor = Color(0xFF757575);
 
+// Animation duration
 const kAnimationDuration = Duration(milliseconds: 200);
 
-
-
+// Text style for headings
 final headingStyle = TextStyle(
   fontSize: getProportionateScreenWidth(28),
   fontWeight: FontWeight.bold,
@@ -23,6 +24,7 @@ final headingStyle = TextStyle(
   height: 1.5,
 );
 
+// Default animation duration
 const defaultDuration = Duration(milliseconds: 250);
 
 // Form Error
@@ -37,6 +39,7 @@ const String kNamelNullError = "Please Enter your name";
 const String kPhoneNumberNullError = "Please Enter your phone number";
 const String kAddressNullError = "Please Enter your address";
 
+// Input decoration for OTP (One-Time Password) field
 final otpInputDecoration = InputDecoration(
   contentPadding:
       EdgeInsets.symmetric(vertical: getProportionateScreenWidth(15)),
@@ -45,6 +48,7 @@ final otpInputDecoration = InputDecoration(
   enabledBorder: outlineInputBorder(),
 );
 
+// Creates an outline input border
 OutlineInputBorder outlineInputBorder() {
   return OutlineInputBorder(
     borderRadius: BorderRadius.circular(getProportionateScreenWidth(15)),

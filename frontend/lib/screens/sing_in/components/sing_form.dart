@@ -7,7 +7,8 @@ import '../../../components/form_error.dart';
 import '../../../constant.dart';
 import '../../../helper/keyboard.dart';
 import '../../../size_config.dart';
-import '../../login_success/login_success_screen.dart';
+import '../../forgot_password/forgot_password_screen.dart';
+import '../../home/home_screen.dart';
 
 class SignForm extends StatefulWidget {
   @override
@@ -47,10 +48,20 @@ class _SignFormState extends State<SignForm> {
           SizedBox(height: getProportionateScreenHeight(30)),
           Row(
             children: [
+              Checkbox(
+                value: remember,
+                activeColor: kPrimaryColor,
+                onChanged: (value) {
+                  setState(() {
+                    remember = value;
+                  });
+                },
+              ),
+              Text("Remember me"),
               Spacer(),
               GestureDetector(
-                /*onTap: () => Navigator.pushNamed(
-                    context, ForgotPasswordScreen.routeName),*/
+                onTap: () => Navigator.pushNamed(
+                    context, ForgotPasswordScreen.routeName),
                 child: Text(
                   "Forgot Password",
                   style: TextStyle(decoration: TextDecoration.underline),
@@ -66,7 +77,7 @@ class _SignFormState extends State<SignForm> {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 KeyboardUtil.hideKeyboard(context);
-                Navigator.pushNamed(context, LoginSuccessScreen.routeName);
+                Navigator.pushNamed(context, HomeScreen.routeName);
               }
             },
           ),
