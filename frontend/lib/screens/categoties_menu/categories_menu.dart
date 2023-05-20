@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/components/coustom_bottom_nav_bar.dart';
+import 'package:shop_app/constant.dart';
 import 'package:shop_app/enums.dart';
 
-import '../../constant.dart';
 import 'components/body.dart';
 
-class ProfileScreen extends StatelessWidget {
-  static String routeName = "/profile";
+class CategoriesMenuScreen extends StatelessWidget {
+  static String routeName = "/categories_menu";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Profile",
+          "Categories",
           style: TextStyle(color: kPrimaryColor),
         ),
       ),

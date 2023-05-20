@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import '../../../constant.dart';
 
-class ProfileMenu extends StatelessWidget {
-  const ProfileMenu({
+class MenuCard extends StatelessWidget {
+  const MenuCard({
     Key? key,
     required this.text,
     required this.icon,
