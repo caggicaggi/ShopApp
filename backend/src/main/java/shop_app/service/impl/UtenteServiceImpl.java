@@ -3,6 +3,7 @@ package shop_app.service.impl;
 
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,7 +16,7 @@ import shop_app.dto.UtenteDTO;
 import shop_app.repository.UtenteRepository;
 import shop_app.service.UtenteService;
 @Service
-public class UtenteServiceImpl implements UtenteService {
+public class UtenteServiceImpl implements UtenteService{
 	
 	@Value("${password.secret}")
 	private String secret;
@@ -24,27 +25,31 @@ public class UtenteServiceImpl implements UtenteService {
 	UtenteRepository utenteRepository;
 
 	@Override
-	public String login(UtenteDTO utenteDT0) throws Exception {
-		String error = null;
+	public HashMap<String,String> login(UtenteDTO utenteDTO) throws Exception {
+		HashMap<String,String> map = new HashMap<>();
 		//recupero salt
-		String salt = utenteRepository.getSalt(utenteDT0.getEmail());
+		String salt = utenteRepository.getSalt(utenteDTO.getEmail());
 		//genero password criptata per confronto
-		String password = generatePassword(utenteDT0.getPassword()+salt+secret);
+		String password = generatePassword(utenteDTO.getPassword()+salt+secret);
 		//recupero password criptata in db
-		utenteDT0= utenteRepository.login(utenteDT0.getEmail(),password);
+		utenteDTO= utenteRepository.login(utenteDTO.getEmail(),password);
+
 		//controllo email errata
 		if (salt == null ) {
-			return error = "Incorrect email";
+			 map.put("ERROR", "Incorrect email. ");
+			 return map;
 		}
 		//controllo password errata
-		if (utenteDT0.getPassword() == null ) {
-			return error = "Incorrect password";
+		if (utenteDTO.getPassword() == null ) {
+			 map.put("ERROR", "Incorrect password. ");
+			 return map;
 		}
 		//controllo password criptata in db e password inserita criptata
-		if (utenteDT0.getPassword().equals(password) ) {
-			error = "Correct credential";
+		if (utenteDTO.getPassword().equals(password) ) {
+			map.put("RESULT", "Correct Credential. ");
+			map.put("IDUTENTE", utenteDTO.getIdUtente());
 		}
-		return error;
+		return map;
 	}
 
 	@Override

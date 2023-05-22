@@ -2,13 +2,11 @@ package shop_app.repository.impl;
 
 import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Repository;
 
 import shop_app.dto.RegistrazioneDTO;
 import shop_app.dto.UtenteDTO;
-import shop_app.repository.UtenteMapper;
 import shop_app.repository.UtenteRepository;
 import shop_app.utils.GenericDao;
 
@@ -19,7 +17,7 @@ public class UtenteRepositoryImpl extends GenericDao implements UtenteRepository
 	    setDataSource(dataSource);
 	}
 	
-	private static final UtenteMapper rowMapper = new UtenteMapper();
+	//private static final UtenteMapper rowMapper = new UtenteMapper();
 	
 	//private static final String IDUTENTE="idUtente";
 	private static final String EMAIL="email";
@@ -34,11 +32,15 @@ public class UtenteRepositoryImpl extends GenericDao implements UtenteRepository
 	
 	private final String QUERY_LOGIN_PASSWORD = "SELECT password FROM utente WHERE password = :password ;"; 
 	
+	private final String QUERY_LOGIN_PHONENUMBER= "SELECT phoneNumber FROM utente WHERE email = :email ;"; 
+	
 	private final String QUERY_GET_SALT = "SELECT salt FROM utente WHERE email = :email ;"; 
 	
 	private final String QUERY_INSERT_UTENTE = "INSERT INTO utente "
 			+ " (email,password,name,surname,address,phoneNumber,salt) "
 			+ " VALUES (:email, :password, :name, :surname, :address, :phoneNumber, :salt) ;";
+	
+	private final String QUERY_LOGIN_ID_UTENTE= "Select idUtente FROM utente WHERE email = :email AND password = :password ";
 
 	
     /*private MapSqlParameterSource getMapSqlParameterSourceUtente(UtenteDTO utenteDTO, int id) {
@@ -71,12 +73,20 @@ public class UtenteRepositoryImpl extends GenericDao implements UtenteRepository
 	@Override
 	public int signup(RegistrazioneDTO registrazioneDTO) throws Exception {
 		System.out.println("START METODO SIGNUP");
+		
 		int checkInsert=0;
 		try {
-				System.out.println(registrazioneDTO.getSalt());
+			MapSqlParameterSource args = getMapSqlParameterSourceRegistrazioeneDTO(registrazioneDTO);
+			String email = getNamedParameterJdbcTemplate().queryForObject(QUERY_LOGIN_EMAIL, args,(rs,rowNum)-> rs.getString(1));
+			if( email.isEmpty()|| email != null)
+				return checkInsert=2;
+		}catch(Exception e) {
+			System.out.println("ERRORE CHIAMATA REGISTRAZIONE -- SIGNUP --- " + e);
+		}
+		try {
 				MapSqlParameterSource args = getMapSqlParameterSourceRegistrazioeneDTO(registrazioneDTO);
 				checkInsert = getNamedParameterJdbcTemplate().update(QUERY_INSERT_UTENTE, args);
-			
+				
 		}catch(Exception e) {
 			System.out.println("ERRORE CHIAMATA REGISTRAZIONE -- SIGNUP --- " + e);
 		}
@@ -104,6 +114,24 @@ public class UtenteRepositoryImpl extends GenericDao implements UtenteRepository
 
 			} catch (Exception e) {
 				System.out.println("ERRORE CHIAMATA RECUPERO PASSWORD -- LOGIN --- " + e);
+			}
+			try {
+				MapSqlParameterSource args = new MapSqlParameterSource();
+				args.addValue(EMAIL,email);
+				utenteDTO.setPhoneNumber(getNamedParameterJdbcTemplate().queryForObject(QUERY_LOGIN_PHONENUMBER, args,(rs,rowNum)-> rs.getString(1)));
+
+			} catch (Exception e) {
+				System.out.println("ERRORE CHIAMATA RECUPERO PHONENUMBER -- LOGIN --- " + e);
+			}
+			try {
+				MapSqlParameterSource args = new MapSqlParameterSource();
+				args.addValue(EMAIL,email);
+				args.addValue(PASSWORD,password);
+
+				utenteDTO.setIdUtente(getNamedParameterJdbcTemplate().queryForObject(QUERY_LOGIN_ID_UTENTE, args,(rs,rowNum)-> rs.getString(1)));
+
+			} catch (Exception e) {
+				System.out.println("ERRORE CHIAMATA RECUPERO IDUTENTE -- LOGIN --- " + e);
 			}
 			System.out.println("END ELABORATION METHOD  LOGIN");
 			return utenteDTO;
