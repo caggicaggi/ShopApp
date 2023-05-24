@@ -22,7 +22,7 @@ public class ProductMapper implements RowMapper<ProductDTO>{
 		product.setImages3(rs.getString("images3"));
 		product.setRating(rs.getInt("rating"));
 		product.setPrice(rs.getInt("price"));
-		product.setPopular(rs.getString("popular"));
+		product.setIsPopular(rs.getString("isPopular"));
 		product.setIsAvailable(rs.getString("isAvailable"));
 		product.setCategory(rs.getString("category"));
 

@@ -25,31 +25,22 @@ public class UtenteServiceImpl implements UtenteService{
 	UtenteRepository utenteRepository;
 
 	@Override
-	public HashMap<String,String> login(UtenteDTO utenteDTO) throws Exception {
-		HashMap<String,String> map = new HashMap<>();
+	public UtenteDTO login(UtenteDTO utenteDTO) throws Exception {
 		//recupero salt
 		String salt = utenteRepository.getSalt(utenteDTO.getEmail());
 		//genero password criptata per confronto
 		String password = generatePassword(utenteDTO.getPassword()+salt+secret);
 		//recupero password criptata in db
 		utenteDTO= utenteRepository.login(utenteDTO.getEmail(),password);
-
-		//controllo email errata
-		if (salt == null ) {
-			 map.put("ERROR", "Incorrect email. ");
-			 return map;
-		}
-		//controllo password errata
-		if (utenteDTO.getPassword() == null ) {
-			 map.put("ERROR", "Incorrect password. ");
-			 return map;
+		
+		if (utenteDTO.getPassword() == null || utenteDTO.getEmail() == null) {
+			return null;
 		}
 		//controllo password criptata in db e password inserita criptata
 		if (utenteDTO.getPassword().equals(password) ) {
-			map.put("RESULT", "Correct Credential. ");
-			map.put("IDUTENTE", utenteDTO.getIdUtente());
+			return utenteDTO;
 		}
-		return map;
+		return null;
 	}
 
 	@Override
@@ -88,5 +79,10 @@ public class UtenteServiceImpl implements UtenteService{
 	static String generatePassword(String passwordAndSecretAndSalt) throws NoSuchAlgorithmException {
 		//ritorno password criptata con sha256
 		return  Hashing.sha256().hashString(passwordAndSecretAndSalt, StandardCharsets.UTF_8) .toString();
+	}
+
+	@Override
+	public int getIdUtente(String surname, String email, String phoneNumber) {
+		 return utenteRepository.getIdUtente(surname,email,phoneNumber);
 	}
 }

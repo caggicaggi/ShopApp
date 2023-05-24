@@ -14,9 +14,7 @@ public class WishListMapper implements RowMapper<WishListDTO>{
 		
 		WishListDTO wishListProduct =new WishListDTO();
 		
-		wishListProduct.setIdWishList(rs.getInt("idWishList"));
 		wishListProduct.setIdProduct(rs.getInt("idProduct"));
-		wishListProduct.setIdUtente(rs.getInt("idUtente"));
 		
 		return wishListProduct;
 	}

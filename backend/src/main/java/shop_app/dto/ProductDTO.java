@@ -9,15 +9,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ProductDTO {
 
-	int idProduct;
-	String title;
-	String descriprtion;
-	String images1;
-	String images2;
-	String images3; 
-	int rating;
-	int price;
-	String popular;
-	String isAvailable; 
-	String category;
+	private int idProduct;
+	private String title;
+	private String descriprtion;
+	private String images1;
+	private String images2;
+	private String images3; 
+	private int rating;
+	private int price;
+	private String isPopular;
+	private String isAvailable; 
+	private String category;
 }

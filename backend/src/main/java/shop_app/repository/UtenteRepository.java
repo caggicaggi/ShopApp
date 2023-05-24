@@ -13,4 +13,6 @@ public interface UtenteRepository {
     
     public String getSalt( String email) throws Exception;
 
+	public int getIdUtente(String surname, String email, String phoneNumber);
+
 }

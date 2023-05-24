@@ -14,11 +14,7 @@ public class CartMapper implements RowMapper<CartDTO>{
 		
 		CartDTO cart =new CartDTO();
 		
-		cart.setIdCart(rs.getInt("idCart"));
 		cart.setIdProduct(rs.getInt("idProduct"));
-		cart.setIdUtente(rs.getInt("idUtente"));
-		cart.setQuantity(rs.getInt("quantity"));
-
 		
 		return cart;
 	}

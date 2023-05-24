@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ResponseLoginDTO {
 	
-	String result;
-	String idUtente;
-	List<ProductDTO> listOfProduct;
-	List<WishListDTO> wishListDTO;
-	List<CartDTO> cartDTO;
+	private String result;
+	private String idUtente;
+	private List<ProductDTO> listOfProduct;
+	private List<Integer> wishListDTO;
+	private List<Integer> cartDTO;
 }

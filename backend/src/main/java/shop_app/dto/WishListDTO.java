@@ -10,8 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class WishListDTO {
 	
-	int idWishList;
-	int idProduct;
-	int idUtente;
+	private int idWishList;
+	private int idProduct;
+	private int idUtente;
 	
 }

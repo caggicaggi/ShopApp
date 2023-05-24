@@ -6,7 +6,10 @@ import shop_app.dto.WishListDTO;
 
 public interface WishListService {
 	
-	 public List<WishListDTO> getListOfWishListProduct(int idUtente) throws Exception;
+	 public List<Integer> getListOfWishListProduct(int idUtente) throws Exception;
+	 
+	 public int removeProductInWishList(WishListDTO wishListDTO) throws Exception;
 
+	 public int addPorductInWishList(WishListDTO wishListDTO) throws Exception;
 
 }

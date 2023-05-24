@@ -16,8 +16,18 @@ public class CartServiceImpl implements CartService{
 	CartRepository cartRepository;
 	
 	@Override
-	public List<CartDTO> getListCartProduct(int idUtente) throws Exception {
+	public List<Integer> getListCartProduct(int idUtente) throws Exception {
 		return cartRepository.getListCartProduct(idUtente);
+	}
+
+	@Override
+	public int removeProductInCart(List<CartDTO> cartDTO) throws Exception {
+		return cartRepository.removeProductInCart(cartDTO);
+	}
+
+	@Override
+	public int addPorductInCart(List<CartDTO> cartDTO) throws Exception {
+		return cartRepository.addPorductInCart(cartDTO);
 	}
 
 }

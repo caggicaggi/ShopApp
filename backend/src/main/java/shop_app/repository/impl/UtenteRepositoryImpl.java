@@ -40,9 +40,10 @@ public class UtenteRepositoryImpl extends GenericDao implements UtenteRepository
 			+ " (email,password,name,surname,address,phoneNumber,salt) "
 			+ " VALUES (:email, :password, :name, :surname, :address, :phoneNumber, :salt) ;";
 	
-	private final String QUERY_LOGIN_ID_UTENTE= "Select idUtente FROM utente WHERE email = :email AND password = :password ";
+	private final String QUERY_LOGIN_ID_UTENTE= "SELECT idUtente FROM utente WHERE email = :email AND password = :password ";
 
-	
+	private final String QUERY_GET_IDUTENTE= "SELECT idUtente FROM utente WHERE email = :email AND phoneNumber = :phoneNumber"
+			+ " AND surname = :surname";
     /*private MapSqlParameterSource getMapSqlParameterSourceUtente(UtenteDTO utenteDTO, int id) {
 
 		MapSqlParameterSource args = new MapSqlParameterSource();
@@ -128,7 +129,7 @@ public class UtenteRepositoryImpl extends GenericDao implements UtenteRepository
 				args.addValue(EMAIL,email);
 				args.addValue(PASSWORD,password);
 
-				utenteDTO.setIdUtente(getNamedParameterJdbcTemplate().queryForObject(QUERY_LOGIN_ID_UTENTE, args,(rs,rowNum)-> rs.getString(1)));
+				utenteDTO.setIdUtente(getNamedParameterJdbcTemplate().queryForObject(QUERY_LOGIN_ID_UTENTE, args,(rs,rowNum)-> rs.getInt(1)));
 
 			} catch (Exception e) {
 				System.out.println("ERRORE CHIAMATA RECUPERO IDUTENTE -- LOGIN --- " + e);
@@ -151,5 +152,23 @@ public class UtenteRepositoryImpl extends GenericDao implements UtenteRepository
 		}
 		System.out.println("END ELABORATION METHOD  GESTSALT");		
 		return salt;
+	}
+
+
+	@Override
+	public int getIdUtente(String surname, String email, String phoneNumber) {
+		System.out.println("START ELABORATION METHOD  getIdUtente");
+		int idUtente = 0;
+		try {
+				MapSqlParameterSource args = new MapSqlParameterSource();
+				args.addValue(EMAIL, email);
+				args.addValue(SURNAME, surname);
+				args.addValue(PHONENUMBER, phoneNumber);
+				idUtente = getNamedParameterJdbcTemplate().queryForObject(QUERY_GET_IDUTENTE, args,(rs,rowNum)-> rs.getInt(1));
+		}catch(Exception e) {
+			System.out.println("ERRORE CHIAMATA RECUPERO SALT -- GETSALT --- " + e);
+		}
+		System.out.println("END ELABORATION METHOD  getIdUtente");		
+		return idUtente;
 	}
 	}

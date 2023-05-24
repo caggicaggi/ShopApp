@@ -33,7 +33,7 @@ public class ProductRepositoryImpl extends GenericDao implements ProductReposito
 	private static final String IMAGES3="images3";
 	private static final String RATING="rating";
 	private static final String PRICE="price";
-	private static final String POPULAR="popular";
+	private static final String ISPOPULAR="isPopular";
 	private static final String ISAVAILABLE="isAvailable";
 	private static final String CATEGORY="category";
 

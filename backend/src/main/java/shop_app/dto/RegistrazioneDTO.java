@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RegistrazioneDTO {
 	
-	String surname;
-	String name;
-	String password;
-	String email;
-	String phoneNumber;
-	String address;
-	String salt;
+	private String surname;
+	private String name;
+	private String password;
+	private String email;
+	private String phoneNumber;
+	private String address;
+	private String salt;
 	
 }
