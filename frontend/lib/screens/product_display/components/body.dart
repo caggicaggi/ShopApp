@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/screens/details/details_screen.dart';
 import 'package:shop_app/screens/product_display/components/product_list_item.dart';
-import '../../../models/Movie.dart';
 import '../../../models/Product.dart';
 
 class Body extends StatelessWidget {
-  List<Movie> movies = Movie.movies;
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -35,7 +33,7 @@ class Body extends StatelessWidget {
                 arguments: ProductDetailsArguments(product: product),
               ),
               child: ProductListItem(
-                  imageUrl: product.imagePath,
+                  imageUrl: product.images[0],
                   name: product.title,
                   information:
                       '${product.title} | ${product.category} | ${product.rating}'),

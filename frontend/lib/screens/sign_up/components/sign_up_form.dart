@@ -52,7 +52,11 @@ class _SignUpFormState extends State<SignUpForm> {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 // if all are valid then go to success screen
-                Navigator.pushNamed(context, CompleteProfileScreen.routeName);
+                Navigator.pushNamed(
+                  context,
+                  CompleteProfileScreen.routeName,
+                  arguments: {'email': email, 'password': password},
+                );
               }
             },
           ),

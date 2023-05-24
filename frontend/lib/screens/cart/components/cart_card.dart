@@ -1,59 +1,83 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/models/Cart.dart';
+import 'package:shop_app/main.dart';
 import '../../../constant.dart';
+import '../../../models/Product.dart';
 import '../../../size_config.dart';
 
 class CartCard extends StatelessWidget {
   const CartCard({
     Key? key,
-    required this.cart,
+    required this.productId,
+    required this.quantity,
   }) : super(key: key);
 
-  final Cart cart;
+  final int productId;
+  final int quantity;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        SizedBox(
-          width: 88,
-          child: AspectRatio(
-            aspectRatio: 0.88,
-            child: Container(
-              padding: EdgeInsets.all(getProportionateScreenWidth(10)),
-              decoration: BoxDecoration(
-                color: Color(0xFFF5F6F9),
-                borderRadius: BorderRadius.circular(15),
+    // Recupera il prodotto dal suo ID
+    Product? product = getProductById(productId);
+
+    if (product != null) {
+      return Row(
+        children: [
+          SizedBox(
+            width: 88,
+            child: AspectRatio(
+              aspectRatio: 0.88,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Color(0xFFF5F6F9),
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Image.network(
+                  product.images[0],
+                  fit: BoxFit.cover,
+                ),
               ),
-              child: Image.asset(cart.product.images[0]),
             ),
           ),
-        ),
-        SizedBox(width: 20),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              cart.product.title,
-              style: TextStyle(color: Colors.black, fontSize: 16),
-              maxLines: 2,
-            ),
-            SizedBox(height: 10),
-            Text.rich(
-              TextSpan(
-                text: "\$${cart.product.price}",
-                style: TextStyle(
-                    fontWeight: FontWeight.w600, color: kPrimaryColor),
-                children: [
-                  TextSpan(
-                      text: " x${cart.numOfItem}",
-                      style: Theme.of(context).textTheme.bodyText1),
-                ],
+          SizedBox(width: 20),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                product.title,
+                style: TextStyle(color: Colors.black, fontSize: 16),
+                maxLines: 2,
               ),
-            )
-          ],
-        )
-      ],
-    );
+              SizedBox(height: 10),
+              Text.rich(
+                TextSpan(
+                  text: "\$${product.price}",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w600, color: kPrimaryColor),
+                  children: [
+                    TextSpan(
+                        text: " x${quantity}",
+                        style: Theme.of(context).textTheme.bodyText1),
+                  ],
+                ),
+              )
+            ],
+          )
+        ],
+      );
+    } else {
+      return Scaffold(
+        backgroundColor: Colors.red,
+      );
+    }
   }
+}
+
+Product? getProductById(int productId) {
+  for (Product product in demoProducts) {
+    if (product.idProduct == productId) {
+      return product;
+    }
+  }
+
+  return null; // Se il prodotto con l'ID specificato non viene trovato
 }

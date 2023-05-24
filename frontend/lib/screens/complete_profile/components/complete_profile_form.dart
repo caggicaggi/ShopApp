@@ -2,12 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:shop_app/components/custom_surfix_icon.dart';
 import 'package:shop_app/components/default_button.dart';
 import 'package:shop_app/components/form_error.dart';
+import 'package:shop_app/main.dart';
 import 'package:shop_app/screens/otp/otp_screen.dart';
 
 import '../../../constant.dart';
 import '../../../size_config.dart';
+import '../../sign_up/components/http_post_user_register.dart';
 
 class CompleteProfileForm extends StatefulWidget {
+  final String email;
+  final String password;
+
+  CompleteProfileForm({required this.email, required this.password});
   @override
   _CompleteProfileFormState createState() => _CompleteProfileFormState();
 }
@@ -19,6 +25,9 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   String? lastName;
   String? phoneNumber;
   String? address;
+  int resp = -1;
+
+  // Use widget.email and widget.password to access the passed variables
 
   void addError({String? error}) {
     if (!errors.contains(error))
@@ -51,9 +60,25 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           SizedBox(height: getProportionateScreenHeight(40)),
           DefaultButton(
             text: "continue",
-            press: () {
+            press: () async {
               if (_formKey.currentState!.validate()) {
-                Navigator.pushNamed(context, OtpScreen.routeName);
+                Map<String, String> requestBody = {
+                  'surname': lastName!,
+                  'name': firstName!,
+                  'password': widget.password,
+                  'email': widget.email,
+                  'phoneNumber': phoneNumber!,
+                  'address': address!,
+                };
+                resp = await sendUserInfo(requestBody);
+                if (resp == 200) {
+                  currentUser.setFirstName(firstName!);
+                  currentUser.setLastName(lastName!);
+                  currentUser.setEmail(widget.email);
+                  currentUser.setPhoneNumber(phoneNumber!);
+                  currentUser.setPhoneNumber(phoneNumber!);
+                  Navigator.pushNamed(context, OtpScreen.routeName);
+                }
               }
             },
           ),

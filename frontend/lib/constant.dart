@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/size_config.dart';
+import 'dart:io';
 
 // Primary colors
 const kPrimaryColor = Color.fromARGB(255, 0, 137, 140);
@@ -55,3 +56,6 @@ OutlineInputBorder outlineInputBorder() {
     borderSide: BorderSide(color: kTextColor),
   );
 }
+
+InternetAddress localhost = InternetAddress.loopbackIPv4;
+String url = 'http://${localhost.address}:8080';

@@ -7,6 +7,10 @@ class CompleteProfileScreen extends StatelessWidget {
   static String routeName = "/complete_profile";
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic>? arguments =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    final String email = arguments?['email'] ?? '';
+    final String password = arguments?['password'] ?? '';
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -14,7 +18,7 @@ class CompleteProfileScreen extends StatelessWidget {
           style: TextStyle(color: kPrimaryColor),
         ),
       ),
-      body: Body(),
+      body: Body(email: email, password: password),
     );
   }
 }

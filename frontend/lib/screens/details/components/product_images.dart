@@ -26,12 +26,14 @@ class _ProductImagesState extends State<ProductImages> {
           child: AspectRatio(
             aspectRatio: 1,
             child: Hero(
-              tag: widget.product.id.toString(),
-              child: Image.asset(widget.product.images[selectedImage]),
+              tag: widget.product.idProduct.toString(),
+              child: Image.network(
+                widget.product.images[selectedImage],
+                fit: BoxFit.cover,
+              ),
             ),
           ),
         ),
-        // SizedBox(height: getProportionateScreenWidth(20)),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -62,7 +64,10 @@ class _ProductImagesState extends State<ProductImages> {
           border: Border.all(
               color: kPrimaryColor.withOpacity(selectedImage == index ? 1 : 0)),
         ),
-        child: Image.asset(widget.product.images[index]),
+        child: Image.network(
+          widget.product.images[index],
+          fit: BoxFit.cover,
+        ),
       ),
     );
   }

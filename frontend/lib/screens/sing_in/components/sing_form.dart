@@ -6,9 +6,11 @@ import '../../../components/default_button.dart';
 import '../../../components/form_error.dart';
 import '../../../constant.dart';
 import '../../../helper/keyboard.dart';
+import '../../../main.dart';
 import '../../../size_config.dart';
 import '../../forgot_password/forgot_password_screen.dart';
 import '../../home/home_screen.dart';
+import 'http_request_sing_in.dart';
 
 class SignForm extends StatefulWidget {
   @override
@@ -21,6 +23,7 @@ class _SignFormState extends State<SignForm> {
   String? password;
   bool? remember = false;
   final List<String?> errors = [];
+  int resp = -1;
 
   void addError({String? error}) {
     if (!errors.contains(error))
@@ -73,11 +76,17 @@ class _SignFormState extends State<SignForm> {
           SizedBox(height: getProportionateScreenHeight(20)),
           DefaultButton(
             text: "Continue",
-            press: () {
+            // Wait for fetchDataFromSingIn to complete
+            press: ()  {
+            //press: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 KeyboardUtil.hideKeyboard(context);
-                Navigator.pushNamed(context, HomeScreen.routeName);
+                  Navigator.pushNamed(context, HomeScreen.routeName);
+
+                /*resp = await fetchDataFromSignIn(email!, password!);
+                if (resp == 200)
+                  Navigator.pushNamed(context, HomeScreen.routeName);*/
               }
             },
           ),
