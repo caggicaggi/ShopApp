@@ -77,16 +77,16 @@ class _SignFormState extends State<SignForm> {
           DefaultButton(
             text: "Continue",
             // Wait for fetchDataFromSingIn to complete
-            press: ()  {
-            //press: () async {
+            //press: ()  {
+            press: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
                 KeyboardUtil.hideKeyboard(context);
-                  Navigator.pushNamed(context, HomeScreen.routeName);
+                Navigator.pushNamed(context, HomeScreen.routeName);
 
-                /*resp = await fetchDataFromSignIn(email!, password!);
+                resp = await fetchDataFromSignIn(email!, password!);
                 if (resp == 200)
-                  Navigator.pushNamed(context, HomeScreen.routeName);*/
+                  Navigator.pushNamed(context, HomeScreen.routeName);
               }
             },
           ),

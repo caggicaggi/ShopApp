@@ -3,6 +3,7 @@ import 'package:shop_app/components/custom_surfix_icon.dart';
 import 'package:shop_app/components/default_button.dart';
 import 'package:shop_app/components/form_error.dart';
 import 'package:shop_app/main.dart';
+import 'package:shop_app/screens/home/home_screen.dart';
 import 'package:shop_app/screens/otp/otp_screen.dart';
 
 import '../../../constant.dart';
@@ -21,10 +22,10 @@ class CompleteProfileForm extends StatefulWidget {
 class _CompleteProfileFormState extends State<CompleteProfileForm> {
   final _formKey = GlobalKey<FormState>();
   final List<String?> errors = [];
-  String? firstName;
-  String? lastName;
-  String? phoneNumber;
-  String? address;
+  String firstName = '';
+  String lastName = '';
+  String phoneNumber = '';
+  String address = '';
   int resp = -1;
 
   // Use widget.email and widget.password to access the passed variables
@@ -63,21 +64,22 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
             press: () async {
               if (_formKey.currentState!.validate()) {
                 Map<String, String> requestBody = {
-                  'surname': lastName!,
-                  'name': firstName!,
+                  'surname': lastName,
+                  'name': firstName,
                   'password': widget.password,
                   'email': widget.email,
-                  'phoneNumber': phoneNumber!,
-                  'address': address!,
+                  'phoneNumber': phoneNumber,
+                  'address': address,
                 };
                 resp = await sendUserInfo(requestBody);
                 if (resp == 200) {
-                  currentUser.setFirstName(firstName!);
-                  currentUser.setLastName(lastName!);
+                  currentUser.setFirstName(firstName);
+                  currentUser.setLastName(lastName);
                   currentUser.setEmail(widget.email);
-                  currentUser.setPhoneNumber(phoneNumber!);
-                  currentUser.setPhoneNumber(phoneNumber!);
-                  Navigator.pushNamed(context, OtpScreen.routeName);
+                  currentUser.setPhoneNumber(phoneNumber);
+                  currentUser.setAddress(address);
+                  //Navigator.pushNamed(context, OtpScreen.routeName);
+                  Navigator.pushNamed(context, HomeScreen.routeName);
                 }
               }
             },
@@ -89,10 +91,11 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   TextFormField buildAddressFormField() {
     return TextFormField(
-      onSaved: (newValue) => address = newValue,
+      //onSaved: (newValue) => address = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kAddressNullError);
+          address = value;
         }
         return null;
       },
@@ -118,10 +121,11 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   TextFormField buildPhoneNumberFormField() {
     return TextFormField(
       keyboardType: TextInputType.phone,
-      onSaved: (newValue) => phoneNumber = newValue,
+      //onSaved: (newValue) => phoneNumber = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kPhoneNumberNullError);
+          phoneNumber = value;
         }
         return null;
       },
@@ -145,7 +149,10 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   TextFormField buildLastNameFormField() {
     return TextFormField(
-      onSaved: (newValue) => lastName = newValue,
+      //onSaved: (newValue) => lastName = newValue,
+      onChanged: (value) {
+        lastName = value;
+      },
       decoration: InputDecoration(
         labelText: "Last Name",
         hintText: "Enter your last name",
@@ -159,10 +166,12 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
   TextFormField buildFirstNameFormField() {
     return TextFormField(
-      onSaved: (newValue) => firstName = newValue,
+      //onSaved: (newValue) => firstName = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kNamelNullError);
+
+          firstName = value;
         }
         return null;
       },

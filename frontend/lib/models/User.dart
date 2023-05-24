@@ -1,19 +1,10 @@
 class User {
-  late final String firstName;
-  late final String lastName;
-  late final String email;
-  late final String phoneNumber;
-  late final String address;
-  late final int id;
-
-  User() {
-    firstName = '';
-    lastName = '';
-    email = '';
-    phoneNumber = '';
-    address = '';
-    id = 0;
-  }
+  String firstName = '';
+  String lastName = '';
+  String email = '';
+  String phoneNumber = '';
+  String address = '';
+  int id = 0;
 
   String getFirstName() {
     return this.firstName;

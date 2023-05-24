@@ -1,11 +1,12 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shop_app/main.dart';
 import '../../../constant.dart';
 import '../../../models/Product.dart';
 
 Future<int> sendUserInfo(Map<String, String> userInfo) async {
-  String completeUrl = '$url/singin'; // API endpoint for sign-in
+  String completeUrl = '$url/signup'; // API endpoint for sign-in
   // If the above URL doesn't work, try the following URL
   // String completeUrl = 'http://10.0.2.2:8000/SOMETHING';
   try {
@@ -14,14 +15,16 @@ Future<int> sendUserInfo(Map<String, String> userInfo) async {
       body: userInfo,
     );
 
-    int statusCode = response.statusCode;
-
-    if (statusCode == 200) {
+    debugPrint(
+        'Response Body: ${response.body} Response status code: ${response.statusCode}');
+    return 200;
+    /*
+    Commentata in attesa di backend, al momento non resistusce niente il body
+    if (response.statusCode == 200) {
       // Decode the response body
       Map<String, dynamic> responseData = jsonDecode(response.body);
       int? userId = responseData['id'];
       currentUser.setId(userId!);
-
       List<dynamic> productData = responseData['listOfProduct'];
       List<Product> listProd = productData.map((item) {
         List<String> images = [
@@ -48,9 +51,10 @@ Future<int> sendUserInfo(Map<String, String> userInfo) async {
 
       return response.statusCode;
     } else {
-      print('Request failed with status: $statusCode');
+      print('Request failed with status: $response.statusCode');
       return response.statusCode;
     }
+    */
   } catch (e) {
     print('Error: $e');
     return -1; // Return a default error status code
