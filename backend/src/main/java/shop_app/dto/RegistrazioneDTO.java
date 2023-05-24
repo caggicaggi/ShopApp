@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegistrazioneDTO {
+	
 	String surname;
 	String name;
 	String password;
@@ -15,4 +16,5 @@ public class RegistrazioneDTO {
 	String phoneNumber;
 	String address;
 	String salt;
+	
 }

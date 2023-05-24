@@ -18,14 +18,21 @@ public class RegistrazioneController implements RegistrazioneControllerImpl {
 	@Override
 	public ResponseEntity<String> signup(RegistrazioneDTO registrazioneDTO) throws Exception {
 		
-		registrazioneDTO = utenteService.cryptoPassword(registrazioneDTO);
+		if (registrazioneDTO.getName() == null || registrazioneDTO.getSurname() == null ||
+				registrazioneDTO.getAddress()==null || registrazioneDTO.getPhoneNumber() ==null
+				|| registrazioneDTO.getEmail() == null || registrazioneDTO.getPassword() == null ) {
+			return new ResponseEntity<>("An error was occured, some fields are missing. ",HttpStatus.BAD_REQUEST);
+		}
 		
 		int checkInsert= utenteService.signup(registrazioneDTO);
 		
 		if (checkInsert == 0) {
-			return new ResponseEntity<>("An error was occured, user not register",HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("An error was occured, user not register. ",HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-		return new ResponseEntity<>("Correctly registered user",HttpStatus.OK);
+		if (checkInsert == 2) {
+			return new ResponseEntity<>("An error was occured, email already used. ",HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<>("Correctly registered user. ",HttpStatus.OK);
 		}
 	
 
