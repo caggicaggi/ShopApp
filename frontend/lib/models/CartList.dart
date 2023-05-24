@@ -90,25 +90,25 @@ class CartList {
   }
 
   void _updateBackend() {
-  if (addedQuantities.isNotEmpty) {
-    _applyDeltaUpdate();
-    debugPrint('Added quantities: $addedQuantities');
-    updateDb(addedQuantities, 'add', currentUser.id);
+    if (addedQuantities.isNotEmpty) {
+      debugPrint('Added quantities: $addedQuantities');
+      _applyDeltaUpdate();
+
+      updateDb(addedQuantities, 'add', currentUser.id);
+    }
+
+    if (removedQuantities.isNotEmpty) {
+      debugPrint('Removed quantities: $removedQuantities');
+      _applyDeltaUpdate();
+      updateDb(removedQuantities, 'remove', currentUser.id);
+    }
+
+    if (addedQuantities.isEmpty && removedQuantities.isEmpty) {
+      debugPrint('No changes since the last update');
+    }
+
+    _cancelDebounce();
   }
-
-  if (removedQuantities.isNotEmpty) {
-    _applyDeltaUpdate();
-    debugPrint('Removed quantities: $removedQuantities');
-    updateDb(removedQuantities, 'remove', currentUser.id);
-  }
-
-  if (addedQuantities.isEmpty && removedQuantities.isEmpty) {
-    debugPrint('No changes since the last update');
-  }
-
-  _cancelDebounce();
-}
-
 
   void _cancelDebounce() {
     if (_debounceTimer != null && _debounceTimer!.isActive) {
@@ -116,35 +116,36 @@ class CartList {
     }
   }
 
-  Future<int> updateDb(Map<int, int> quantities, String mode, int userId) async {
-  String completeUrl = '$url/cart/$mode'; // API endpoint for adding or removing items
+  Future<int> updateDb(
+      Map<int, int> quantities, String mode, int userId) async {
+    String completeUrl =
+        '$url/cart/$mode'; // API endpoint for adding or removing items
 
-  List<Map<String, dynamic>> requestBody = quantities.entries.map((entry) {
-    int idProduct = entry.key;
-    int quantity = entry.value;
-    return {
-      'idProduct': idProduct,
-      'quantity': quantity,
-      'idUtente': userId,
-    };
-  }).toList();
+    List<Map<String, dynamic>> requestBody = quantities.entries.map((entry) {
+      int idProduct = entry.key;
+      int quantity = entry.value;
+      return {
+        'idProduct': idProduct,
+        'quantity': quantity,
+        'idUtente': userId,
+      };
+    }).toList();
 
-  try {
-    http.Response response = await http.post(
-      Uri.parse(completeUrl),
-      body: jsonEncode(requestBody),
-    );
+    try {
+      http.Response response = await http.post(
+        Uri.parse(completeUrl),
+        body: jsonEncode(requestBody),
+      );
 
-    if (response.statusCode == 200) {
-      return response.statusCode;
-    } else {
-      debugPrint('Request failed with status: ${response.statusCode}');
-      return response.statusCode;
+      if (response.statusCode == 200) {
+        return response.statusCode;
+      } else {
+        debugPrint('Request failed with status: ${response.statusCode}');
+        return response.statusCode;
+      }
+    } catch (e) {
+      debugPrint('Error: $e');
+      return -1; // Return a custom error code or handle the error accordingly
     }
-  } catch (e) {
-    debugPrint('Error: $e');
-    return -1; // Return a custom error code or handle the error accordingly
   }
-}
-
 }
