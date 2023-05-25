@@ -35,10 +35,6 @@ class _BodyState extends State<Body> {
                 product: widget.product,
                 pressOnSeeMore: () {},
               ),
-
-              /*ColorDots(
-                      product: widget.product,
-                    ),*/
               TopRoundedContainer(
                 color: Colors.white,
                 child: Padding(

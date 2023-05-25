@@ -94,13 +94,13 @@ class CartList {
       debugPrint('Added quantities: $addedQuantities');
       _applyDeltaUpdate();
 
-      updateDb(addedQuantities, 'add', currentUser.id);
+      updateDb(addedQuantities, 'addToCart', currentUser.id);
     }
 
     if (removedQuantities.isNotEmpty) {
       debugPrint('Removed quantities: $removedQuantities');
       _applyDeltaUpdate();
-      updateDb(removedQuantities, 'remove', currentUser.id);
+      updateDb(removedQuantities, 'removeProductInCart', currentUser.id);
     }
 
     if (addedQuantities.isEmpty && removedQuantities.isEmpty) {
@@ -126,8 +126,8 @@ class CartList {
       int quantity = entry.value;
       return {
         'idProduct': idProduct,
-        'quantity': quantity,
         'idUtente': userId,
+        'quantity': quantity,
       };
     }).toList();
 

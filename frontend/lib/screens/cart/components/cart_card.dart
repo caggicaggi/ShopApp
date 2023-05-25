@@ -73,7 +73,7 @@ class CartCard extends StatelessWidget {
 }
 
 Product? getProductById(int productId) {
-  for (Product product in demoProducts) {
+  for (Product product in listOfProduct) {
     if (product.idProduct == productId) {
       return product;
     }

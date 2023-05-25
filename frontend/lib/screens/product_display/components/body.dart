@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/main.dart';
 import 'package:shop_app/screens/details/details_screen.dart';
 import 'package:shop_app/screens/product_display/components/product_list_item.dart';
 import '../../../models/Product.dart';
@@ -14,18 +15,8 @@ class Body extends StatelessWidget {
         ),
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           const SizedBox(height: 20),
-
-          /*  ...List.generate(
-            demoProducts.length,
-            (index) {
-              if (demoProducts[index].isPopular)
-                return ProductCard(product: demoProducts[index]);
-
-              return SizedBox.shrink(); // here by default width and height is 0
-            },
-          ),*/
           //we create a Movie list item
-          for (final product in demoProducts)
+          for (final product in listOfProduct)
             InkWell(
               onTap: () => Navigator.pushNamed(
                 context,
