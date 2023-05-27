@@ -3,7 +3,7 @@ import 'package:shop_app/size_config.dart';
 import 'dart:io';
 
 // Primary colors
-const kPrimaryColor = Color.fromARGB(255, 0, 137, 140);
+const kPrimaryColor = Color(0xFF00898C);
 //const kPrimaryColor = Color(0xFFFF7643);
 const kPrimaryLightColor = Color(0xFFFFECDF);
 const kPrimaryGradientColor = LinearGradient(

@@ -15,7 +15,7 @@ class CartList {
       {}; // Map to track removed quantities for each product
 
   Timer? _debounceTimer;
-  Duration _debounceDuration = Duration(seconds: 0);
+  Duration _debounceDuration = Duration(seconds: 2);
 
   // Method to initialize the cart with an existing map
   void initializeFromMap(Map<int, int> initialMap) {
@@ -50,6 +50,22 @@ class CartList {
     _triggerDebounce();
   }
 
+  void _triggerDebounce() {
+    if (_debounceTimer != null && _debounceTimer!.isActive) {
+      _debounceTimer!.cancel();
+    }
+
+    _debounceTimer = Timer(_debounceDuration, () {
+      _updateBackend();
+    });
+  }
+
+  void _cancelDebounce() {
+    if (_debounceTimer != null && _debounceTimer!.isActive) {
+      _debounceTimer!.cancel();
+    }
+  }
+
   void _applyDeltaUpdate() {
     for (var entry in addedQuantities.entries) {
       var productId = entry.key;
@@ -57,7 +73,7 @@ class CartList {
       var currentQuantity = productQuantities[productId] ?? 0;
       var newQuantity = currentQuantity + addedQuantity;
       productQuantities[productId] = newQuantity;
-      debugPrint('$addedQuantity x $productId added to the cart');
+      debugPrint('q: $addedQuantity x id: $productId added to the cart');
     }
 
     for (var entry in removedQuantities.entries) {
@@ -72,48 +88,31 @@ class CartList {
       } else {
         productQuantities[productId] = newQuantity;
       }
-      debugPrint('$removedQuantity x $productId removed from the cart');
+      debugPrint('q: $removedQuantity x id: $productId removed from the cart');
     }
-
-    addedQuantities.clear();
-    removedQuantities.clear();
-  }
-
-  void _triggerDebounce() {
-    if (_debounceTimer != null && _debounceTimer!.isActive) {
-      _debounceTimer!.cancel();
-    }
-
-    _debounceTimer = Timer(_debounceDuration, () {
-      _updateBackend();
-    });
   }
 
   void _updateBackend() {
-    if (addedQuantities.isNotEmpty) {
-      debugPrint('Added quantities: $addedQuantities');
-      _applyDeltaUpdate();
+    if (addedQuantities.isEmpty && removedQuantities.isEmpty) {
+      debugPrint('No changes since the last update');
+      return;
+    }
 
+    if (addedQuantities.isNotEmpty) {
+      debugPrint('Added quantities in DB: $addedQuantities');
+      _applyDeltaUpdate();
       updateDb(addedQuantities, 'addToCart', currentUser.id);
+      addedQuantities.clear();
     }
 
     if (removedQuantities.isNotEmpty) {
-      debugPrint('Removed quantities: $removedQuantities');
-      _applyDeltaUpdate();
+      debugPrint('Removed quantities in DB: $removedQuantities');
       updateDb(removedQuantities, 'removeProductInCart', currentUser.id);
-    }
-
-    if (addedQuantities.isEmpty && removedQuantities.isEmpty) {
-      debugPrint('No changes since the last update');
+      _applyDeltaUpdate();
+      removedQuantities.clear();
     }
 
     _cancelDebounce();
-  }
-
-  void _cancelDebounce() {
-    if (_debounceTimer != null && _debounceTimer!.isActive) {
-      _debounceTimer!.cancel();
-    }
   }
 
   Future<int> updateDb(
@@ -138,6 +137,7 @@ class CartList {
       );
 
       if (response.statusCode == 200) {
+        debugPrint('Request succes: ${response.statusCode}');
         return response.statusCode;
       } else {
         debugPrint('Request failed with status: ${response.statusCode}');

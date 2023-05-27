@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/models/Product.dart';
+import 'package:shop_app/screens/home/home_screen.dart';
 import 'package:shop_app/size_config.dart';
 import '../../../components/default_button.dart';
 import '../../../constant.dart';
+import '../../../main.dart';
 import '../../sing_in/sing_in_screen.dart';
 import '../components/splash_content.dart';
 
@@ -68,7 +71,9 @@ class _BodyState extends State<Body> {
                      DefaultButton(
                       text: "Continue",
                       press: () {
-                        Navigator.pushNamed(context, SignInScreen.routeName);
+                        //Navigator.pushNamed(context, SignInScreen.routeName);
+                        listOfProduct = demoProducts;
+                        Navigator.pushNamed(context, HomeScreen.routeName);
                       },
                     ),
                     const Spacer(),

@@ -4,6 +4,7 @@ import 'package:shop_app/constant.dart';
 import 'package:shop_app/screens/home/home_screen.dart';
 import 'package:shop_app/screens/product_display/product_display.dart';
 import '../enums.dart';
+import '../main.dart';
 import '../screens/profile/profile_screen.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
@@ -57,8 +58,13 @@ class CustomBottomNavBar extends StatelessWidget {
                 color: MenuState.profile == selectedMenu
                     ? kPrimaryColor
                     : inActiveIconColor,
-                onPressed: () => Navigator.pushNamed(
-                    context, ProductDisplayScreen.routeName),
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        ProductDisplayScreen(productList: listOfProduct),
+                  ),
+                ),
               ),
               IconButton(
                 icon: SvgPicture.asset(

@@ -5,7 +5,6 @@ import 'package:shop_app/models/Product.dart';
 import 'package:shop_app/size_config.dart';
 import '../../../components/rounded_icon_btn.dart';
 import '../../../constant.dart';
-import 'color_dots.dart';
 import 'product_description.dart';
 import 'top_rounded_container.dart';
 import 'product_images.dart';
@@ -41,7 +40,7 @@ class _BodyState extends State<Body> {
                   padding: EdgeInsets.only(
                     left: SizeConfig.screenWidth * 0.15,
                     right: SizeConfig.screenWidth * 0.15,
-                    bottom: getProportionateScreenWidth(40),
+                    bottom: getProportionateScreenWidth(0),
                     top: getProportionateScreenWidth(15),
                   ),
                   child: Row(
@@ -57,7 +56,7 @@ class _BodyState extends State<Body> {
                           });
                         },
                       ),
-                      SizedBox(width: getProportionateScreenWidth(20)),
+                      SizedBox(width: getProportionateScreenWidth(10)),
                       Text(
                         '$quantity',
                         style: TextStyle(
@@ -66,7 +65,7 @@ class _BodyState extends State<Body> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(width: getProportionateScreenWidth(20)),
+                      SizedBox(width: getProportionateScreenWidth(10)),
                       RoundedIconBtn(
                         icon: Icons.add,
                         showShadow: true,
@@ -87,7 +86,7 @@ class _BodyState extends State<Body> {
                     left: SizeConfig.screenWidth * 0.15,
                     right: SizeConfig.screenWidth * 0.15,
                     bottom: getProportionateScreenWidth(40),
-                    top: getProportionateScreenWidth(15),
+                    top: getProportionateScreenWidth(1),
                   ),
                   child: DefaultButton(
                     text: "Add To Cart",

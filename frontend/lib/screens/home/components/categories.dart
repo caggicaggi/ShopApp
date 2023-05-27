@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/screens/categoties_menu/categories_menu.dart';
-
+import '../../../main.dart';
+import '../../../models/Product.dart';
 import '../../../size_config.dart';
-import '../../complete_profile/complete_profile_screen.dart';
+import '../../categoties_menu/components/body.dart';
+import '../../product_display/product_display.dart';
 import 'section_title.dart';
 
 class Categories extends StatelessWidget {
@@ -19,7 +21,9 @@ class Categories extends StatelessWidget {
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: SectionTitle(
             title: "Categories",
-            press: () {Navigator.pushNamed(context, CategoriesMenuScreen.routeName);},
+            press: () {
+              Navigator.pushNamed(context, CategoriesMenuScreen.routeName);
+            },
           ),
         ),
         SizedBox(height: getProportionateScreenWidth(20)),
@@ -28,16 +32,49 @@ class Categories extends StatelessWidget {
           child: Row(
             children: [
               SpecialOfferCard(
-                image: "assets/images/Image Banner 2.png",
-                category: "Smartphone",
-                numOfBrands: 18,
-                press: () {},
+                image: 'assets/images/electronics.jpg',
+                category: "Electronics",
+                press: () {
+                  List<Product> listCategoryProducts =
+                      getCategoryProducts(listOfProduct, 'Electronics');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProductDisplayScreen(
+                          productList: listCategoryProducts),
+                    ),
+                  );
+                },
               ),
               SpecialOfferCard(
-                image: "assets/images/Image Banner 3.png",
+                image: 'assets/images/fashion.jpg',
                 category: "Fashion",
-                numOfBrands: 24,
-                press: () {},
+                press: () {
+                  List<Product> listCategoryProducts =
+                      getCategoryProducts(listOfProduct, 'Fashion');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProductDisplayScreen(
+                          productList: listCategoryProducts),
+                    ),
+                  );
+                },
+              ),
+              SpecialOfferCard(
+                image: 'assets/images/home.jpg',
+                category: "Home",
+                press: () {
+                  List<Product> listCategoryProducts =
+                      getCategoryProducts(listOfProduct, 'Home');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProductDisplayScreen(
+                          productList: listCategoryProducts),
+                    ),
+                  );
+                },
               ),
               SizedBox(width: getProportionateScreenWidth(20)),
             ],
@@ -53,12 +90,10 @@ class SpecialOfferCard extends StatelessWidget {
     Key? key,
     required this.category,
     required this.image,
-    required this.numOfBrands,
     required this.press,
   }) : super(key: key);
 
   final String category, image;
-  final int numOfBrands;
   final GestureTapCallback press;
 
   @override
@@ -76,7 +111,9 @@ class SpecialOfferCard extends StatelessWidget {
               children: [
                 Image.asset(
                   image,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
+                  width: double.infinity,
+                  height: double.infinity,
                 ),
                 Container(
                   decoration: BoxDecoration(
@@ -106,7 +143,6 @@ class SpecialOfferCard extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        TextSpan(text: "$numOfBrands Brands")
                       ],
                     ),
                   ),

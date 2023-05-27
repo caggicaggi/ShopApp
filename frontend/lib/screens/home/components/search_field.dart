@@ -1,11 +1,61 @@
 import 'package:flutter/material.dart';
 import '../../../constant.dart';
+import '../../../main.dart';
 import '../../../size_config.dart';
+import '../../../models/Product.dart';
+import '../../product_display/product_display.dart';
 
-class SearchField extends StatelessWidget {
+class SearchField extends StatefulWidget {
   const SearchField({
     Key? key,
   }) : super(key: key);
+
+  @override
+  _SearchFieldState createState() => _SearchFieldState();
+}
+
+class _SearchFieldState extends State<SearchField> {
+  List<Product> searchResults = [];
+
+  void searchProducts(String query) {
+    // Clear previous search results
+    searchResults.clear();
+
+    // Perform the search based on the entered query
+    for (Product product in listOfProduct) {
+      if (product.title.toLowerCase().contains(query.toLowerCase())) {
+        searchResults.add(product);
+      }
+    }
+
+    if (searchResults.isEmpty) {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('No Results Found'),
+            content: Text('No products matching your search query were found.'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    } else {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              ProductDisplayScreen(productList: searchResults),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,16 +66,18 @@ class SearchField extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
       ),
       child: TextField(
-        onChanged: (value) => print(value),
+        onSubmitted: searchProducts,
         decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(
-                horizontal: getProportionateScreenWidth(20),
-                vertical: getProportionateScreenWidth(9)),
-            border: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            enabledBorder: InputBorder.none,
-            hintText: "Search product",
-            prefixIcon: Icon(Icons.search)),
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: getProportionateScreenWidth(20),
+            vertical: getProportionateScreenWidth(9),
+          ),
+          border: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          hintText: "Search product",
+          prefixIcon: Icon(Icons.search),
+        ),
       ),
     );
   }

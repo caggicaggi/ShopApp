@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Product {
   int idProduct;
   String title;
@@ -40,7 +38,6 @@ class Product {
       category: json['category'],
     );
   }
-
 }
 
 // Our demo Products
@@ -81,7 +78,7 @@ List<Product> demoProducts = [
     rating: 4.1,
     isAvailable: true,
     isPopular: true,
-    category: "fashion",
+    category: "Home",
   ),
   Product(
     idProduct: 4,
@@ -93,8 +90,21 @@ List<Product> demoProducts = [
     description: description,
     rating: 4.1,
     isAvailable: true,
-    category: "fashion",
+    category: "Fashion",
+    isPopular: false,
+  ),
+   Product(
+    idProduct: 7,
+    images: [
+      "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/b47a303d-f770-430f-9b18-d53c5f059638/nikecourt-advantage-mens-tennis-pants-J1NztZ.png",
+    ],
+    title: "Nike Sport @@@@@ Pant",
+    price: 50.5,
+    description: description,
+    rating: 4.1,
     isPopular: true,
+    category: "Electronics",
+    isAvailable: true,
   ),
 ];
 

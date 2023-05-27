@@ -12,6 +12,7 @@ List<Product> listOfProduct = [];
 Wishlist wishlist = Wishlist();
 CartList demoCartList = CartList();
 User currentUser = User();
+String tokenJWT = '';
 
 void main() {
   runApp(MyApp());

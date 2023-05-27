@@ -7,8 +7,7 @@ import '../../../models/Product.dart';
 
 Future<int> sendUserInfo(Map<String, String> userInfo) async {
   String completeUrl = '$url/utente/signup'; // API endpoint for sign-in
-  // If the above URL doesn't work, try the following URL
-  // String completeUrl = 'http://10.0.2.2:8000/SOMETHING';
+
   try {
     http.Response response = await http.post(
       Uri.parse(completeUrl),
@@ -19,57 +18,30 @@ Future<int> sendUserInfo(Map<String, String> userInfo) async {
 
     if (response.statusCode == 200) {
       // Decode the response body
-      List<dynamic> responseData = jsonDecode(response.body);
-      Map<String, dynamic> userIdData = responseData[0];
-      int userId = userIdData['idUtente'];
+      dynamic responseBody = json.decode(response.body);
+
+      tokenJWT = responseBody['tokenJWT'][0]['value'];
+      int userId = responseBody['idUtente'][0]['value'];
+
       currentUser.setId(userId);
 
-      List<Product> listProd = responseData.sublist(1).map((item) {
-        List<String> images = [
-          item['images1'],
-          item['images2'],
-          item['images3'],
-        ];
+      List<Product> productList = (responseBody['ProductDTO'] as List)
+          .map((item) => Product.fromJson(item))
+          .toList();
 
-        bool isPopular;
-        if (item['isPopular'] == "1") {
-          isPopular = true;
-        } else {
-          isPopular = false;
-        }
-
-        bool isAvailable;
-        if (item['isAvailable'] == "1") {
-          isAvailable = true;
-        } else {
-          isAvailable = false;
-        }
-
-        return Product(
-          idProduct: item['idProduct'],
-          title: item['title'],
-          description: item['description'],
-          images: images,
-          rating: (item['rating'] as num).toDouble(),
-          price: (item['price'] as num).toDouble(),
-          isPopular: isPopular,
-          isAvailable: isAvailable,
-          category: item['category'],
-        );
-      }).toList();
-
-      listOfProduct = listProd;
+      listOfProduct = productList;
 
       // Print the data for testing
       debugPrint('User ID: ${currentUser.getId()}');
-      debugPrint('Lista generata: ');
-      listProd.forEach((product) => debugPrint(product.toString()));
-      debugPrint('Lista nel main: ');
+      debugPrint('Token: $tokenJWT');
+      debugPrint('Product List: ');
+      productList.forEach((product) => debugPrint(product.toString()));
+      debugPrint('List in the main: ');
       listOfProduct.forEach((product) => debugPrint(product.toString()));
 
       return response.statusCode;
     } else {
-      print('Request failed with status: $response.statusCode');
+      print('Request failed with status: ${response.statusCode}');
       return response.statusCode;
     }
   } catch (e) {
