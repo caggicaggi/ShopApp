@@ -75,11 +75,10 @@ public class UtenteControllerImpl implements UtenteController {
     	listOfIdWishList = wishListService.getListOfWishList(userDTO.getIdutente());
     	listOfIdCart = cartService.getListOfIdCart(userDTO.getIdutente());
     	//creo il json da mandare come return
-    	Map<String,List<JSONObject>> jsonToSend = jsonCreateService.
+    	JSONObject jsonToSend = jsonCreateService.
     			createJsonToSendSignIn(jwtUtil.generateToken(userDTO.getEmail()),listOfProduct,userDTO.getIdutente()
     					,listOfIdWishList,listOfIdCart);
-        String response = jsonCreateService.parse(jsonToSend);
-        return new ResponseEntity<String>(response,HttpStatus.OK);
+        return new ResponseEntity<String>(jsonToSend.toString(),HttpStatus.OK);
     }
     
   
@@ -100,10 +99,9 @@ public class UtenteControllerImpl implements UtenteController {
             throw new Exception(ex.toString());
         }
         //creo il json da mandare come return
-        Map<String,List<JSONObject>> jsonToSend = jsonCreateService.
+        JSONObject jsonToSend = jsonCreateService.
     			createJsonToSendSignUp(jwtUtil.generateToken(userDTO.getEmail()),listOfProduct,userDTO.getIdutente());
-        String response = jsonCreateService.parse(jsonToSend);
-        return new ResponseEntity<String>(response,HttpStatus.OK);
+        return new ResponseEntity<String>(jsonToSend.toString(),HttpStatus.OK);
     }
 	
 	
