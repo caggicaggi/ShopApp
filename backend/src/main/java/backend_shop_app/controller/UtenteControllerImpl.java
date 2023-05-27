@@ -78,13 +78,13 @@ public class UtenteControllerImpl implements UtenteController {
     	Map<String,List<JSONObject>> jsonToSend = jsonCreateService.
     			createJsonToSendSignIn(jwtUtil.generateToken(userDTO.getEmail()),listOfProduct,userDTO.getIdutente()
     					,listOfIdWishList,listOfIdCart);
-    	
-        return new ResponseEntity<String>(jsonToSend.toString(),HttpStatus.OK);
+        String response = jsonCreateService.parse(jsonToSend);
+        return new ResponseEntity<String>(response,HttpStatus.OK);
     }
     
   
 	@PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestBody UserDTO userDTO) throws Exception {
+    public ResponseEntity<String> signup( @RequestBody UserDTO userDTO) throws Exception {
 		//dichiaro lista di prodotti da generare
 		List<ProductDTO> listOfProduct = new ArrayList<>();
         try {
@@ -102,8 +102,8 @@ public class UtenteControllerImpl implements UtenteController {
         //creo il json da mandare come return
         Map<String,List<JSONObject>> jsonToSend = jsonCreateService.
     			createJsonToSendSignUp(jwtUtil.generateToken(userDTO.getEmail()),listOfProduct,userDTO.getIdutente());
-        
-        return new ResponseEntity<String>(jsonToSend.toString(),HttpStatus.OK);
+        String response = jsonCreateService.parse(jsonToSend);
+        return new ResponseEntity<String>(response,HttpStatus.OK);
     }
 	
 	

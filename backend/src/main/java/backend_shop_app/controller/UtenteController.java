@@ -8,7 +8,7 @@ import backend_shop_app.dto.UserDTO;
 
 public interface UtenteController {
 	
-	public ResponseEntity<String> generateToken(@RequestBody AuthRequestDTO authRequest) throws Exception ;
+	public ResponseEntity<String> generateToken( @RequestBody AuthRequestDTO authRequest) throws Exception ;
 	
-	public ResponseEntity<String> signup(@RequestBody UserDTO userDTO) throws Exception ;
+	public ResponseEntity<String> signup( @RequestBody UserDTO userDTO) throws Exception ;
 }
