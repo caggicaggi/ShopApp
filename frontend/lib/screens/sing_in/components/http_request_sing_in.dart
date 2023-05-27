@@ -30,34 +30,22 @@ Future<int> fetchDataFromSignIn(String email, String password) async {
       debugPrint(responseData.toString());
 
       // Extract the values from the response data
-      String result = responseData['result'] as String? ?? '';
-      int idUtente = int.parse(responseData['idUtente'] as String? ?? '0');
+      List<dynamic> tokenList = responseData['tokenJWT'];
+      tokenJWT = tokenList[0]['value'] as String;
 
       // Extract the list of products from the response data
-      List<Map<String, dynamic>> productList =
-          List<Map<String, dynamic>>.from(responseData['listOfProduct']);
-      List<Product> listProd = productList.map((item) {
+      List<dynamic> productList = responseData['ProductDTO'];
+      List<Product> listProd = productList.map<Product>((item) {
         String image1 = item['images1'] != null ? item['images1'] : '';
         String image2 = item['images2'] != null ? item['images2'] : '';
         String image3 = item['images3'] != null ? item['images3'] : '';
-        bool isPopular;
-        if (item['isPopular'] == "1") {
-          isPopular = true;
-        } else {
-          isPopular = false;
-        }
-
-        bool isAvailable;
-        if (item['isAvailable'] == "1") {
-          isAvailable = true;
-        } else {
-          isAvailable = false;
-        }
+        bool isPopular = item['isPopular'] == "true";
+        bool isAvailable = item['isAvailable'] == "true";
 
         return Product(
           idProduct: item['idProduct'],
           title: item['title'],
-          description: item['descriprtion'], // Corrected key name
+          description: item['description'],
           images: [image1, image2, image3],
           rating: (item['rating'] as num).toDouble(),
           price: (item['price'] as num).toDouble(),
@@ -68,14 +56,13 @@ Future<int> fetchDataFromSignIn(String email, String password) async {
       }).toList();
 
       // Extract the list of product IDs from the wishlistDTO
-      if (responseData.containsKey('wishListDTO')) {
-        dynamic wishListData = responseData['wishListDTO'];
+      if (responseData.containsKey('WishListDTO')) {
+        List<dynamic> wishListData = responseData['WishListDTO'];
         if (wishListData != null &&
             wishListData is List &&
             wishListData.isNotEmpty) {
-          List<int> wishlistDTO = List<Map<String, dynamic>>.from(wishListData)
-              .map<int>((item) => item['idProduct'] ?? 0)
-              .toList();
+          List<int> wishlistDTO =
+              wishListData.map<int>((item) => item['idProduct'] ?? 0).toList();
           wishlist.initializeWishlist(wishlistDTO);
         } else {
           wishlist = Wishlist(); // Initialize as an empty wishlist
@@ -84,8 +71,8 @@ Future<int> fetchDataFromSignIn(String email, String password) async {
 
       // Extract the cart items from the response data and create a map of product IDs to quantities
       Map<int, int> cartDTO = {};
-      if (responseData.containsKey('cartDTO')) {
-        dynamic cartData = responseData['cartDTO'];
+      if (responseData.containsKey('CartDTO')) {
+        List<dynamic> cartData = responseData['CartDTO'];
         if (cartData != null && cartData is List && cartData.isNotEmpty) {
           for (var item in cartData) {
             int idProduct = item['idProduct'] ?? 0;

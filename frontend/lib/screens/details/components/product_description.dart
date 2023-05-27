@@ -20,6 +20,29 @@ class ProductDescription extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Align(
+          alignment: Alignment.centerRight,
+          child: Container(
+            padding: EdgeInsets.all(getProportionateScreenWidth(15)),
+            width: getProportionateScreenWidth(64),
+            decoration: BoxDecoration(
+              color: wishlist.isIdInWishList(product.idProduct)
+                  ? Color(0xFFFFE6E6)
+                  : Color(0xFFF5F6F9),
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                bottomLeft: Radius.circular(20),
+              ),
+            ),
+            child: SvgPicture.asset(
+              "assets/icons/Heart Icon_2.svg",
+              color: wishlist.isIdInWishList(product.idProduct)
+                  ? Color(0xFFFF4848)
+                  : Color(0xFFDBDEE4),
+              height: getProportionateScreenWidth(16),
+            ),
+          ),
+        ),
         Padding(
           padding:
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
@@ -28,25 +51,14 @@ class ProductDescription extends StatelessWidget {
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
-        Align(
-          alignment: Alignment.centerRight,
-          child: Container(
-            padding: EdgeInsets.all(getProportionateScreenWidth(15)),
-            width: getProportionateScreenWidth(64),
-            decoration: BoxDecoration(
-              color:
-                  wishlist.isIdInWishList(product.idProduct) ? Color(0xFFFFE6E6) : Color(0xFFF5F6F9),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                bottomLeft: Radius.circular(20),
-              ),
-            ),
-            child: SvgPicture.asset(
-              "assets/icons/Heart Icon_2.svg",
-              color:
-                  wishlist.isIdInWishList(product.idProduct) ? Color(0xFFFF4848) : Color(0xFFDBDEE4),
-              height: getProportionateScreenWidth(16),
-            ),
+        Padding(
+          padding: EdgeInsets.only(
+            left: getProportionateScreenWidth(20),
+            right: getProportionateScreenWidth(64),
+          ),
+          child: Text(
+            product.price.toString() + '€',
+            style: TextStyle(fontSize: 20),
           ),
         ),
         Padding(
@@ -59,30 +71,6 @@ class ProductDescription extends StatelessWidget {
             maxLines: 2,
           ),
         ),
-        Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: getProportionateScreenWidth(20),
-            vertical: 10,
-          ),
-          child: GestureDetector(
-            onTap: () {},
-            child: Row(
-              children: [
-                Text(
-                  "See More Detail",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w600, color: kPrimaryColor),
-                ),
-                SizedBox(width: 5),
-                Icon(
-                  Icons.arrow_forward_ios,
-                  size: 12,
-                  color: kPrimaryColor,
-                ),
-              ],
-            ),
-          ),
-        )
       ],
     );
   }

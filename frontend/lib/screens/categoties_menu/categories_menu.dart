@@ -13,7 +13,8 @@ class CategoriesMenuScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           "Categories",
-          style: TextStyle(color: kPrimaryColor),
+          style: TextStyle(color: kPrimaryColor, fontSize: 22,
+                  fontWeight: FontWeight.bold,),
         ),
       ),
       body: Body(),

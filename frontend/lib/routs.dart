@@ -40,5 +40,5 @@ final Map<String, WidgetBuilder> routes = {
   CategoriesMenuScreen.routeName: (context) =>
       CategoriesMenuScreen(), // Route for the Categories Menu screen
   ProductDisplayScreen.routeName: (context) =>
-      ProductDisplayScreen(), // Rout for the Product display screen
+      ProductDisplayScreen(productList: [],), // Rout for the Product display screen
 };

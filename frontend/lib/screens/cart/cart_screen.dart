@@ -22,11 +22,14 @@ class CartScreen extends StatelessWidget {
         children: [
           Text(
             "Your Cart",
-            style: TextStyle(color: kPrimaryColor),
+            style: TextStyle(
+              color: kPrimaryColor,
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ],
       ),
     );
   }
-  
 }
