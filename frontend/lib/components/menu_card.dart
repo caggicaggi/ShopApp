@@ -32,7 +32,7 @@ class MenuCard extends StatelessWidget {
           children: [
             SvgPicture.asset(
               icon,
-              color: kPrimaryColor,
+              color: Colors.white,
               width: 22,
             ),
             SizedBox(width: 20),
