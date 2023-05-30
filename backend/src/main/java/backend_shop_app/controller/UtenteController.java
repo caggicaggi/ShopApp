@@ -15,7 +15,7 @@ public interface UtenteController {
 	 * @return the response entity with the generated token
 	 * @throws Exception if an error occurs during token generation
 	 */
-	public ResponseEntity<String> generateToken(@RequestBody AuthRequestDTO authRequest) throws Exception;
+	public ResponseEntity<String> generateToken(AuthRequestDTO authRequest) throws Exception;
 	
 	/**
 	 * Handles the sign-up request.
@@ -24,5 +24,5 @@ public interface UtenteController {
 	 * @return the response entity indicating the success or failure of the sign-up process
 	 * @throws Exception if an error occurs during sign-up
 	 */
-	public ResponseEntity<String> signup(@RequestBody UserDTO userDTO) throws Exception;
+	public ResponseEntity<String> signup(UserDTO userDTO) throws Exception;
 }

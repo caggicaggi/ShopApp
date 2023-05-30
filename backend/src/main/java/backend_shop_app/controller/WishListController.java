@@ -15,7 +15,7 @@ public interface WishListController {
 	 * @return ResponseEntity with a confirmation message or an error message if an exception occurs
 	 * @throws Exception if an error occurs while adding the products to the wishList
 	 */
-	public ResponseEntity<String> addProductInWishList(@RequestBody List<WishListRequestDTO> wishListRequestDTO) 
+	public ResponseEntity<String> addProductInWishList(List<WishListRequestDTO> wishListRequestDTO) 
 			throws Exception ;
 	
 	/**
@@ -25,7 +25,7 @@ public interface WishListController {
 	 * @return ResponseEntity with a confirmation message or an error message if an exception occurs
 	 * @throws Exception if an error occurs while adding the products to the wishList
 	 */
-	public ResponseEntity<String> removeProductInWishList(@RequestBody List<WishListRequestDTO> wishListRequestDTO) 
+	public ResponseEntity<String> removeProductInWishList(List<WishListRequestDTO> wishListRequestDTO) 
 			throws Exception ;
 
 }
