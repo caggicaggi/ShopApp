@@ -103,13 +103,14 @@ class CartList {
     if (addedQuantities.isNotEmpty) {
       debugPrint('Added quantities in DB: $addedQuantities');
       _applyDeltaUpdate();
-      updateDb(addedQuantities, 'addToCart', currentUser.id);
+      updateDbAdd(addedQuantities, currentUser.id);
       addedQuantities.clear();
+      debugPrint(productQuantities.toString());
     }
 
     if (removedQuantities.isNotEmpty) {
       debugPrint('Removed quantities in DB: $removedQuantities');
-      updateDb(removedQuantities, 'removeProductInCart', currentUser.id);
+      updateDbRemove(removedQuantities, currentUser.id);
       _applyDeltaUpdate();
       removedQuantities.clear();
     }
@@ -117,10 +118,49 @@ class CartList {
     _cancelDebounce();
   }
 
-  Future<int> updateDb(
-      Map<int, int> quantities, String mode, int userId) async {
+  Future<int> updateDbAdd(
+      Map<int, int> quantities, int userId) async {
     String completeUrl =
-        '$url/cart/$mode'; // API endpoint for adding or removing items
+        '$url/cart/add'; // API endpoint for adding or removing items
+
+    List<Map<String, dynamic>> requestBody = quantities.entries.map((entry) {
+      int idProduct = entry.key;
+      int quantity = entry.value;
+      return {
+        'idProduct': idProduct,
+        'idUtente': currentUser.id,
+        'quantity': quantity,
+      };
+    }).toList();
+    final headers = {
+      'Authorization': 'Bearer $tokenJWT',
+      'Content-Type': 'application/json',
+    };
+
+    try {
+      http.Response response = await http.put(
+        Uri.parse(completeUrl),
+        headers: headers,
+        body: jsonEncode(requestBody),
+      );
+
+      if (response.statusCode == 200) {
+        debugPrint('Request succes: ${response.statusCode}');
+        return response.statusCode;
+      } else {
+        debugPrint('Request failed with status: ${response.statusCode}');
+        return response.statusCode;
+      }
+    } catch (e) {
+      debugPrint('Error: $e');
+      return -1; // Return a custom error code or handle the error accordingly
+    }
+  }
+
+  Future<int> updateDbRemove(
+      Map<int, int> quantities, int userId) async {
+    String completeUrl =
+        '$url/cart/remove'; // API endpoint for adding or removing items
 
     List<Map<String, dynamic>> requestBody = quantities.entries.map((entry) {
       int idProduct = entry.key;
@@ -131,10 +171,15 @@ class CartList {
         'quantity': quantity,
       };
     }).toList();
+    final headers = {
+      'Authorization': 'Bearer $tokenJWT',
+      'Content-Type': 'application/json',
+    };
 
     try {
-      http.Response response = await http.post(
+      http.Response response = await http.delete(
         Uri.parse(completeUrl),
+        headers: headers,
         body: jsonEncode(requestBody),
       );
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:shop_app/main.dart';
 import '../../../constant.dart';
 import '../../../models/Product.dart';
-import '../../../size_config.dart';
 
 class CartCard extends StatelessWidget {
   const CartCard({
@@ -17,9 +16,9 @@ class CartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Recupera il prodotto dal suo ID
-    Product? product = getProductById(productId);
+    Product? prod = getProductById(productId);
 
-    if (product != null) {
+    if (prod != null) {
       return Row(
         children: [
           SizedBox(
@@ -32,7 +31,7 @@ class CartCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Image.network(
-                  product.images[0],
+                  prod.images[0],
                   fit: BoxFit.cover,
                 ),
               ),
@@ -43,14 +42,14 @@ class CartCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                product.title,
+                prod.title,
                 style: TextStyle(color: Colors.black, fontSize: 16),
                 maxLines: 2,
               ),
               SizedBox(height: 10),
               Text.rich(
                 TextSpan(
-                  text: "\$${product.price}",
+                  text: "\$${prod.price}",
                   style: TextStyle(
                       fontWeight: FontWeight.w600, color: kPrimaryColor),
                   children: [
@@ -75,7 +74,8 @@ class CartCard extends StatelessWidget {
 Product? getProductById(int productId) {
   for (Product product in listOfProduct) {
     if (product.idProduct == productId) {
-      return product;
+      Product pro = product;
+      return pro;
     }
   }
 

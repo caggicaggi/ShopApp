@@ -27,6 +27,14 @@ Future<int> fetchDataFromSignIn(String email, String password) async {
     if (response.statusCode == 200) {
       Map<String, dynamic> responseData = jsonDecode(response.body);
 
+      int userId = 0;
+      if (responseData.containsKey('idUtente')) {
+        List<dynamic> idUtenteList = responseData['idUtente'];
+        userId = idUtenteList[0]['value'] as int;
+      }
+
+      currentUser.setId(userId);
+
       List<dynamic> tokenList = responseData['tokenJWT'];
       tokenJWT = tokenList[0]['value'] as String;
 
@@ -85,8 +93,6 @@ Future<int> fetchDataFromSignIn(String email, String password) async {
       debugPrintCartContents(demoCartList.productQuantities);
       debugPrintWishlistContents(wishlist.productIds);
 
-      
-
       return response.statusCode;
     } else {
       print('Request failed with status: ${response.statusCode}');
@@ -109,7 +115,7 @@ bool processStatus(String i) {
 void debugPrintAllProducts(List<Product> products) {
   debugPrint('--- List of Products ---');
   products.forEach((product) {
-    debugPrint('Product: ${product.title}');
+    debugPrint('Product: ${product.title} id: ${product.idProduct}');
   });
   debugPrint('-------------------------');
 }

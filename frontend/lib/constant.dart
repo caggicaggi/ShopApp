@@ -60,4 +60,4 @@ OutlineInputBorder outlineInputBorder() {
 InternetAddress localhost = InternetAddress.loopbackIPv4;
 //String url = 'http://${localhost.address}:8080';
 //String url = 'http://192.168.0.7:8080';
-String url = 'http://192.168.0.7:9192';
+String url = 'http://192.168.178.152:9192';
