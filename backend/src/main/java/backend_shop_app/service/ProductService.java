@@ -8,14 +8,22 @@ import org.springframework.stereotype.Service;
 import backend_shop_app.dto.ProductDTO;
 import backend_shop_app.repository.ProductRepository;
 
+/*
+ * Product Management Class
+ */
 @Service
 public class ProductService {
 	
 	@Autowired
 	ProductRepository productRepository;
 
-	public List<ProductDTO> getListOfProduct() throws Exception {
-		return productRepository.findAll();
-	}
+	/**
+	 *  Get list of all products in db
+	 *
+	 * @return  the list of products 
+	 */
+		public List<ProductDTO> getListOfProduct() throws Exception {
+			return productRepository.findAll();
+		}
 
 }

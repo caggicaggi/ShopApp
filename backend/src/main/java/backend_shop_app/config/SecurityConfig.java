@@ -30,21 +30,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        // Configure the authentication manager to use the custom user details service
         auth.userDetailsService(userDetailsService);
     }
     @Bean
     public PasswordEncoder passwordEncoder(){
+        // Use NoOpPasswordEncoder as the password encoder (for demonstration purposes only)
         return NoOpPasswordEncoder.getInstance();
     }
 
     @Bean(name = BeanIds.AUTHENTICATION_MANAGER)
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
+        // Expose the authentication manager bean
         return super.authenticationManagerBean();
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+    	// Disable CSRF protection for the /signup endpoint
     	http.csrf().disable().authorizeRequests().antMatchers("/signup")
         .permitAll();
     	
@@ -52,7 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll().anyRequest().authenticated()
                 .and().exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        //aggiungo il flitro alle chiamate http
+        // Add the JwtFilter before the UsernamePasswordAuthenticationFilter
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);;
     }
 }

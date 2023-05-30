@@ -22,45 +22,50 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Autowired
     private JwtUtil jwtUtil;
+    
     @Autowired
     private CustomUserDetailsService service;
 
-
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-    	    	
+    	
         String authorizationHeader = httpServletRequest.getHeader("Authorization");
         String token = null;
         String email = null;
         
+        // Check if the Authorization header is present and starts with "Bearer "
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+            // Extract the token from the header
             token = authorizationHeader.substring(7);
+            
+            // Extract the email from the token using JwtUtil
             email = jwtUtil.extractEmail(token);
         }
-        /*
-        System.out.println("SECURITY: " +SecurityContextHolder.getContext().getAuthentication()==null);
-        System.out.println("EMAIL BOOLEAN: "+email != null);
-        System.out.println("TOTAL IF: "+email != null && SecurityContextHolder.getContext().getAuthentication() == null);
         
-        HttpServletRequest request = (HttpServletRequest) httpServletRequest;
-        String path = request.getRequestURI().substring(request.getContextPath().length());
-        System.out.println("PATH: " + path);
-        System.out.println("EMAIL VALUE: " +email);
-        */
-        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null ) {
-        	//si entra in questo if solo in caso di check del token
+        // Check if the email is not null and if there is no existing authentication in the SecurityContextHolder
+        if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        	// Only enter this if block for token verification
+        	
+        	// Load user details by email using the CustomUserDetailsService
         	UserDetails userDetails = service.loadUserByUsername(email);
 
             if (jwtUtil.validateToken(token, userDetails)) {
-
+            	// If the token is valid, create an authentication token with the user details
+            	// and set it in the security context
+            	
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                
+                // Set additional details for the authentication token
                 usernamePasswordAuthenticationToken
                         .setDetails(new WebAuthenticationDetailsSource().buildDetails(httpServletRequest));
+                
+                // Set the authentication token in the SecurityContextHolder
                 SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             }
         }
         
+        // Continue the filter chain
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 }
