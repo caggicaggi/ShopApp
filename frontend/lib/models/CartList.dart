@@ -17,6 +17,8 @@ class CartList {
   Timer? _debounceTimer;
   Duration _debounceDuration = Duration(seconds: 2);
 
+
+
   // Method to initialize the cart with an existing map
   void initializeFromMap(Map<int, int> initialMap) {
     productQuantities = Map.from(initialMap);

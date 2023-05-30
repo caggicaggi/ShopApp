@@ -72,7 +72,7 @@ class Wishlist {
     if (addedProductIds.isNotEmpty || removedProductIds.isNotEmpty) {
       // Check if there are any changes
       _applyDeltaUpdate(); // Apply the delta update (print messages for added/removed product IDs)
-      print('Updated wishlist: $productIds'); // Print the updated wishlist
+      print('BACKEND-Updated wishlist: $productIds'); // Print the updated wishlist
 
       // Perform backend call to update the wishlist in the database
 

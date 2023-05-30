@@ -76,7 +76,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                   'name': firstName,
                   'surname': lastName,
                   'address': address,
-                  'phoneNumber': phoneNumber,
+                  'phonenumber': phoneNumber,
                 };
                 resp = await sendUserInfo(requestBody);
                 if (resp == 200) {

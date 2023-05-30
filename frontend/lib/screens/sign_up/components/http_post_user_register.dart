@@ -6,7 +6,7 @@ import '../../../constant.dart';
 import '../../../models/Product.dart';
 
 Future<int> sendUserInfo(Map<String, String> userInfo) async {
-  String completeUrl = '$url/utente/signup'; // API endpoint for sign-in
+  String completeUrl = '$url/signup'; // API endpoint for sign-in
 
   try {
     http.Response response = await http.post(
@@ -15,37 +15,88 @@ Future<int> sendUserInfo(Map<String, String> userInfo) async {
     );
 
     debugPrint('Response status code: ${response.statusCode}');
+    debugPrint('Response body: ${response.body}');
 
     if (response.statusCode == 200) {
       // Decode the response body
       dynamic responseBody = json.decode(response.body);
 
-      tokenJWT = responseBody['tokenJWT'][0]['value'];
-      int userId = responseBody['idUtente'][0]['value'];
+      dynamic tokenData = responseBody['tokenJWT'];
+      dynamic idData = responseBody['idUtente'];
+      dynamic productData = responseBody['ProductDTO'];
 
-      currentUser.setId(userId);
+      if (tokenData is List && tokenData.isNotEmpty) {
+        tokenJWT = tokenData[0]['value'];
+      }
 
-      List<Product> productList = (responseBody['ProductDTO'] as List)
-          .map((item) => Product.fromJson(item))
-          .toList();
+      if (idData is List && idData.isNotEmpty) {
+        int userId = idData[0]['value'];
+        currentUser.setId(userId);
+      }
 
-      listOfProduct = productList;
+      if (productData is List) {
+        listOfProduct = productData.map((item) {
+          int id = item['idProduct'];
+          String title = item['title'];
+          String description = item['description'];
+          List<String> images = [];
+          for (int i = 1; i <= 3; i++) {
+            String imageKey = 'images$i';
+            if (item.containsKey(imageKey) && item[imageKey] != null) {
+              String imageUrl = item[imageKey]?.replaceAll('"', '') ?? '';
+              images.add(imageUrl);
+            } else {
+              images.add('');
+            }
+          }
+          double rating = item['rating'].toDouble();
+          double price = item['price'].toDouble();
+          bool isAvailable = processStatus(item['isAvailable']);
+          bool isPopular = processStatus(item['isPopular']);
+          String category = item['category'];
 
-      // Print the data for testing
-      debugPrint('User ID: ${currentUser.getId()}');
-      debugPrint('Token: $tokenJWT');
-      debugPrint('Product List: ');
-      productList.forEach((product) => debugPrint(product.toString()));
-      debugPrint('List in the main: ');
-      listOfProduct.forEach((product) => debugPrint(product.toString()));
+          return Product(
+            idProduct: id,
+            title: title,
+            description: description,
+            images: images,
+            rating: rating,
+            price: price,
+            isAvailable: isAvailable,
+            isPopular: isPopular,
+            category: category,
+          );
+        }).toList();
+      }
+
+      listOfProduct.forEach((product) {
+        debugPrint('Product ID: ${product.idProduct}');
+        debugPrint('Title: ${product.title}');
+        debugPrint('Description: ${product.description}');
+        debugPrint('Images: ${product.images}');
+        debugPrint('Rating: ${product.rating}');
+        debugPrint('Price: ${product.price}');
+        debugPrint('Is Available: ${product.isAvailable}');
+        debugPrint('Is Popular: ${product.isPopular}');
+        debugPrint('Category: ${product.category}');
+        debugPrint('-------------------------');
+      });
 
       return response.statusCode;
     } else {
-      print('Request failed with status: ${response.statusCode}');
+      debugPrint('Request failed with status: ${response.statusCode}');
       return response.statusCode;
     }
   } catch (e) {
-    print('Error: $e');
+    debugPrint('Error: $e');
     return -1; // Return a default error status code
+  }
+}
+
+bool processStatus(String i) {
+  if (i == '1') {
+    return true;
+  } else {
+    return false;
   }
 }

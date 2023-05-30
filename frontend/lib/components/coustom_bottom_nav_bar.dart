@@ -5,6 +5,7 @@ import 'package:shop_app/screens/home/home_screen.dart';
 import 'package:shop_app/screens/product_display/product_display.dart';
 import '../enums.dart';
 import '../main.dart';
+import '../models/Product.dart';
 import '../screens/profile/profile_screen.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
@@ -51,11 +52,24 @@ class CustomBottomNavBar extends StatelessWidget {
               ),
               IconButton(
                 icon: SvgPicture.asset("assets/icons/Heart Icon.svg"),
-                onPressed: () {},
+                color: MenuState.heart == selectedMenu
+                      ? kPrimaryColor
+                      : inActiveIconColor,
+                onPressed: () {
+                  List<Product> wishlistProducts =
+                      getInWishlistProducts(listOfProduct, wishlist.productIds);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          ProductDisplayScreen(productList: wishlistProducts),
+                    ),
+                  );
+                },
               ),
               IconButton(
                 icon: SvgPicture.asset("assets/icons/Chat bubble Icon.svg"),
-                color: MenuState.profile == selectedMenu
+                color: MenuState.message == selectedMenu
                     ? kPrimaryColor
                     : inActiveIconColor,
                 onPressed: () => Navigator.push(
@@ -80,4 +94,11 @@ class CustomBottomNavBar extends StatelessWidget {
           )),
     );
   }
+}
+
+List<Product> getInWishlistProducts(
+    List<Product> products, List<int> wishlist) {
+  return products
+      .where((product) => wishlist.contains(product.idProduct))
+      .toList();
 }
