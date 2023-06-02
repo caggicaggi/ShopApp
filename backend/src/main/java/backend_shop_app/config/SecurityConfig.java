@@ -48,14 +48,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+    	
     	// Disable CSRF protection for the /signup endpoint
     	http.csrf().disable().authorizeRequests().antMatchers("/signup")
+        .permitAll();
+    	
+    	// Disable CSRF protection for the /signup endpoint
+    	http.csrf().disable().authorizeRequests().antMatchers("/google")
         .permitAll();
     	
         http.csrf().disable().authorizeRequests().antMatchers("/signin")
                 .permitAll().anyRequest().authenticated()
                 .and().exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        
         // Add the JwtFilter before the UsernamePasswordAuthenticationFilter
         http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);;
     }

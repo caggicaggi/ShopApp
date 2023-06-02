@@ -27,4 +27,9 @@ public interface WishListRepository extends JpaRepository<WishListDTO,Integer>{
 	 */
 	public void deleteAllByIdproductAndIdutente(int idproduct, int idutente);
 	
+	
+	/*
+	 *  Deletes all wish list items based on the provided user ID
+	 */
+	public int deleteAllByIdutente(int idutente);
 }

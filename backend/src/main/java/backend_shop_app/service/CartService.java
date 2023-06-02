@@ -2,9 +2,9 @@ package backend_shop_app.service;
 
 import java.util.List;
 
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import backend_shop_app.dto.CartDTO;
 import backend_shop_app.dto.CartRequestDTO;
 import backend_shop_app.repository.CartRespository;
@@ -28,18 +28,35 @@ public class CartService {
 	
 	/*
 	 *  Adds products to the cart based on the provided CartRequestDTO list
+	 *  if the product is already present, the quantity is updated
 	 */
 	public int addProductInCart(List<CartRequestDTO> cartRequestDTO) throws Exception {
 		int countElement = 0;
 		for (int i = 0; i < cartRequestDTO.size(); i++) {
 			CartDTO cartDTO = new CartDTO();
+			CartDTO cartDTOInDB = new CartDTO();
 			cartDTO.setIdproduct(cartRequestDTO.get(i).getIdProduct());
 			cartDTO.setIdutente(cartRequestDTO.get(i).getIdUtente());
 			cartDTO.setQuantity(cartRequestDTO.get(i).getQuantity());
 			try {
-				cartRepository.save(cartDTO);
-				countElement++;
+				//check if the product is in the cart
+				cartDTOInDB = cartRepository.findAllByIdproductAndIdutente(cartDTO.getIdproduct(),cartDTO.getIdutente());
+				//if object is null, i can add the product
+				System.out.println(isObjectIsNull(cartDTOInDB));
+				if(isObjectIsNull(cartDTOInDB))
+				{
+					cartRepository.save(cartDTO);
+					countElement++;
+				} else {
+					//delete the previous products
+					cartRepository.delete(cartDTOInDB);
+					//if object is not null increment only quantity
+					cartDTO.setQuantity(cartDTOInDB.getQuantity()+cartDTO.getQuantity());
+				    cartRepository.save(cartDTO);
+					countElement++;
+				}
 			} catch (Exception e) {
+				System.out.println(e);
 				throw new Exception("Error occurred while adding products to the cart.");
 			}
 
@@ -54,17 +71,39 @@ public class CartService {
 		int countElement = 0;
 		for (int i = 0; i < cartRequestDTO.size(); i++) {
 			try {
-				cartRepository.deleteAllByIdproductAndIdutenteAndQuantity(
+				cartRepository.deleteAllByIdproductAndIdutente(
 						cartRequestDTO.get(i).getIdProduct(),
-						cartRequestDTO.get(i).getIdUtente(),
-						cartRequestDTO.get(i).getQuantity());
+						cartRequestDTO.get(i).getIdUtente());
 				countElement++;
 			} catch (Exception e) {
-				System.out.println(e.getCause());
 				throw new Exception("Error occurred while removing products from the cart.");
 			}
 
 		}
 		return countElement;
 	}
+	
+	/*
+	 *  Deletes all wish list items based on the provided user ID
+	 */
+	public int removeAllProductInCart(int idutente) throws Exception {
+		int countElement = 0;
+			try {
+				cartRepository.deleteAllByIdutente(idutente);
+				countElement++;
+			} catch (Exception e) {
+				throw new Exception("Error occurred while removing products from the cart.");
+			}
+		return countElement;
+	}
+	
+	
+	
+	/*
+	 * check if a field is null
+	 */
+	public static boolean isObjectIsNull(CartDTO cartDTO) {
+	    return cartDTO == null;
+	}
+
 }

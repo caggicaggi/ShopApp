@@ -42,6 +42,12 @@ public class CustomUserDetailsService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), new ArrayList<>());
     }
     
+    public UserDTO getUserInformation(String email) throws UsernameNotFoundException {
+    	// Check if the email exists in the database
+    	UserDTO user = userRepository.findByEmail(email);
+        return user;
+    }
+    
     public void signup(UserDTO userDTO)  {
     	// Call the repository to save the userDTO object in the database
     	userRepository.save(userDTO);

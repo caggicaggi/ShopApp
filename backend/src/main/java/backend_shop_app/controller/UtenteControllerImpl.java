@@ -1,6 +1,7 @@
 package backend_shop_app.controller;
 
 import backend_shop_app.dto.AuthRequestDTO;
+import backend_shop_app.dto.AuthRequestGoogleDTO;
 import backend_shop_app.dto.CartDTO;
 import backend_shop_app.dto.ProductDTO;
 import backend_shop_app.dto.UserDTO;
@@ -59,6 +60,11 @@ public class UtenteControllerImpl implements UtenteController {
     	List<Integer> listOfIdWishList = new ArrayList<>();
     	List<CartDTO> listOfIdCart = new ArrayList<>();
     	
+		// Check if all required fields are present or correct
+		if ( isFieldNull(authRequest) || !isValidEmail(authRequest.getEmail())) {
+			return new ResponseEntity<String>("Email is not valid", HttpStatus.BAD_REQUEST);
+		}
+		
     	// Retrieve the user
     	UserDTO userDTO = customUserDetailsService.getUserDTO(authRequest);
     	
@@ -93,7 +99,51 @@ public class UtenteControllerImpl implements UtenteController {
         return new ResponseEntity<String>(jsonToSend.toString(), HttpStatus.OK);
     }
     
-    /**
+    /*
+	 * Endpoint to singup in application.
+	 * 
+	 * @param UserDTO contains the params to insert in db
+	 * @return ResponseEntity with a confirmation message or an error message if an exception occurs
+	 * @throws Exception if an error occurs while adding the user in db
+	 */
+    @PostMapping("/google")
+    public ResponseEntity<String> singInGoogle(@RequestBody AuthRequestGoogleDTO authRequest) throws Exception {
+    	// Declare the lists to include in the return JSON
+    	List<ProductDTO> listOfProduct = new ArrayList<>();
+    	List<Integer> listOfIdWishList = new ArrayList<>();
+    	List<CartDTO> listOfIdCart = new ArrayList<>();
+    	UserDTO userDTO = new UserDTO();
+		// Check if all required fields are present or correct
+		if ( isFieldNull(authRequest) || !isValidEmail(authRequest.getEmail())) {
+			return new ResponseEntity<String>("Email is not valid", HttpStatus.BAD_REQUEST);
+		}
+    	
+    	// Retrieve the lists of product, wishList and cart
+    	try {
+			 userDTO = customUserDetailsService.getUserInformation(authRequest.getEmail());
+		} catch (Exception e) {
+    		return new ResponseEntity<String>("Incorrect Email", HttpStatus.BAD_REQUEST);
+		}
+    	
+    	
+    	// Retrieve the list of products
+    	listOfProduct = productService.getListOfProduct();
+    	
+    	// Retrieve the list of wish list items for the user
+    	listOfIdWishList = wishListService.getListOfWishList(userDTO.getIdutente());
+    	
+    	// Retrieve the list of cart items for the user
+    	listOfIdCart = cartService.getListOfIdCart(userDTO.getIdutente());
+    	
+    	// Create the JSON to be sent as the return value
+    	JSONObject jsonToSend = jsonCreateService.createJsonToSendSignIn(
+    			jwtUtil.generateToken(userDTO.getEmail()), listOfProduct, userDTO.getIdutente(),
+    			listOfIdWishList, listOfIdCart);
+    	
+        return new ResponseEntity<String>(jsonToSend.toString(), HttpStatus.OK);
+    }
+    
+    /*
 	 * Endpoint to singup in application.
 	 * 
 	 * @param UserDTO contains the params to insert in db
@@ -105,8 +155,44 @@ public class UtenteControllerImpl implements UtenteController {
 		// Declare a list of products to generate
 		List<ProductDTO> listOfProduct = new ArrayList<>();
 		
+		// Check if all required fields are present or correct
+		if(userDTO.getIdutente()!= 0) {
+			return new ResponseEntity<String>("There is an error, you can't send idutente", HttpStatus.BAD_REQUEST);
+		}
+		
+		//check if email is valid
+		if ( isFieldNull(userDTO) || !isValidEmail(userDTO.getEmail())) {
+			return new ResponseEntity<String>("Email is not valid", HttpStatus.BAD_REQUEST);
+		}
+		
+		//check if password is valid
+		if (isFieldPasswordNull(userDTO) || userDTO.getPassword().isEmpty() ) {
+			return new ResponseEntity<String>("Password is not valid", HttpStatus.BAD_REQUEST);
+		}
+		
+		//check if Name is valid
+	    if (isFieldNull(userDTO.getName()) || userDTO.getName().isEmpty()) {
+			return new ResponseEntity<String>("Name is not valid", HttpStatus.BAD_REQUEST);
+	    }
+	    
+		//check if Surname is valid
+	    if (isFieldNull(userDTO.getSurname()) || userDTO.getSurname().isEmpty()) {
+			return new ResponseEntity<String>("Surname is not valid", HttpStatus.BAD_REQUEST);
+	    }
+	    
+		//check if Address is valid
+	    if (isFieldNull(userDTO.getAddress()) || userDTO.getAddress().isEmpty()) {
+			return new ResponseEntity<String>("Address is not valid", HttpStatus.BAD_REQUEST);
+	    }
+	    
+		//check if PhoneNumber is valid
+	    if (!isValidPhoneNumber(userDTO.getPhonenumber())) {
+			return new ResponseEntity<String>("PhoneNumber is not valid", HttpStatus.BAD_REQUEST);
+	    }
+	    
 		//check if email already exist
 		int checkEmail = customUserDetailsService.getEmail(userDTO);
+		
 		if(checkEmail == 1)
 	        return new ResponseEntity<String>("Email already exist", HttpStatus.BAD_REQUEST);
 
@@ -132,4 +218,67 @@ public class UtenteControllerImpl implements UtenteController {
         
         return new ResponseEntity<String>(jsonToSend.toString(), HttpStatus.OK);
     }
+	
+	/*
+	 *  Esempio di metodo di validazione dell'email:
+	 *	-Può contenere lettere maiuscole e minuscole (A-Z, a-z)
+	 *	-Può contenere numeri (0-9)
+	 *	-Può contenere i seguenti caratteri speciali: +, _, ., -
+	 *	-Deve essere seguito da un simbolo "@" e almeno un carattere alfanumerico o un punto
+	 *	-Dopo l'@" deve essere presente un dominio composto da caratteri alfanumerici o punti
+	 */
+	private static boolean isValidEmail(String email) {
+		String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$";
+	    return email.matches(emailRegex);
+	}
+	
+	private static boolean isValidPhoneNumber(String phoneNumber) {
+	    // Remove any spaces or special characters from the phone number
+	    String cleanedPhoneNumber;
+		try {
+			cleanedPhoneNumber = phoneNumber.replaceAll("[\\s()-]+", "");
+		} catch (Exception e) {
+		    return !(phoneNumber == null);
+		}
+	   
+	    // Check if the phone number consists only of digits and has a valid length
+	    return cleanedPhoneNumber.matches("\\d{10}") || cleanedPhoneNumber.matches("\\d{11}");
+	}
+	
+	/*
+	 * check if a email of authRequestDTO is null
+	 */
+	public static boolean isFieldNull(AuthRequestDTO authRequestDTO) {
+	    return authRequestDTO.getEmail() == null;
+	}
+	
+	/*
+	 * check if a email of userDTO is null
+	 */
+	public static boolean isFieldNull(UserDTO userDTO) {
+	    return userDTO.getEmail() == null;
+	}
+	
+	/*
+	 * check if a email of userDTO is null
+	 */
+	public static boolean isFieldNull(AuthRequestGoogleDTO userDTO) {
+	    return userDTO.getEmail() == null;
+	}
+	
+	/*
+	 * check if a field is null
+	 */
+	public static boolean isFieldNull(String input) {
+	    return input == null;
+	}
+	
+	/*
+	 * check if a field is null
+	 */
+	public static boolean isFieldPasswordNull(UserDTO userDTO) {
+	    return userDTO.getPassword() == null;
+	}
+	
+	
 }

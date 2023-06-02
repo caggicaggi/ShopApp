@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
+import backend_shop_app.dto.CartCheckoutRequest;
 import backend_shop_app.dto.CartRequestDTO;
 
 public interface CartController {
@@ -26,6 +27,16 @@ public interface CartController {
 	 * @throws Exception if an error occurs while removing the products from the cart
 	 */
 	public ResponseEntity<String> removeProductFromCart(List<CartRequestDTO> cartRequestDTO) 
+			throws Exception ;
+	
+	/**
+	 * Endpoint to remove all products from the shopping cart.
+	 * 
+	 * @param user id
+	 * @return ResponseEntity with a confirmation message or an error message if an exception occurs
+	 * @throws Exception if an error occurs while removing the products from the cart
+	 */
+	public ResponseEntity<String> removeAllProductFromCart(CartCheckoutRequest idUtente) 
 			throws Exception ;
 
 }

@@ -74,4 +74,18 @@ public class WishListService {
 		}
 		return countElement;
 	}
+	
+	
+	/*
+	 *  Deletes all wish list items based on the provided user ID
+	 */
+	public int removeAllProductInWishList(int idutente) throws Exception {
+		int countElement = 0;
+			try {
+				countElement =wishListRepository.deleteAllByIdutente(idutente);
+			} catch (Exception e) {
+				throw new Exception("Error occurred while removing products from the cart.");
+			}
+		return countElement;
+	}
 }
