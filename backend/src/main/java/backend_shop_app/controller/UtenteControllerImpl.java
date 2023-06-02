@@ -107,7 +107,7 @@ public class UtenteControllerImpl implements UtenteController {
 	 * @throws Exception if an error occurs while adding the user in db
 	 */
     @PostMapping("/google")
-    public ResponseEntity<String> singInGoogle(@RequestBody AuthRequestGoogleDTO authRequest) throws Exception {
+    public ResponseEntity<String> singInGoogle(  AuthRequestGoogleDTO authRequest) throws Exception {
     	// Declare the lists to include in the return JSON
     	List<ProductDTO> listOfProduct = new ArrayList<>();
     	List<Integer> listOfIdWishList = new ArrayList<>();
@@ -121,6 +121,19 @@ public class UtenteControllerImpl implements UtenteController {
     	// Retrieve the lists of product, wishList and cart
     	try {
 			 userDTO = customUserDetailsService.getUserInformation(authRequest.getEmail());
+			 
+			 if ( isFieldNullGoogleSingIn(userDTO) ) {
+				 	 userDTO = new UserDTO();
+				 	 userDTO.setEmail(authRequest.getEmail());
+					 userDTO.setPassword("Login with google");
+					 userDTO.setAddress("Login with google");
+					 userDTO.setPhonenumber("Login with google");
+					 userDTO.setSalt("Login with google");
+					 userDTO.setSurname(authRequest.getSurname());
+					 userDTO.setName(authRequest.getName());
+				 	// Save the user in the table
+		        	customUserDetailsService.signup(userDTO);
+				}
 		} catch (Exception e) {
     		return new ResponseEntity<String>("Incorrect Email", HttpStatus.BAD_REQUEST);
 		}
@@ -263,8 +276,16 @@ public class UtenteControllerImpl implements UtenteController {
 	 * check if a email of userDTO is null
 	 */
 	public static boolean isFieldNull(AuthRequestGoogleDTO userDTO) {
-	    return userDTO.getEmail() == null;
+	    return userDTO == null;
 	}
+	
+	/*
+	 * check if a email of userDTO is null
+	 */
+	public static boolean isFieldNullGoogleSingIn(UserDTO userDTO) {
+	    return userDTO == null;
+	}
+	
 	
 	/*
 	 * check if a field is null

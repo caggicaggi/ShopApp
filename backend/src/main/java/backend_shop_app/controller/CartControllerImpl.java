@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import backend_shop_app.dto.CartCheckoutRequest;
@@ -32,7 +33,7 @@ public class CartControllerImpl implements CartController {
 	 * @throws Exception if an error occurs while adding the products to the cart
 	 */
 	@PutMapping("/add")
-	public ResponseEntity<String> addProductInCart(List<CartRequestDTO> cartRequestDTO) throws Exception {
+	public ResponseEntity<String> addProductInCart(@RequestBody List<CartRequestDTO> cartRequestDTO) throws Exception {
 		// Check if all required fields are present
 		for (int i = 0; i < cartRequestDTO.size(); i++) {
 			if ( cartRequestDTO.get(i).getIdProduct() <= 0 
@@ -60,7 +61,7 @@ public class CartControllerImpl implements CartController {
 	 * @throws Exception if an error occurs while removing the products from the cart
 	 */
 	@DeleteMapping("/remove")
-	public ResponseEntity<String> removeProductFromCart(List<CartRequestDTO> cartRequestDTO)
+	public ResponseEntity<String> removeProductFromCart(@RequestBody List<CartRequestDTO> cartRequestDTO)
 			throws Exception {
 		// Check if all required fields are present or correct
 		for (int i = 0; i < cartRequestDTO.size(); i++) {

@@ -10,4 +10,6 @@ import lombok.NoArgsConstructor;
 public class AuthRequestGoogleDTO {
 
 	private String email;
+	private String name;
+	private String surname;
 }

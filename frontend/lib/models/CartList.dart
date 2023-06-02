@@ -17,8 +17,6 @@ class CartList {
   Timer? _debounceTimer;
   Duration _debounceDuration = Duration(seconds: 2);
 
-
-
   // Method to initialize the cart with an existing map
   void initializeFromMap(Map<int, int> initialMap) {
     productQuantities = Map.from(initialMap);
@@ -118,14 +116,16 @@ class CartList {
     _cancelDebounce();
   }
 
-  Future<int> updateDbAdd(
-      Map<int, int> quantities, int userId) async {
+  Future<int> updateDbAdd(Map<int, int> quantities, int userId) async {
     String completeUrl =
         '$url/cart/add'; // API endpoint for adding or removing items
 
     List<Map<String, dynamic>> requestBody = quantities.entries.map((entry) {
       int idProduct = entry.key;
       int quantity = entry.value;
+      debugPrint(idProduct.toString());
+      debugPrint(currentUser.id.toString());
+      debugPrint(quantity.toString());
       return {
         'idProduct': idProduct,
         'idUtente': currentUser.id,
@@ -157,8 +157,7 @@ class CartList {
     }
   }
 
-  Future<int> updateDbRemove(
-      Map<int, int> quantities, int userId) async {
+  Future<int> updateDbRemove(Map<int, int> quantities, int userId) async {
     String completeUrl =
         '$url/cart/remove'; // API endpoint for adding or removing items
 

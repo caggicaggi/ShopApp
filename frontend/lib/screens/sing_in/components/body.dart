@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:shop_app/routs.dart';
-import 'package:shop_app/screens/home/home_screen.dart';
+import 'package:shop_app/screens/sing_in/components/http_request_google_sing_in.dart';
 import 'package:shop_app/screens/sing_in/components/sing_form.dart';
 import '../../../components/no_account_text.dart';
 import '../../../components/social_card.dart';
 import '../../../size_config.dart';
+import '../../home/home_screen.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -44,11 +43,20 @@ class Body extends StatelessWidget {
                       press: () {
                         final GoogleSignIn _googleSignIn = GoogleSignIn();
                         _googleSignIn.signIn().then((value) {
-                          String userName = value!.displayName!;
+                          String user = value!.displayName!;
+                          List<String> parts = user.split(" ");
+                          String name = parts[0];
+                          String surname = parts[1];
+
                           String email = value!.email!;
                           debugPrint(value.email);
                           debugPrint(value.displayName);
-                          //Navigator.pushNamed(context, HomeScreen.routeName);
+                          fetchDataFromGoogleSignIn(
+                            email,
+                            name,
+                            surname,
+                          );
+                          Navigator.pushNamed(context, HomeScreen.routeName);
                         });
                       },
                     ),

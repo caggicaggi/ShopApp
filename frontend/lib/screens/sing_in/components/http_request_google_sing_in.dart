@@ -9,11 +9,15 @@ import '../../../models/Product.dart';
 
 Future<int> fetchDataFromGoogleSignIn(
   String email,
+  String name,
+  String surname,
 ) async {
-  String completeUrl = '$url/google/signin';
+  String completeUrl = '$url/google';
 
   Map<String, String> requestBody = {
     'email': email,
+    'name': name,
+    'surname': surname,
   };
 
   try {

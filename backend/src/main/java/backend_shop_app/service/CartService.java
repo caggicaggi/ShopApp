@@ -42,7 +42,6 @@ public class CartService {
 				//check if the product is in the cart
 				cartDTOInDB = cartRepository.findAllByIdproductAndIdutente(cartDTO.getIdproduct(),cartDTO.getIdutente());
 				//if object is null, i can add the product
-				System.out.println(isObjectIsNull(cartDTOInDB));
 				if(isObjectIsNull(cartDTOInDB))
 				{
 					cartRepository.save(cartDTO);
@@ -56,10 +55,8 @@ public class CartService {
 					countElement++;
 				}
 			} catch (Exception e) {
-				System.out.println(e);
 				throw new Exception("Error occurred while adding products to the cart.");
 			}
-
 		}
 		return countElement;
 	}
