@@ -1,5 +1,9 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
+
+import '../services/add_wishlist.dart';
+
 class Wishlist {
   List<int> productIds = []; // List to store product IDs
   List<int> addedProductIds = []; // List to track added product IDs
@@ -69,17 +73,29 @@ class Wishlist {
   }
 
   void _updateBackend() {
-    if (addedProductIds.isNotEmpty || removedProductIds.isNotEmpty) {
-      // Check if there are any changes
-      _applyDeltaUpdate(); // Apply the delta update (print messages for added/removed product IDs)
-      print('BACKEND-Updated wishlist: $productIds'); // Print the updated wishlist
+    if (addedProductIds.isNotEmpty) {
+      _applyDeltaUpdate();       // Apply the delta update (print messages for added product IDs)
+      debugPrint(
+          'BACKEND-Updated wishlist with added products: $productIds'); // Print the updated wishlist with added products
 
       // Perform backend call to update the wishlist in the database
 
       addedProductIds.clear(); // Clear the addedProductIds list
+      _cancelDebounce(); // Cancel debounce after manual backend update
+    }
+
+    if (removedProductIds.isNotEmpty) {
+      _applyDeltaUpdate(); // Apply the delta update (print messages for removed product IDs)
+      debugPrint(
+          'BACKEND-Updated wishlist with removed products: $productIds'); // Print the updated wishlist with removed products
+
+      // Perform backend call to update the wishlist in the database
+
       removedProductIds.clear(); // Clear the removedProductIds list
       _cancelDebounce(); // Cancel debounce after manual backend update
-    } else {
+    }
+
+    if (addedProductIds.isEmpty && removedProductIds.isEmpty) {
       print(
           'No changes since the last update'); // Print message if there are no changes
     }

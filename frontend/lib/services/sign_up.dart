@@ -5,7 +5,7 @@ import 'package:shop_app/main.dart';
 import '../../../constant.dart';
 import '../../../models/Product.dart';
 
-Future<int> sendUserInfo(Map<String, String> userInfo) async {
+Future<int> requestSignUp(Map<String, String> userInfo) async {
   String completeUrl = '$url/signup'; // API endpoint for sign-in
 
   try {

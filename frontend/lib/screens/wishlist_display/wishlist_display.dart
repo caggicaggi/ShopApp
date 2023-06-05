@@ -7,19 +7,19 @@ import '../../enums.dart';
 import '../../models/Product.dart';
 import 'components/body.dart';
 
-class ProductDisplayScreen extends StatelessWidget {
+class WishListDisplayScreen extends StatelessWidget {
   static String routeName = "/product_display";
-  
+
   final List<Product> productList;
 
-  ProductDisplayScreen({required this.productList});
+  WishListDisplayScreen({required this.productList});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "All Products",
+          "Your Wishlist",
           style: TextStyle(
             color: kPrimaryColor,
             fontSize: 22,

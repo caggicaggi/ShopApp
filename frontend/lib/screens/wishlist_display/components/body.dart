@@ -4,11 +4,16 @@ import 'package:shop_app/components/product_list_item.dart';
 
 import '../../../models/Product.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   final List<Product> productList;
 
   Body({required this.productList});
 
+  @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -22,7 +27,7 @@ class Body extends StatelessWidget {
           children: [
             const SizedBox(height: 20),
             // Create a ProductListItem for each product in the productList
-            for (final product in productList)
+            for (final product in widget.productList)
               InkWell(
                 onTap: () => Navigator.pushNamed(
                   context,

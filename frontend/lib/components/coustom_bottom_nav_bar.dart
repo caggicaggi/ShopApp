@@ -7,6 +7,7 @@ import '../enums.dart';
 import '../main.dart';
 import '../models/Product.dart';
 import '../screens/profile/profile_screen.dart';
+import '../screens/wishlist_display/wishlist_display.dart';
 
 class CustomBottomNavBar extends StatelessWidget {
   const CustomBottomNavBar({
@@ -51,10 +52,10 @@ class CustomBottomNavBar extends StatelessWidget {
                     Navigator.pushNamed(context, HomeScreen.routeName),
               ),
               IconButton(
-                icon: SvgPicture.asset("assets/icons/Heart Icon.svg"),
+                icon: SvgPicture.asset("assets/icons/Heart Icon.svg",
                 color: MenuState.heart == selectedMenu
                       ? kPrimaryColor
-                      : inActiveIconColor,
+                      : inActiveIconColor,),
                 onPressed: () {
                   List<Product> wishlistProducts =
                       getInWishlistProducts(listOfProduct, wishlist.productIds);
@@ -62,7 +63,7 @@ class CustomBottomNavBar extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          ProductDisplayScreen(productList: wishlistProducts),
+                          WishListDisplayScreen(productList: wishlistProducts),
                     ),
                   );
                 },

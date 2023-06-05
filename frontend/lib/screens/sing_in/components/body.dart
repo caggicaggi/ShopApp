@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:shop_app/screens/sing_in/components/http_request_google_sing_in.dart';
 import 'package:shop_app/screens/sing_in/components/sing_form.dart';
 import '../../../components/no_account_text.dart';
 import '../../../components/social_card.dart';
+import '../../../services/google_sign_in.dart';
 import '../../../size_config.dart';
 import '../../home/home_screen.dart';
 
@@ -48,10 +48,10 @@ class Body extends StatelessWidget {
                           String name = parts[0];
                           String surname = parts[1];
 
-                          String email = value!.email!;
+                          String email = value.email;
                           debugPrint(value.email);
                           debugPrint(value.displayName);
-                          fetchDataFromGoogleSignIn(
+                          requestGoogleSignIn(
                             email,
                             name,
                             surname,

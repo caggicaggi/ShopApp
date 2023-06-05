@@ -4,11 +4,9 @@ import 'package:shop_app/components/default_button.dart';
 import 'package:shop_app/components/form_error.dart';
 import 'package:shop_app/main.dart';
 import 'package:shop_app/screens/home/home_screen.dart';
-import 'package:shop_app/screens/otp/otp_screen.dart';
-
 import '../../../constant.dart';
+import '../../../services/sign_up.dart';
 import '../../../size_config.dart';
-import '../../sign_up/components/http_post_user_register.dart';
 
 class CompleteProfileForm extends StatefulWidget {
   final String email;
@@ -78,7 +76,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                   'address': address,
                   'phonenumber': phoneNumber,
                 };
-                resp = await sendUserInfo(requestBody);
+                resp = await requestSignUp(requestBody);
                 if (resp == 200) {
                   currentUser.setFirstName(firstName);
                   currentUser.setLastName(lastName);
