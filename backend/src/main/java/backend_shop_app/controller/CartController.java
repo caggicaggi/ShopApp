@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
-import backend_shop_app.dto.CartCheckoutRequest;
-import backend_shop_app.dto.CartRequestDTO;
+import backend_shop_app.dto.request.CartCheckoutRequest;
+import backend_shop_app.dto.request.CartRequestDTO;
 
 public interface CartController {
 	

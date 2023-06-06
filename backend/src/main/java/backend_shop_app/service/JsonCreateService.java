@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import backend_shop_app.dto.CartDTO;
 import backend_shop_app.dto.ProductDTO;
+import backend_shop_app.dto.UserDTO;
 
 /*
  * JSON management class
@@ -74,7 +75,7 @@ public class JsonCreateService {
 	 * @return                   the JSON object to send
 	 */
 	public JSONObject createJsonToSendSignIn(String token, List<ProductDTO> listOfProduct,
-			int idUtente, List<Integer> listOfIdWishList, List<CartDTO> listOfIdCart) {
+			UserDTO userDTO, List<Integer> listOfIdWishList, List<CartDTO> listOfIdCart) {
 
 		// Create the JSON object
 		JSONObject json = new JSONObject();
@@ -89,10 +90,18 @@ public class JsonCreateService {
 		// Create and add the idUtente array
 		JSONArray idUtenteArray = new JSONArray();
 		JSONObject idUtenteObject = new JSONObject();
-		idUtenteObject.put("value", idUtente);
+		idUtenteObject.put("value", userDTO.getIdutente());
 		idUtenteArray.put(idUtenteObject);
 		json.put("idUtente", idUtenteArray);
-
+		
+		if (!userDTO.getPhonenumber().equals("Login with google")) {
+			// Create and add the idUtente array
+			JSONArray PhoneNumeberArray = new JSONArray();
+			JSONObject PhoneNumeberObject = new JSONObject();
+			PhoneNumeberObject.put("value", userDTO.getPhonenumber());
+			PhoneNumeberArray.put(PhoneNumeberObject);
+			json.put("phoneNumber", PhoneNumeberArray);
+		}
 		// Create and add the ProductDTO array
 		JSONArray productDTOArray = new JSONArray();
 		for (ProductDTO productDTO : listOfProduct) {
@@ -131,6 +140,20 @@ public class JsonCreateService {
 		json.put("ProductDTO", productDTOArray);
 		json.put("WishListDTO", wishListDTO);
 		json.put("CartDTO", cartDTO);
+
+		return json;
+	}
+	
+	public JSONObject createJsonToForgotPassword(String email) {
+		// Create the JSON object
+		JSONObject json = new JSONObject();
+
+		// Create and add the tokenJWT array
+		JSONArray emailArray = new JSONArray();
+		JSONObject emailObjcet = new JSONObject();
+		emailObjcet.put("value", email);
+		emailArray.put(emailObjcet);
+		json.put("email", emailArray);
 
 		return json;
 	}

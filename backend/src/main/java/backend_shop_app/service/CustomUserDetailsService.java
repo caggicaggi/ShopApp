@@ -1,7 +1,7 @@
 package backend_shop_app.service;
 
-import backend_shop_app.dto.AuthRequestDTO;
 import backend_shop_app.dto.UserDTO;
+import backend_shop_app.dto.request.AuthRequestDTO;
 import backend_shop_app.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +48,19 @@ public class CustomUserDetailsService implements UserDetailsService {
         return user;
     }
     
+    public UserDTO updatePassword(UserDTO userDTO) throws UsernameNotFoundException {
+		String newSalt = userDTO.getSalt();
+    	UserDTO user = userRepository.findByEmail(userDTO.getEmail());
+    	userDTO.setAddress(user.getAddress());
+    	userDTO.setName(user.getName());
+    	userDTO.setSalt(newSalt);
+    	userDTO.setPhonenumber(user.getPhonenumber());
+    	userDTO.setSurname(user.getSurname());
+    	userRepository.delete(user);
+    	userRepository.save(userDTO);
+        return user;
+    }
+    
     public void signup(UserDTO userDTO)  {
     	// Call the repository to save the userDTO object in the database
     	userRepository.save(userDTO);
@@ -82,6 +95,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		String password = generatePassword(userDTO.getPassword()+salt+secret);
 		userDTO.setSalt(salt);
 		userDTO.setPassword(password);
+		userDTO.setPhonenumber(user.getPhonenumber());
 		
 		if(user.getPassword().equals(password)) {
 	            // Perform authentication using Spring Security's AuthenticationManager

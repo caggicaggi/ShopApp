@@ -53,8 +53,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     	http.csrf().disable().authorizeRequests().antMatchers("/signup")
         .permitAll();
     	
-    	// Disable CSRF protection for the /signup endpoint
+    	// Disable CSRF protection for the /google endpoint
     	http.csrf().disable().authorizeRequests().antMatchers("/google")
+        .permitAll();
+    	
+    	// Disable CSRF protection for the /google endpoint
+    	http.csrf().disable().authorizeRequests().antMatchers("/updatePassword")
+        .permitAll();
+    	
+    	// Disable CSRF protection for the /getPhoneNumber endpoint
+    	http.csrf().disable().authorizeRequests().antMatchers("/getPhoneNumber")
         .permitAll();
     	
         http.csrf().disable().authorizeRequests().antMatchers("/signin")

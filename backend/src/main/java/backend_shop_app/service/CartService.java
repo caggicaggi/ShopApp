@@ -1,12 +1,10 @@
 package backend_shop_app.service;
 
 import java.util.List;
-
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import backend_shop_app.dto.CartDTO;
-import backend_shop_app.dto.CartRequestDTO;
+import backend_shop_app.dto.request.CartRequestDTO;
 import backend_shop_app.repository.CartRespository;
 
 /**
