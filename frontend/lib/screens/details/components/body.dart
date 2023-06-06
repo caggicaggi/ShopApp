@@ -4,6 +4,7 @@ import 'package:shop_app/main.dart';
 import 'package:shop_app/models/Product.dart';
 import 'package:shop_app/size_config.dart';
 import '../../../components/rounded_icon_btn.dart';
+import '../../../components/show_dialog.dart';
 import '../../../constant.dart';
 import '../../../models/CartList.dart';
 import '../../../models/User.dart';
@@ -100,52 +101,10 @@ class _BodyState extends State<Body> {
                             .then((int statusCode) {
                           switch (statusCode) {
                             case 200:
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Text('Product Added'),
-                                    actions: [
-                                      TextButton(
-                                        child: Text('OK'),
-                                        onPressed: () {
-                                          Navigator.of(context)
-                                              .pop(); // Close the dialog
-                                          Navigator.of(context)
-                                              .pop(); // Go back to the previous screen
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
+                              showAddedDialog(context);
                               break;
                             case 403:
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Text('Session Expired'),
-                                    content: Text('Please sign in again.'),
-                                    actions: [
-                                      TextButton(
-                                        child: Text('OK'),
-                                        onPressed: () {
-                                          Navigator.of(context)
-                                              .pop(); // Close the dialog
-                                          currentUser = User();
-                                          wishlist = Wishlist();
-                                          demoCartList = CartList();
-                                          tokenJWT = '';
-                                          Navigator.pushNamed(
-                                              context, SignInScreen.routeName);
-                                          // Navigate to the sign-in screen
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
+                              showSessionExpiredDialog(context);
                               break;
                             default:
                               // Perform other actions for different status codes

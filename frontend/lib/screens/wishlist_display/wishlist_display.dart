@@ -1,18 +1,32 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import '../../components/coustom_bottom_nav_bar.dart';
 import '../../constant.dart';
 import '../../enums.dart';
+import '../../main.dart';
 import '../../models/Product.dart';
 import 'components/body.dart';
 
-class WishListDisplayScreen extends StatelessWidget {
+class WishListDisplayScreen extends StatefulWidget {
   static String routeName = "/product_display";
 
-  final List<Product> productList;
+  @override
+  _WishListDisplayScreenState createState() => _WishListDisplayScreenState();
+}
 
-  WishListDisplayScreen({required this.productList});
+class _WishListDisplayScreenState extends State<WishListDisplayScreen> {
+  late Future<List<Product>> productListFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    productListFuture = fetchProductList();
+  }
+
+  Future<List<Product>> fetchProductList() async {
+    List<Product> wishlistProducts =
+        getInWishlistProducts(listOfProduct, wishlist.productIds);
+    return wishlistProducts;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +42,19 @@ class WishListDisplayScreen extends StatelessWidget {
         ),
       ),
       extendBodyBehindAppBar: true,
-      body: Body(productList: productList),
+      body: FutureBuilder<List<Product>>(
+        future: productListFuture,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else {
+            final productList = snapshot.data ?? [];
+            return Body(productList: productList);
+          }
+        },
+      ),
       bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.heart),
     );
   }

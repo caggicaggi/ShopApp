@@ -43,7 +43,6 @@ final Map<String, WidgetBuilder> routes = {
   ProductDisplayScreen.routeName: (context) => ProductDisplayScreen(
         productList: [],
       ), // Rout for the Product display screen
-  WishListDisplayScreen.routeName: (context) => WishListDisplayScreen(
-        productList: [],
-      ), // Rout for the Wishlist display screen
+  WishListDisplayScreen.routeName: (context) =>
+      WishListDisplayScreen(), // Rout for the Wishlist display screen
 };

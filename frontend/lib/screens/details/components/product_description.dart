@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shop_app/components/show_dialog.dart';
 import 'package:shop_app/main.dart';
 import 'package:shop_app/models/Product.dart';
 import '../../../constant.dart';
+import '../../../models/CartList.dart';
+import '../../../models/User.dart';
+import '../../../models/Wishlist.dart';
 import '../../../size_config.dart';
+import '../../sing_in/sing_in_screen.dart';
 
 class ProductDescription extends StatefulWidget {
   const ProductDescription({
@@ -39,10 +44,32 @@ class _ProductDescriptionState extends State<ProductDescription> {
             onTap: () {
               setState(() {
                 if (isFavorite) {
-                  wishlist.removeProduct(widget.product.idProduct);
+                  wishlist
+                      .removeProduct(widget.product.idProduct)
+                      .then((int statusCode) {
+                    switch (statusCode) {
+                      case 403:
+                        showSessionExpiredDialog(context);
+                        break;
+                      default:
+                        // Perform other actions for different status codes
+                        debugPrint('Status code: $statusCode');
+                    }
+                  });
                   isFavorite = false;
                 } else {
-                  wishlist.addProduct(widget.product.idProduct);
+                  wishlist
+                      .addProduct(widget.product.idProduct)
+                      .then((int statusCode) {
+                    switch (statusCode) {
+                      case 403:
+                        showSessionExpiredDialog(context);
+                        break;
+                      default:
+                        // Perform other actions for different status codes
+                        debugPrint('Status code: $statusCode');
+                    }
+                  });
                   isFavorite = true;
                 }
               });
