@@ -5,6 +5,10 @@ import 'package:shop_app/models/Product.dart';
 import 'package:shop_app/size_config.dart';
 import '../../../components/rounded_icon_btn.dart';
 import '../../../constant.dart';
+import '../../../models/CartList.dart';
+import '../../../models/User.dart';
+import '../../../models/Wishlist.dart';
+import '../../sing_in/sing_in_screen.dart';
 import 'product_description.dart';
 import 'top_rounded_container.dart';
 import 'product_images.dart';
@@ -89,12 +93,66 @@ class _BodyState extends State<Body> {
                     top: getProportionateScreenWidth(1),
                   ),
                   child: DefaultButton(
-                    text: "Add To Cart",
-                    press: () {
-                      demoCartList.addProduct(
-                          widget.product.idProduct, quantity);
-                    },
-                  ),
+                      text: "Add To Cart",
+                      press: () {
+                        demoCartList
+                            .addProduct(widget.product.idProduct, quantity)
+                            .then((int statusCode) {
+                          switch (statusCode) {
+                            case 200:
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Product Added'),
+                                    actions: [
+                                      TextButton(
+                                        child: Text('OK'),
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .pop(); // Close the dialog
+                                          Navigator.of(context)
+                                              .pop(); // Go back to the previous screen
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              break;
+                            case 403:
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Session Expired'),
+                                    content: Text('Please sign in again.'),
+                                    actions: [
+                                      TextButton(
+                                        child: Text('OK'),
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .pop(); // Close the dialog
+                                          currentUser = User();
+                                          wishlist = Wishlist();
+                                          demoCartList = CartList();
+                                          tokenJWT = '';
+                                          Navigator.pushNamed(
+                                              context, SignInScreen.routeName);
+                                          // Navigate to the sign-in screen
+                                        },
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                              break;
+                            default:
+                              // Perform other actions for different status codes
+                              debugPrint('Status code: $statusCode');
+                          }
+                        });
+                      }),
                 ),
               ),
             ],

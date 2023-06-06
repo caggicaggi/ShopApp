@@ -10,6 +10,7 @@ import 'package:shop_app/screens/profile/profile_screen.dart';
 import 'package:shop_app/screens/reset_pass_success/reset_pass_success_screen.dart';
 import 'package:shop_app/screens/sign_up/sign_up_screen.dart';
 import 'package:shop_app/screens/splash/splash_screen.dart';
+import 'package:shop_app/screens/wishlist_display/wishlist_display.dart';
 import 'screens/otp/otp_screen.dart';
 import 'screens/sing_in/sing_in_screen.dart';
 
@@ -39,6 +40,10 @@ final Map<String, WidgetBuilder> routes = {
       ResetPassSuccessScreen(), // Route for the reset pass succes screen
   CategoriesMenuScreen.routeName: (context) =>
       CategoriesMenuScreen(), // Route for the Categories Menu screen
-  ProductDisplayScreen.routeName: (context) =>
-      ProductDisplayScreen(productList: [],), // Rout for the Product display screen
+  ProductDisplayScreen.routeName: (context) => ProductDisplayScreen(
+        productList: [],
+      ), // Rout for the Product display screen
+  WishListDisplayScreen.routeName: (context) => WishListDisplayScreen(
+        productList: [],
+      ), // Rout for the Wishlist display screen
 };

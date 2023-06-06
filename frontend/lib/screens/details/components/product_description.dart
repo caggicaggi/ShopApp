@@ -5,7 +5,7 @@ import 'package:shop_app/models/Product.dart';
 import '../../../constant.dart';
 import '../../../size_config.dart';
 
-class ProductDescription extends StatelessWidget {
+class ProductDescription extends StatefulWidget {
   const ProductDescription({
     Key? key,
     required this.product,
@@ -16,30 +16,52 @@ class ProductDescription extends StatelessWidget {
   final GestureTapCallback? pressOnSeeMore;
 
   @override
+  _ProductDescriptionState createState() => _ProductDescriptionState();
+}
+
+class _ProductDescriptionState extends State<ProductDescription> {
+  bool isFavorite = false;
+
+  @override
+  void initState() {
+    super.initState();
+    isFavorite = wishlist.isIdInWishList(widget.product.idProduct);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Align(
           alignment: Alignment.centerRight,
-          child: Container(
-            padding: EdgeInsets.all(getProportionateScreenWidth(15)),
-            width: getProportionateScreenWidth(64),
-            decoration: BoxDecoration(
-              color: wishlist.isIdInWishList(product.idProduct)
-                  ? Color(0xFFFFE6E6)
-                  : Color(0xFFF5F6F9),
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                bottomLeft: Radius.circular(20),
+          child: GestureDetector(
+            onTap: () {
+              setState(() {
+                if (isFavorite) {
+                  wishlist.removeProduct(widget.product.idProduct);
+                  isFavorite = false;
+                } else {
+                  wishlist.addProduct(widget.product.idProduct);
+                  isFavorite = true;
+                }
+              });
+            },
+            child: Container(
+              padding: EdgeInsets.all(getProportionateScreenWidth(15)),
+              width: getProportionateScreenWidth(64),
+              decoration: BoxDecoration(
+                color: isFavorite ? Color(0xFFFFE6E6) : Color(0xFFF5F6F9),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  bottomLeft: Radius.circular(20),
+                ),
               ),
-            ),
-            child: SvgPicture.asset(
-              "assets/icons/Heart Icon_2.svg",
-              color: wishlist.isIdInWishList(product.idProduct)
-                  ? Color(0xFFFF4848)
-                  : Color(0xFFDBDEE4),
-              height: getProportionateScreenWidth(16),
+              child: SvgPicture.asset(
+                "assets/icons/Heart Icon_2.svg",
+                color: isFavorite ? Color(0xFFFF4848) : Color(0xFFDBDEE4),
+                height: getProportionateScreenWidth(16),
+              ),
             ),
           ),
         ),
@@ -47,7 +69,7 @@ class ProductDescription extends StatelessWidget {
           padding:
               EdgeInsets.symmetric(horizontal: getProportionateScreenWidth(20)),
           child: Text(
-            product.title,
+            widget.product.title,
             style: Theme.of(context).textTheme.headline6,
           ),
         ),
@@ -57,7 +79,7 @@ class ProductDescription extends StatelessWidget {
             right: getProportionateScreenWidth(64),
           ),
           child: Text(
-            product.price.toString() + '€',
+            widget.product.price.toString() + '€',
             style: TextStyle(fontSize: 20),
           ),
         ),
@@ -67,7 +89,7 @@ class ProductDescription extends StatelessWidget {
             right: getProportionateScreenWidth(64),
           ),
           child: Text(
-            product.description,
+            widget.product.description,
             maxLines: 2,
           ),
         ),

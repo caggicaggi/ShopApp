@@ -7,12 +7,17 @@ import '../../../constant.dart';
 import '../../../main.dart';
 import '../../../models/Product.dart';
 
-Future<int> fetchDataFromSignIn(String email, String password) async {
-  String completeUrl = '$url/signin';
+Future<int> requestGoogleSignIn(
+  String email,
+  String name,
+  String surname,
+) async {
+  String completeUrl = '$url/google';
 
   Map<String, String> requestBody = {
     'email': email,
-    'password': password,
+    'name': name,
+    'surname': surname,
   };
 
   try {
