@@ -3,8 +3,9 @@ package backend_shop_app.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import backend_shop_app.dto.CartCheckoutRequest;
-import backend_shop_app.dto.WishListRequestDTO;
+
+import backend_shop_app.dto.request.CartCheckoutRequest;
+import backend_shop_app.dto.request.WishListRequestDTO;
 
 public interface WishListController {
 	

@@ -1,10 +1,11 @@
 package backend_shop_app.controller;
 
-import backend_shop_app.dto.AuthRequestDTO;
-import backend_shop_app.dto.AuthRequestGoogleDTO;
 import backend_shop_app.dto.CartDTO;
 import backend_shop_app.dto.ProductDTO;
 import backend_shop_app.dto.UserDTO;
+import backend_shop_app.dto.request.AuthRequestDTO;
+import backend_shop_app.dto.request.AuthRequestGoogleDTO;
+import backend_shop_app.dto.request.ForgotPasswordDTO;
 import backend_shop_app.service.CartService;
 import backend_shop_app.service.CustomUserDetailsService;
 import backend_shop_app.service.JsonCreateService;
@@ -17,6 +18,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -54,7 +56,7 @@ public class UtenteControllerImpl implements UtenteController {
  	 * @throws Exception if an error occurs while adding the user in db
  	 */
     @PostMapping("/signin")
-    public ResponseEntity<String> generateToken(AuthRequestDTO authRequest) throws Exception {
+    public ResponseEntity<String> signin(@RequestBody AuthRequestDTO authRequest) throws Exception {
     	// Declare the lists to include in the return JSON
     	List<ProductDTO> listOfProduct = new ArrayList<>();
     	List<Integer> listOfIdWishList = new ArrayList<>();
@@ -93,7 +95,7 @@ public class UtenteControllerImpl implements UtenteController {
     	
     	// Create the JSON to be sent as the return value
     	JSONObject jsonToSend = jsonCreateService.createJsonToSendSignIn(
-    			jwtUtil.generateToken(userDTO.getEmail()), listOfProduct, userDTO.getIdutente(),
+    			jwtUtil.generateToken(userDTO.getEmail()), listOfProduct, userDTO,
     			listOfIdWishList, listOfIdCart);
     	
         return new ResponseEntity<String>(jsonToSend.toString(), HttpStatus.OK);
@@ -107,7 +109,7 @@ public class UtenteControllerImpl implements UtenteController {
 	 * @throws Exception if an error occurs while adding the user in db
 	 */
     @PostMapping("/google")
-    public ResponseEntity<String> singInGoogle(  AuthRequestGoogleDTO authRequest) throws Exception {
+    public ResponseEntity<String> singUpGoogle(@RequestBody  AuthRequestGoogleDTO authRequest) throws Exception {
     	// Declare the lists to include in the return JSON
     	List<ProductDTO> listOfProduct = new ArrayList<>();
     	List<Integer> listOfIdWishList = new ArrayList<>();
@@ -150,7 +152,7 @@ public class UtenteControllerImpl implements UtenteController {
     	
     	// Create the JSON to be sent as the return value
     	JSONObject jsonToSend = jsonCreateService.createJsonToSendSignIn(
-    			jwtUtil.generateToken(userDTO.getEmail()), listOfProduct, userDTO.getIdutente(),
+    			jwtUtil.generateToken(userDTO.getEmail()), listOfProduct, userDTO,
     			listOfIdWishList, listOfIdCart);
     	
         return new ResponseEntity<String>(jsonToSend.toString(), HttpStatus.OK);
@@ -164,7 +166,7 @@ public class UtenteControllerImpl implements UtenteController {
 	 * @throws Exception if an error occurs while adding the user in db
 	 */
 	@PostMapping("/signup")
-    public ResponseEntity<String> signup(UserDTO userDTO) throws Exception {
+    public ResponseEntity<String> signup(@RequestBody UserDTO userDTO) throws Exception {
 		// Declare a list of products to generate
 		List<ProductDTO> listOfProduct = new ArrayList<>();
 		
@@ -232,8 +234,76 @@ public class UtenteControllerImpl implements UtenteController {
         return new ResponseEntity<String>(jsonToSend.toString(), HttpStatus.OK);
     }
 	
+	
+	/**
+ 	 * Endpoint to get phone number.
+ 	 * 
+ 	 * @param ForgotPasswordDTO contains the email 
+ 	 * @return ResponseEntity with a confirmation message or an error message if an exception occurs and the phone number
+ 	 * @throws Exception if an error occurs
+ 	 */
+	
+    @GetMapping("/getPhoneNumber")
+    public ResponseEntity<String> getPhoneNumber(@RequestBody ForgotPasswordDTO forgotPasswordDTO) throws Exception {
+    	UserDTO userDTO= new UserDTO();
+		// Check if all required fields are present or correct
+		if ( isFieldNull(forgotPasswordDTO) || !isValidEmail(forgotPasswordDTO.getEmail())) {
+			return new ResponseEntity<String>("Email is not valid", HttpStatus.BAD_REQUEST);
+		}
+    	
+    	// Get user information to return email
+    	try {
+    		userDTO = customUserDetailsService.getUserInformation(forgotPasswordDTO.getEmail());
+		} catch (Exception e) {
+    		return new ResponseEntity<String>("Incorrect Email", HttpStatus.BAD_REQUEST);
+		}
+    	
+    	// Create the JSON to be sent as the return value
+    	JSONObject jsonToSend = jsonCreateService.createJsonToForgotPassword(userDTO.getPhonenumber());
+    	
+        return new ResponseEntity<String>(jsonToSend.toString(), HttpStatus.OK);
+    }
+ 
+	 
+	/**
+ 	 * Endpoint to update password.
+ 	 * 
+ 	 * @param AuthRequestDTO contains the params to do check in db
+ 	 * @return ResponseEntity with a confirmation message or an error message if an exception occurs
+ 	 * @throws Exception if an error occurs while adding the user in db
+ 	 */
+	
+    @PostMapping("/updatePassword")
+    public ResponseEntity<String> updatePassword(@RequestBody ForgotPasswordDTO forgotPasswordDTO) throws Exception {
+    	UserDTO userDTO= new UserDTO();
+		// Check if all required fields are present or correct
+		if ( isFieldNull(forgotPasswordDTO) ) {
+			return new ResponseEntity<String>("Email is not valid", HttpStatus.BAD_REQUEST);
+		}
+    	
+		// Retrieve the lists and check if the password is correct
+    	try {
+    		userDTO.setEmail(forgotPasswordDTO.getEmail());
+    		userDTO.setPassword(forgotPasswordDTO.getPassword());
+    		userDTO.setSalt("Generate");
+			userDTO = customUserDetailsService.cryptoPassword(userDTO);
+			// Save the user in the table
+        	customUserDetailsService.updatePassword(userDTO);
+        	
+		} catch (Exception e) {
+    		return new ResponseEntity<String>("Incorrect Email", HttpStatus.BAD_REQUEST);
+		}
+    	
+    	if (userDTO.getPassword().equals("Incorrect Password")) {
+    		return new ResponseEntity<String>("Incorrect Password", HttpStatus.BAD_REQUEST);
+    	}
+    	
+        return new ResponseEntity<String>("Password changed", HttpStatus.OK);
+    }
+    
+	
 	/*
-	 *  Esempio di metodo di validazione dell'email:
+	 *  Metodo di validazione dell'email:
 	 *	-Può contenere lettere maiuscole e minuscole (A-Z, a-z)
 	 *	-Può contenere numeri (0-9)
 	 *	-Può contenere i seguenti caratteri speciali: +, _, ., -
@@ -263,6 +333,13 @@ public class UtenteControllerImpl implements UtenteController {
 	 */
 	public static boolean isFieldNull(AuthRequestDTO authRequestDTO) {
 	    return authRequestDTO.getEmail() == null;
+	}
+	
+	/*
+	 * check if a email of ForgotPasswordDTO is null
+	 */
+	public static boolean isFieldNull(ForgotPasswordDTO forgotPasswordDTO) {
+	    return forgotPasswordDTO == null;
 	}
 	
 	/*

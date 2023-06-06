@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import backend_shop_app.dto.CartCheckoutRequest;
-import backend_shop_app.dto.CartRequestDTO;
+
+import backend_shop_app.dto.request.CartCheckoutRequest;
+import backend_shop_app.dto.request.CartRequestDTO;
 import backend_shop_app.service.CartService;
 
 
@@ -42,6 +43,7 @@ public class CartControllerImpl implements CartController {
 					|| !isInteger(cartRequestDTO.get(i).getIdProduct()+"")
 					|| !isInteger(cartRequestDTO.get(i).getIdUtente()+"")
 					|| !isInteger(cartRequestDTO.get(i).getQuantity()+""))
+
 				return new ResponseEntity<String>("Some fields are missing or incorrect", HttpStatus.BAD_REQUEST);
 		}
 		// Call the cartService to add the products to the cart
@@ -90,7 +92,7 @@ public class CartControllerImpl implements CartController {
 	 * @throws Exception if an error occurs while removing the products from the cart
 	 */
 	@DeleteMapping("/checkout")
-	public ResponseEntity<String> removeAllProductFromCart(CartCheckoutRequest cartCheckoutRequest)
+	public ResponseEntity<String> removeAllProductFromCart(@RequestBody CartCheckoutRequest cartCheckoutRequest)
 			throws Exception {
 		// Check if all required fields are present or correct
 		if (cartCheckoutRequest.getIdUtente() <= 0 || !isInteger(cartCheckoutRequest.getIdUtente()+""))

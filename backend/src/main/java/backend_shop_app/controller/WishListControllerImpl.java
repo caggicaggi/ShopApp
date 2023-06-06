@@ -7,10 +7,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import backend_shop_app.dto.CartCheckoutRequest;
-import backend_shop_app.dto.WishListRequestDTO;
+
+import backend_shop_app.dto.request.CartCheckoutRequest;
+import backend_shop_app.dto.request.WishListRequestDTO;
 import backend_shop_app.service.WishListService;
 
 
@@ -32,7 +34,7 @@ public class WishListControllerImpl implements WishListController {
 	 * @throws Exception if an error occurs while adding the products to the wishlist
 	 */
     @PutMapping("/add")
-	public ResponseEntity<String> addProductInWishList(List<WishListRequestDTO> wishListRequestDTO) throws Exception {
+	public ResponseEntity<String> addProductInWishList(@RequestBody List<WishListRequestDTO> wishListRequestDTO) throws Exception {
 		// Check if all required fields are present or correct
 		for (int i = 0; i < wishListRequestDTO.size(); i++) {
 			if(wishListRequestDTO.get(i).getIdProduct() <= 0 
@@ -48,7 +50,7 @@ public class WishListControllerImpl implements WishListController {
 		if(countElement==0)
 	        return new ResponseEntity<String>("An error occurred",HttpStatus.INTERNAL_SERVER_ERROR);
 		
-        return new ResponseEntity<String>(countElement + " Product correctly inserted in wishlist ",HttpStatus.OK);
+        return new ResponseEntity<String>(countElement + " Product correctly inserted in the wishlist ",HttpStatus.OK);
 	}
     
 	/**
@@ -59,7 +61,7 @@ public class WishListControllerImpl implements WishListController {
 	 * @throws Exception if an error occurs while adding the products to the wishlist
 	 */
     @DeleteMapping("/remove")
-	public ResponseEntity<String> removeProductInWishList(List<WishListRequestDTO> wishListRequestDTO)
+	public ResponseEntity<String> removeProductInWishList(@RequestBody List<WishListRequestDTO> wishListRequestDTO)
 			throws Exception {
 		for (int i = 0; i < wishListRequestDTO.size(); i++) {
 			// Check if all required fields are present or correct
@@ -75,7 +77,7 @@ public class WishListControllerImpl implements WishListController {
 		if(countElement==0)
 	        return new ResponseEntity<String>("An error occurred",HttpStatus.INTERNAL_SERVER_ERROR);
 		
-        return new ResponseEntity<String>(countElement + " Product correctly removed from wishlist ",HttpStatus.OK);
+        return new ResponseEntity<String>(countElement + " Product correctly removed from the wishlist ",HttpStatus.OK);
 	}
 
     /**
@@ -86,7 +88,7 @@ public class WishListControllerImpl implements WishListController {
 	 * @throws Exception if an error occurs while removing the products from the wish list
 	 */
 	@DeleteMapping("/checkout")
-	public ResponseEntity<String> removeAllProductFromWishList(CartCheckoutRequest cartCheckoutRequest)
+	public ResponseEntity<String> removeAllProductFromWishList(@RequestBody CartCheckoutRequest cartCheckoutRequest)
 			throws Exception {
 		// Check if all required fields are present or correct
 		if (cartCheckoutRequest.getIdUtente() <= 0 || !isInteger(cartCheckoutRequest.getIdUtente()+""))
