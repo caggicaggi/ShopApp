@@ -36,6 +36,7 @@ class Body extends StatelessWidget {
             text: "Log Out",
             icon: "assets/icons/Log out.svg",
             press: () {
+              googleSignIn.signOut();
               currentUser = User();
               wishlist = Wishlist();
               demoCartList = CartList();

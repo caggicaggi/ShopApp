@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shop_app/models/Wishlist.dart';
 import 'package:shop_app/routs.dart';
 import 'package:shop_app/screens/splash/splash_screen.dart';
@@ -13,13 +14,13 @@ Wishlist wishlist = Wishlist();
 CartList demoCartList = CartList();
 User currentUser = User();
 String tokenJWT = '';
+final GoogleSignIn googleSignIn = GoogleSignIn();
 
 void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  
   // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {

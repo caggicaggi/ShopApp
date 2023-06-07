@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shop_app/main.dart';
 import 'package:shop_app/screens/sing_in/components/sing_form.dart';
 import '../../../components/no_account_text.dart';
 import '../../../components/social_card.dart';
@@ -41,8 +42,7 @@ class Body extends StatelessWidget {
                     SocialCard(
                       icon: "assets/icons/google-icon.svg",
                       press: () {
-                        final GoogleSignIn _googleSignIn = GoogleSignIn();
-                        _googleSignIn.signIn().then((value) {
+                        googleSignIn.signIn().then((value) {
                           String user = value!.displayName!;
                           List<String> parts = user.split(" ");
                           String name = parts[0];
