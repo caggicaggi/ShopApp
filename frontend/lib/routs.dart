@@ -12,7 +12,7 @@ import 'package:shop_app/screens/sign_up/sign_up_screen.dart';
 import 'package:shop_app/screens/splash/splash_screen.dart';
 import 'package:shop_app/screens/wishlist_display/wishlist_display.dart';
 import 'screens/otp/otp_screen.dart';
-import 'screens/sing_in/sing_in_screen.dart';
+import 'screens/sign_in/sing_in_screen.dart';
 
 // All our routes will be available here
 

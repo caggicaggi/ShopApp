@@ -6,7 +6,7 @@ import '../../../models/CartList.dart';
 import '../../../models/User.dart';
 import '../../../models/Wishlist.dart';
 import '../../../size_config.dart';
-import '../../sing_in/sing_in_screen.dart';
+import '../../sign_in/sing_in_screen.dart';
 import 'cart_card.dart';
 
 class Body extends StatefulWidget {
@@ -84,6 +84,4 @@ class _BodyState extends State<Body> {
       ),
     );
   }
-
-  
 }

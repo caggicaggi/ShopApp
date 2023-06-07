@@ -4,7 +4,7 @@ import '../main.dart';
 import '../models/CartList.dart';
 import '../models/User.dart';
 import '../models/Wishlist.dart';
-import '../screens/sing_in/sing_in_screen.dart';
+import '../screens/sign_in/sing_in_screen.dart';
 
 Future<dynamic> showSessionExpiredDialog(BuildContext context) {
   return showDialog(

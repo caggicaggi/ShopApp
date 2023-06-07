@@ -5,7 +5,7 @@ import 'package:shop_app/models/User.dart';
 import 'package:shop_app/models/Wishlist.dart';
 import 'package:shop_app/screens/splash/splash_screen.dart';
 import '../../../components/menu_card.dart';
-import '../../sing_in/sing_in_screen.dart';
+import '../../sign_in/sing_in_screen.dart';
 import 'profile_pic.dart';
 
 class Body extends StatelessWidget {

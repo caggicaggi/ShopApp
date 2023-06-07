@@ -9,7 +9,7 @@ import '../../../constant.dart';
 import '../../../models/CartList.dart';
 import '../../../models/User.dart';
 import '../../../models/Wishlist.dart';
-import '../../sing_in/sing_in_screen.dart';
+import '../../sign_in/sing_in_screen.dart';
 import 'product_description.dart';
 import 'top_rounded_container.dart';
 import 'product_images.dart';
