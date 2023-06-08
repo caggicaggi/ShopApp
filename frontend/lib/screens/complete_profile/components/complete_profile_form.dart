@@ -61,12 +61,12 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
             text: "continue",
             press: () async {
               if (_formKey.currentState!.validate()) {
-                debugPrint('email. '+widget.email);
-                debugPrint('pass. '+widget.password);
-                debugPrint('name. '+firstName);
-                debugPrint('surname. '+lastName);
-                debugPrint('address. '+address);
-                debugPrint('phone. '+phoneNumber);
+                debugPrint('email. ' + widget.email);
+                debugPrint('pass. ' + widget.password);
+                debugPrint('name. ' + firstName);
+                debugPrint('surname. ' + lastName);
+                debugPrint('address. ' + address);
+                debugPrint('phone. ' + phoneNumber);
 
                 Map<String, String> requestBody = {
                   'email': widget.email,
@@ -83,7 +83,6 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
                   currentUser.setEmail(widget.email);
                   currentUser.setPhoneNumber(phoneNumber);
                   currentUser.setAddress(address);
-                  //Navigator.pushNamed(context, OtpScreen.routeName);
                   Navigator.pushNamed(context, HomeScreen.routeName);
                 }
               }

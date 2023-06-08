@@ -1,3 +1,5 @@
+import 'package:email_otp/email_otp.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shop_app/models/Wishlist.dart';
@@ -14,9 +16,12 @@ Wishlist wishlist = Wishlist();
 CartList demoCartList = CartList();
 User currentUser = User();
 String tokenJWT = '';
-final GoogleSignIn googleSignIn = GoogleSignIn();
+GoogleSignIn googleSignIn = GoogleSignIn();
+EmailOTP myauth = EmailOTP();
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 

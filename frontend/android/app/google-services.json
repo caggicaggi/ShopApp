@@ -22,36 +22,7 @@
           }
         },
         {
-          "client_id": "505975403635-0tpmicg1u1hh78fu4jdr9gsphsggt4rj.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAX-PHvUsNepEPYlUOhwQNc9jHj9MYntQM"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "505975403635-0tpmicg1u1hh78fu4jdr9gsphsggt4rj.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:505975403635:android:775ae8a6a60865d4812606",
-        "android_client_info": {
-          "package_name": "com.example.shop_app"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "505975403635-0tpmicg1u1hh78fu4jdr9gsphsggt4rj.apps.googleusercontent.com",
+          "client_id": "505975403635-d3pdj40ud247ims3auhr023ie9192cep.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
