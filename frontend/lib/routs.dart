@@ -5,6 +5,7 @@ import 'package:shop_app/screens/complete_profile/complete_profile_screen.dart';
 import 'package:shop_app/screens/details/details_screen.dart';
 import 'package:shop_app/screens/forgot_password/forgot_password_screen.dart';
 import 'package:shop_app/screens/home/home_screen.dart';
+import 'package:shop_app/screens/new_password/new_password_screen.dart';
 import 'package:shop_app/screens/product_display/product_display.dart';
 import 'package:shop_app/screens/profile/profile_screen.dart';
 import 'package:shop_app/screens/reset_pass_success/reset_pass_success_screen.dart';
@@ -12,7 +13,7 @@ import 'package:shop_app/screens/sign_up/sign_up_screen.dart';
 import 'package:shop_app/screens/splash/splash_screen.dart';
 import 'package:shop_app/screens/wishlist_display/wishlist_display.dart';
 import 'screens/otp/otp_screen.dart';
-import 'screens/sing_in/sing_in_screen.dart';
+import 'screens/sign_in/sing_in_screen.dart';
 
 // All our routes will be available here
 
@@ -24,6 +25,8 @@ final Map<String, WidgetBuilder> routes = {
       SignInScreen(), // Route for the sign-in screen
   ForgotPasswordScreen.routeName: (context) =>
       ForgotPasswordScreen(), // Route for the forgot password screen
+  NewPasswordScreen.routeName: (context) =>
+      NewPasswordScreen(), // Route for the new password screen
   SignUpScreen.routeName: (context) =>
       SignUpScreen(), // Route for the sign-up screen
   CompleteProfileScreen.routeName: (context) =>
@@ -43,7 +46,6 @@ final Map<String, WidgetBuilder> routes = {
   ProductDisplayScreen.routeName: (context) => ProductDisplayScreen(
         productList: [],
       ), // Rout for the Product display screen
-  WishListDisplayScreen.routeName: (context) => WishListDisplayScreen(
-        productList: [],
-      ), // Rout for the Wishlist display screen
+  WishListDisplayScreen.routeName: (context) =>
+      WishListDisplayScreen(), // Rout for the Wishlist display screen
 };

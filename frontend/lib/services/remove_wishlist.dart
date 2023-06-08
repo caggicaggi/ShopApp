@@ -4,35 +4,34 @@ import 'package:http/http.dart' as http;
 import '../constant.dart';
 import '../main.dart';
 
-Future<int> updateDbRemoveWishList(int idProduct) async {
+Future<int> updateDbRemoveWishList(List<int> idProduct) async {
   String completeUrl = '$url/wishlist/remove';
 
-    Map<String, dynamic> requestBody ={
-        'idProduct': idProduct,
-        'idUtente': currentUser.id,
-      };
-    
-    final headers = {
-      'Authorization': 'Bearer $tokenJWT',
-      'Content-Type': 'application/json',
-    };
+  List<dynamic> requestBody = [
+    {'idProduct': idProduct, 'idUtente': currentUser.id}
+  ];
 
-    try {
-      http.Response response = await http.delete(
-        Uri.parse(completeUrl),
-        headers: headers,
-        body: jsonEncode(requestBody),
-      );
+  final headers = {
+    'Authorization': 'Bearer $tokenJWT',
+    'Content-Type': 'application/json',
+  };
 
-      if (response.statusCode == 200) {
-        debugPrint('Request success: ${response.statusCode}');
-        return response.statusCode;
-      } else {
-        debugPrint('Request failed with status: ${response.statusCode}');
-        return response.statusCode;
-      }
-    } catch (e) {
-      debugPrint('Error: $e');
-      return -1; // Return a custom error code or handle the error accordingly
+  try {
+    http.Response response = await http.delete(
+      Uri.parse(completeUrl),
+      headers: headers,
+      body: jsonEncode(requestBody),
+    );
+
+    if (response.statusCode == 200) {
+      debugPrint('Request success: ${response.statusCode}');
+      return response.statusCode;
+    } else {
+      debugPrint('Request failed with status: ${response.statusCode}');
+      return response.statusCode;
     }
+  } catch (e) {
+    debugPrint('Error: $e');
+    return -1; // Return a custom error code or handle the error accordingly
   }
+}

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:shop_app/services/remove_wishlist.dart';
 
 import '../services/add_wishlist.dart';
 
@@ -24,24 +25,26 @@ class Wishlist {
     removedProductIds = []; // Initialize removed product IDs list as empty
   }
 
-  void addProduct(int productId) {
+  Future<int> addProduct(int productId) async {
     if (!productIds.contains(productId)) {
       // Check if product ID is not already present in wishlist
       productIds.add(productId); // Add product ID to the wishlist
       addedProductIds.add(productId); // Track the added product ID
 
-      _triggerDebounce(); // Trigger debounce timer
+      return _triggerDebounce(); // Trigger debounce timer and return the future
     }
+    return -1; // Return a custom error code or handle the error accordingly
   }
 
-  void removeProduct(int productId) {
+  Future<int> removeProduct(int productId) async {
     if (productIds.contains(productId)) {
       // Check if product ID is present in the wishlist
       productIds.remove(productId); // Remove product ID from the wishlist
       removedProductIds.add(productId); // Track the removed product ID
 
-      _triggerDebounce(); // Trigger debounce timer
+      return _triggerDebounce(); // Trigger debounce timer and return the future
     }
+    return -1; // Return a custom error code or handle the error accordingly
   }
 
   void _applyDeltaUpdate() {
@@ -56,14 +59,18 @@ class Wishlist {
     }
   }
 
-  void _triggerDebounce() {
+  Future<int> _triggerDebounce() {
     if (_debounceTimer != null && _debounceTimer!.isActive) {
       _debounceTimer!.cancel(); // Cancel any existing debounce timer
     }
 
-    _debounceTimer = Timer(_debounceDuration, () {
-      _updateBackend(); // Schedule the backend update after debounce duration
+    final completer = Completer<int>();
+    _debounceTimer = Timer(_debounceDuration, () async {
+      final statusCode = await _updateBackend(); // Await the backend update
+      completer.complete(statusCode);
     });
+
+    return completer.future;
   }
 
   void _cancelDebounce() {
@@ -72,32 +79,31 @@ class Wishlist {
     }
   }
 
-  void _updateBackend() {
+  Future<int> _updateBackend() async {
     if (addedProductIds.isNotEmpty) {
-      _applyDeltaUpdate();       // Apply the delta update (print messages for added product IDs)
-      debugPrint(
-          'BACKEND-Updated wishlist with added products: $productIds'); // Print the updated wishlist with added products
+      _applyDeltaUpdate(); // Apply the delta update (print messages for added product IDs)
 
-      // Perform backend call to update the wishlist in the database
-
+      final statusCode = await updateDbAddWishList(addedProductIds);
       addedProductIds.clear(); // Clear the addedProductIds list
-      _cancelDebounce(); // Cancel debounce after manual backend update
+      _cancelDebounce();
+      return statusCode;
+
+      // Cancel debounce after manual backend update
     }
 
     if (removedProductIds.isNotEmpty) {
       _applyDeltaUpdate(); // Apply the delta update (print messages for removed product IDs)
-      debugPrint(
-          'BACKEND-Updated wishlist with removed products: $productIds'); // Print the updated wishlist with removed products
-
-      // Perform backend call to update the wishlist in the database
-
       removedProductIds.clear(); // Clear the removedProductIds list
       _cancelDebounce(); // Cancel debounce after manual backend update
+      final statusCode = await updateDbRemoveWishList(removedProductIds);
+      return statusCode;
     }
 
     if (addedProductIds.isEmpty && removedProductIds.isEmpty) {
-      print(
-          'No changes since the last update'); // Print message if there are no changes
+      print('No changes since the last update');
+      // Print message if there are no changes
+      return -1;
     }
+    return -1;
   }
 }

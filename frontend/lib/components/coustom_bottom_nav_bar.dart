@@ -63,7 +63,7 @@ class CustomBottomNavBar extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          WishListDisplayScreen(productList: wishlistProducts),
+                          WishListDisplayScreen(),
                     ),
                   );
                 },

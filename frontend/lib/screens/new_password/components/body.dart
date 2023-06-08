@@ -8,6 +8,7 @@ import 'package:shop_app/components/form_error.dart';
 import 'package:shop_app/components/no_account_text.dart';
 import 'package:shop_app/main.dart';
 import 'package:shop_app/screens/otp/otp_screen.dart';
+import 'package:shop_app/screens/reset_pass_success/reset_pass_success_screen.dart';
 import 'package:shop_app/size_config.dart';
 import '../../../constant.dart';
 
@@ -24,7 +25,7 @@ class Body extends StatelessWidget {
             children: [
               SizedBox(height: SizeConfig.screenHeight * 0.04),
               Text(
-                "Forgot Password",
+                "New Password",
                 style: TextStyle(
                   fontSize: getProportionateScreenWidth(28),
                   color: Colors.black,
@@ -32,11 +33,11 @@ class Body extends StatelessWidget {
                 ),
               ),
               Text(
-                "Please enter your email and we will send \nyou a link to return to your account",
+                "Please enter your new password",
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: SizeConfig.screenHeight * 0.1),
-              ForgotPassForm(),
+              NewPasswordForm(),
             ],
           ),
         ),
@@ -45,16 +46,15 @@ class Body extends StatelessWidget {
   }
 }
 
-class ForgotPassForm extends StatefulWidget {
+class NewPasswordForm extends StatefulWidget {
   @override
-  _ForgotPassFormState createState() => _ForgotPassFormState();
+  _NewPasswordState createState() => _NewPasswordState();
 }
 
-class _ForgotPassFormState extends State<ForgotPassForm> {
+class _NewPasswordState extends State<NewPasswordForm> {
   final _formKey = GlobalKey<FormState>();
-  String? email;
   String? password;
-  bool? remember = false;
+  String? repeatPassword;
   final List<String?> errors = [];
 
   void addError({String? error}) {
@@ -77,31 +77,16 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
       key: _formKey,
       child: Column(
         children: [
-          buildEmailFormField(),
-          SizedBox(height: getProportionateScreenHeight(30)),
-          //buildPasswordFormField(),
-          //SizedBox(height: getProportionateScreenHeight(20)),
+          buildPasswordFormField(),
+          SizedBox(height: getProportionateScreenHeight(20)),
+          buildPasswordRepeatFormField(),
+          SizedBox(height: getProportionateScreenHeight(20)),
           FormError(errors: errors),
           SizedBox(height: SizeConfig.screenHeight * 0.1),
           DefaultButton(
             text: "Continue",
-            press: () async {
-              if (_formKey.currentState!.validate()) {
-                myauth.setConfig(
-                    appEmail: "shopApp@otp.com",
-                    appName: "Email OTP",
-                    userEmail: "caggiano.mc98@gmail.com",
-                    otpLength: 5,
-                    otpType: OTPType.digitsOnly);
-                if (await myauth.sendOTP() == true) {
-                  debugPrint(context.toString());
-                  Navigator.pushNamed(context, OtpScreen.routeName);
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Oops, OTP send failed"),
-                  ));
-                }
-              }
+            press: () {
+              Navigator.pushNamed(context, ResetPassSuccessScreen.routeName);
             },
           ),
           SizedBox(height: SizeConfig.screenHeight * 0.1),
@@ -142,33 +127,33 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
     );
   }
 
-  TextFormField buildEmailFormField() {
+  TextFormField buildPasswordRepeatFormField() {
     return TextFormField(
-      keyboardType: TextInputType.emailAddress,
-      onSaved: (newValue) => email = newValue,
+      obscureText: true,
+      onSaved: (newValue) => password = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
-          removeError(error: kEmailNullError);
-        } else if (emailValidatorRegExp.hasMatch(value)) {
-          removeError(error: kInvalidEmailError);
+          removeError(error: kPassNullError);
+        } else if (value.length >= 8) {
+          removeError(error: kShortPassError);
         }
         return null;
       },
       validator: (value) {
         if (value!.isEmpty) {
-          addError(error: kEmailNullError);
+          addError(error: kPassNullError);
           return "";
-        } else if (!emailValidatorRegExp.hasMatch(value)) {
-          addError(error: kInvalidEmailError);
+        } else if (value.length < 8) {
+          addError(error: kShortPassError);
           return "";
         }
         return null;
       },
       decoration: InputDecoration(
-        labelText: "Email",
-        hintText: "Enter your email",
+        labelText: "Repeat Password",
+        hintText: "Repeat your new password",
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Mail.svg"),
+        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
       ),
     );
   }

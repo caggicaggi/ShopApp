@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../../components/show_dialog.dart';
 import '../../../main.dart';
 import '../../../models/CartList.dart';
 import '../../../models/User.dart';
 import '../../../models/Wishlist.dart';
 import '../../../size_config.dart';
-import '../../sing_in/sing_in_screen.dart';
+import '../../sign_in/sing_in_screen.dart';
 import 'cart_card.dart';
 
 class Body extends StatefulWidget {
@@ -48,50 +49,10 @@ class _BodyState extends State<Body> {
                     .then((int statusCode) {
                   switch (statusCode) {
                     case 403:
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text('Session Expired'),
-                            content: Text('Please sign in again.'),
-                            actions: [
-                              TextButton(
-                                child: Text('OK'),
-                                onPressed: () {
-                                  Navigator.of(context)
-                                      .pop(); // Close the dialog
-                                  currentUser = User();
-                                  wishlist = Wishlist();
-                                  demoCartList = CartList();
-                                  tokenJWT = '';
-                                  Navigator.pushNamed(
-                                      context, SignInScreen.routeName);
-                                  // Navigate to the sign-in screen
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      );
+                      showSessionExpiredDialog(context);
                       break;
                     case 200:
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text('Product Removed'),
-                            actions: [
-                              TextButton(
-                                child: Text('OK'),
-                                onPressed: () {
-                                  Navigator.of(context)
-                                      .pop(); // Close the dialog
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      );
+                      showProductRemoveDialog(context);
                       break;
                     default:
                       // Perform other actions for different status codes
