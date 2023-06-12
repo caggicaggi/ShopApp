@@ -183,8 +183,6 @@ public class UtenteControllerImpl implements UtenteController {
 		logger.info("START ELABORATION ENDPOINT - signup - /signup");
 		// Declare a list of products to generate
 		List<ProductDTO> listOfProduct = new ArrayList<>();
-		System.out.println(userDTO.getEmail());
-		System.out.println(userDTO.getPassword());
 		// Check if all required fields are present or correct
 		if(userDTO.getIdutente()!= 0) {
 			logger.error("ENDPOINT - signup - found idutente");
