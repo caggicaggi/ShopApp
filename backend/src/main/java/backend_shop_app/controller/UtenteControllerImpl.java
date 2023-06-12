@@ -179,11 +179,12 @@ public class UtenteControllerImpl implements UtenteController {
 	 * @throws Exception if an error occurs while adding the user in db
 	 */
 	@PostMapping("/signup")
-    public ResponseEntity<String> signup( UserDTO userDTO) throws Exception {
+    public ResponseEntity<String> signup(@RequestBody UserDTO userDTO) throws Exception {
 		logger.info("START ELABORATION ENDPOINT - signup - /signup");
 		// Declare a list of products to generate
 		List<ProductDTO> listOfProduct = new ArrayList<>();
-		
+		System.out.println(userDTO.getEmail());
+		System.out.println(userDTO.getPassword());
 		// Check if all required fields are present or correct
 		if(userDTO.getIdutente()!= 0) {
 			logger.error("ENDPOINT - signup - found idutente");
@@ -375,14 +376,6 @@ public class UtenteControllerImpl implements UtenteController {
 	public static boolean isFieldNullEmail(AuthRequestDTO authRequestDTO) {
 	    return authRequestDTO.getEmail() == null;
 	}
-	
-	/*
-	 * check if a email of userDTO is null
-	 */
-	public static boolean isFieldNull(UserDTO userDTO) {
-	    return userDTO.getEmail() == null;
-	}
-	
 	
 	/*
 	 * check if a Password of userDTO is null

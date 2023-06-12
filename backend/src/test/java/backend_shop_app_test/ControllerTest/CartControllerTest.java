@@ -185,13 +185,13 @@ public class CartControllerTest {
 
 				// Create an JSONobject 
 				JSONObject JSONObject = new JSONObject();
-				JSONObject.put("idUtente", 1);
+				JSONObject.put("idUtente", 0);
 				
 				MockHttpServletRequestBuilder request = MockMvcRequestBuilders.delete(ENDPOINT_CHECKOUT).contentType(APPLICATION_JSON_UTF8)
 						.content(JSONObject.toString());
 					
 				mockMvc.perform(request)
-				.andExpect(MockMvcResultMatchers.status().is(500));	
+				.andExpect(MockMvcResultMatchers.status().is(400));	
 			
 			}catch(Exception e) {
 			}

@@ -38,7 +38,7 @@ public class UtenteControllerTest {
 
 	private static final String ENDPOINT_SIGNUP = "/signup";
 	
-	private static final String ENDPOINT_GETPHONENUMBER = "/getPhoneNumber";
+	private static final String ENDPOINT_MAILFOROTP = "/mailForOtp";
 	
 	private static final String ENDPOINT_UPDATEPASSWORD = "/updatePassword";
 
@@ -177,7 +177,7 @@ public class UtenteControllerTest {
 
 			MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(ENDPOINT_GOOGLE).contentType(APPLICATION_JSON_UTF8)
 					.content(JSONObject.toString());
-				
+			
 			mockMvc.perform(request)
 			.andExpect(MockMvcResultMatchers.status().is(200));	
 		
@@ -193,11 +193,12 @@ public class UtenteControllerTest {
 			JSONObject JSONObject = new JSONObject();
 			JSONObject.put("email", "bomba@gmail.com");
 			JSONObject.put("password", "bomba");
-			JSONObject.put("address", "via bomba 13");
-			JSONObject.put("phonenumber", "3920872956");
 			JSONObject.put("name", "Marco");
 			JSONObject.put("surname", "Verdi");
+			JSONObject.put("address", "via bomba 13");
+			JSONObject.put("phonenumber", "3920872956");
 
+			System.out.println(JSONObject.toString());
 			MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(ENDPOINT_SIGNUP).contentType(APPLICATION_JSON_UTF8)
 					.content(JSONObject.toString());
 				
@@ -353,15 +354,14 @@ public class UtenteControllerTest {
 	}
 	
 	@Test
-	public void testgetPhoneNumberEndpoint() {
+	public void testEmailForOtp() {
 
 		try {			
 			// Create an JSONobject for email
 			JSONObject JSONObject = new JSONObject();
 			JSONObject.put("email", "bomba@gmail.com");
-			JSONObject.put("password", "bomba");
-
-			MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get(ENDPOINT_GETPHONENUMBER).contentType(APPLICATION_JSON_UTF8)
+			
+			MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(ENDPOINT_MAILFOROTP).contentType(APPLICATION_JSON_UTF8)
 					.content(JSONObject.toString());
 				
 			mockMvc.perform(request)
