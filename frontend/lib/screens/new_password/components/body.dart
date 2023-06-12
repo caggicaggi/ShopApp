@@ -84,12 +84,10 @@ class _NewPasswordState extends State<NewPasswordForm> {
           SizedBox(height: SizeConfig.screenHeight * 0.1),
           DefaultButton(
             text: "Continue",
-            press: () {
+            press: () async {
               if (_formKey.currentState!.validate()) {
                 _formKey.currentState!.save();
-                debugPrint(currentUser.email);
-                debugPrint(password);
-                if (setNewPassword(currentUser.email, password!) == 200) {
+                if (await setNewPassword(currentUser.email, password!) == 200) {
                   Navigator.pushNamed(
                       context, ResetPassSuccessScreen.routeName);
                 }

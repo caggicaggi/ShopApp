@@ -86,24 +86,29 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
             press: () async {
               if (_formKey.currentState!.validate()) {
                 currentUser.email = email!;
-                //Controllo presenza mail inserita
-                //if (checkEmailDb(email!) == 200) {
-                //Configurazione per OTP
-                myauth.setConfig(
-                    appEmail: "shopApp@otp.com",
-                    appName: "Email OTP",
-                    userEmail: email,
-                    otpLength: 5,
-                    otpType: OTPType.digitsOnly);
-                if (await myauth.sendOTP() == true) {
-                  debugPrint(context.toString());
-                  Navigator.pushNamed(context, OtpScreen.routeName);
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Oops, OTP send failed"),
-                  ));
+                //Check if existing mail
+                if (await checkEmailDb(email!) == 200) {
+                  debugPrint("Dopo");
+                  //Configurazione per OTP
+                  myauth.setConfig(
+                      appEmail: "shopApp@otp.com",
+                      appName: "Email OTP",
+                      userEmail: email,
+                      otpLength: 5,
+                      otpType: OTPType.digitsOnly);
+                  if (await myauth.sendOTP() == true) {
+                    debugPrint(context.toString());
+                    Navigator.pushNamed(context, OtpScreen.routeName);
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("Oops, OTP send failed"),
+                      ),
+                    );
+                  }
+                } else if (await checkEmailDb(email!) == 400) {
+                  addError(error: "Email inesistente");
                 }
-                //}
               }
             },
           ),

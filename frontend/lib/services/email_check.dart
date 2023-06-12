@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import '../constant.dart';
 
 Future<int> checkEmailDb(String email) async {
-  String completeUrl = '$url/mailFotOtp';
+  String completeUrl = '$url/mailForOtp';
 
   Map<String, String> requestBody = {
     "email": email,
@@ -13,7 +13,7 @@ Future<int> checkEmailDb(String email) async {
   try {
     http.Response response = await http.post(
       Uri.parse(completeUrl),
-      body: jsonEncode(requestBody),
+      body: requestBody,
     );
 
     if (response.statusCode == 200) {

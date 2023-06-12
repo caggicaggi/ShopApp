@@ -6,15 +6,15 @@ import '../constant.dart';
 Future<int> setNewPassword(String email, String password) async {
   String completeUrl = '$url/updatePassword';
 
-  Map<String, dynamic> requestBody = {
-    "email": email,
-    "password": password,
+  Map<String, String> requestBody = {
+    'email': email,
+    'password': password,
   };
 
   try {
     http.Response response = await http.post(
       Uri.parse(completeUrl),
-      body: jsonEncode(requestBody),
+      body: requestBody,
     );
 
     debugPrint(requestBody.toString());

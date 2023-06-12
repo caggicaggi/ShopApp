@@ -60,7 +60,7 @@ public class UtenteControllerImpl implements UtenteController {
  	 * @throws Exception if an error occurs while adding the user in db
  	 */
     @PostMapping("/signin")
-    public ResponseEntity<String> signin(@RequestBody AuthRequestDTO authRequest) throws Exception {
+    public ResponseEntity<String> signin(AuthRequestDTO authRequest) throws Exception {
 		logger.info("START ELABORATION ENDPOINT - signin - /signin");
     	// Declare the lists to include in the return JSON
     	List<ProductDTO> listOfProduct = new ArrayList<>();
@@ -118,7 +118,7 @@ public class UtenteControllerImpl implements UtenteController {
 	 * @throws Exception if an error occurs while adding the user in db
 	 */
     @PostMapping("/google")
-    public ResponseEntity<String> singUpGoogle(@RequestBody  AuthRequestGoogleDTO authRequest) throws Exception {
+    public ResponseEntity<String> singUpGoogle(AuthRequestGoogleDTO authRequest) throws Exception {
 		logger.info("START ELABORATION ENDPOINT - singUpGoogle - /google");
     	// Declare the lists to include in the return JSON
     	List<ProductDTO> listOfProduct = new ArrayList<>();
@@ -267,9 +267,11 @@ public class UtenteControllerImpl implements UtenteController {
  	 */
 	
     @PostMapping("/updatePassword")
-    public ResponseEntity<String> updatePassword(@RequestBody ForgotPasswordDTO forgotPasswordDTO) throws Exception {
+    public ResponseEntity<String> updatePassword( ForgotPasswordDTO forgotPasswordDTO) throws Exception {
 		logger.info("START ELABORATION ENDPOINT - updatePassword - /updatePassword");
     	UserDTO userDTO= new UserDTO();
+    	System.out.println(forgotPasswordDTO.getEmail());
+    	System.out.println(forgotPasswordDTO.getPassword());
 		// Check if all required fields are present or correct
 		if ( isFieldNull(forgotPasswordDTO) ) {
     		logger.error("ENDPOINT - updatePassword - This email is not valid ");
@@ -307,7 +309,7 @@ public class UtenteControllerImpl implements UtenteController {
  	 * @throws Exception if an error occurs while adding the user in db
  	 */
     @PostMapping("/mailForOtp")
-    public ResponseEntity<String> mailForOtp(@RequestBody OtpVerificationDTO otpVerificationDTO) throws Exception {
+    public ResponseEntity<String> mailForOtp( OtpVerificationDTO otpVerificationDTO) throws Exception {
 		logger.info("START ELABORATION ENDPOINT - mailForOtp - /mailForOtp");
 		// Check if all required fields are present or correct
 		if ( isFieldNull(otpVerificationDTO) || !isValidEmail(otpVerificationDTO.getEmail())) {
