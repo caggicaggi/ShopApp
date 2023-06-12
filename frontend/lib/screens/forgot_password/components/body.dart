@@ -8,6 +8,7 @@ import 'package:shop_app/components/form_error.dart';
 import 'package:shop_app/components/no_account_text.dart';
 import 'package:shop_app/main.dart';
 import 'package:shop_app/screens/otp/otp_screen.dart';
+import 'package:shop_app/services/email_check.dart';
 import 'package:shop_app/size_config.dart';
 import '../../../constant.dart';
 
@@ -54,7 +55,6 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
   final _formKey = GlobalKey<FormState>();
   String? email;
   String? password;
-  bool? remember = false;
   final List<String?> errors = [];
 
   void addError({String? error}) {
@@ -79,18 +79,20 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
         children: [
           buildEmailFormField(),
           SizedBox(height: getProportionateScreenHeight(30)),
-          //buildPasswordFormField(),
-          //SizedBox(height: getProportionateScreenHeight(20)),
           FormError(errors: errors),
           SizedBox(height: SizeConfig.screenHeight * 0.1),
           DefaultButton(
             text: "Continue",
             press: () async {
               if (_formKey.currentState!.validate()) {
+                currentUser.email = email!;
+                //Controllo presenza mail inserita
+                //if (checkEmailDb(email!) == 200) {
+                //Configurazione per OTP
                 myauth.setConfig(
                     appEmail: "shopApp@otp.com",
                     appName: "Email OTP",
-                    userEmail: "caggiano.mc98@gmail.com",
+                    userEmail: email,
                     otpLength: 5,
                     otpType: OTPType.digitsOnly);
                 if (await myauth.sendOTP() == true) {
@@ -101,6 +103,7 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
                     content: Text("Oops, OTP send failed"),
                   ));
                 }
+                //}
               }
             },
           ),
@@ -111,47 +114,17 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
     );
   }
 
-  TextFormField buildPasswordFormField() {
-    return TextFormField(
-      obscureText: true,
-      onSaved: (newValue) => password = newValue,
-      onChanged: (value) {
-        if (value.isNotEmpty) {
-          removeError(error: kPassNullError);
-        } else if (value.length >= 8) {
-          removeError(error: kShortPassError);
-        }
-        return null;
-      },
-      validator: (value) {
-        if (value!.isEmpty) {
-          addError(error: kPassNullError);
-          return "";
-        } else if (value.length < 8) {
-          addError(error: kShortPassError);
-          return "";
-        }
-        return null;
-      },
-      decoration: InputDecoration(
-        labelText: "New Password",
-        hintText: "Enter your new password",
-        floatingLabelBehavior: FloatingLabelBehavior.always,
-        suffixIcon: CustomSurffixIcon(svgIcon: "assets/icons/Lock.svg"),
-      ),
-    );
-  }
-
   TextFormField buildEmailFormField() {
     return TextFormField(
       keyboardType: TextInputType.emailAddress,
-      onSaved: (newValue) => email = newValue,
+      //onSaved: (newValue) => email = newValue,
       onChanged: (value) {
         if (value.isNotEmpty) {
           removeError(error: kEmailNullError);
         } else if (emailValidatorRegExp.hasMatch(value)) {
           removeError(error: kInvalidEmailError);
         }
+        email = value;
         return null;
       },
       validator: (value) {

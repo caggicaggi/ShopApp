@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shop_app/main.dart';
-import 'package:shop_app/screens/sign_in/components/sing_form.dart';
+import 'package:shop_app/screens/sign_in/components/sign_form.dart';
 import '../../../components/no_account_text.dart';
 import '../../../components/social_card.dart';
 import '../../../services/google_sign_in.dart';

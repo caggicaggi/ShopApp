@@ -1,8 +1,5 @@
 import 'dart:async';
-
-import 'package:flutter/material.dart';
 import 'package:shop_app/services/remove_wishlist.dart';
-
 import '../services/add_wishlist.dart';
 
 class Wishlist {
