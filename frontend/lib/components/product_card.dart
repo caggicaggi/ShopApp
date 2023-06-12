@@ -5,6 +5,7 @@ import '../main.dart';
 import '../models/Product.dart';
 import '../screens/details/details_screen.dart';
 import '../size_config.dart';
+import 'show_dialog.dart';
 
 class ProductCard extends StatefulWidget {
   const ProductCard({
@@ -78,10 +79,34 @@ class _ProductCardState extends State<ProductCard> {
                     onTap: () {
                       setState(() {
                         if (isFavorite) {
-                          wishlist.removeProduct(widget.product.idProduct);
+                          wishlist
+                              .removeProduct(widget.product.idProduct)
+                              .then((int statusCode) {
+                            switch (statusCode) {
+                              case 403:
+                                showSessionExpiredDialog(context);
+                                break;
+                              default:
+                                // Perform other actions for different status codes
+                                debugPrint('Status code: $statusCode');
+                            }
+                          });
+                          ;
                           isFavorite = false;
                         } else {
-                          wishlist.addProduct(widget.product.idProduct);
+                          wishlist
+                              .addProduct(widget.product.idProduct)
+                              .then((int statusCode) {
+                            switch (statusCode) {
+                              case 403:
+                                showSessionExpiredDialog(context);
+                                break;
+                              default:
+                                // Perform other actions for different status codes
+                                debugPrint('Status code: $statusCode');
+                            }
+                          });
+                          ;
                           isFavorite = true;
                         }
                       });

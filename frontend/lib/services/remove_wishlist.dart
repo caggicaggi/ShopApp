@@ -5,11 +5,15 @@ import '../constant.dart';
 import '../main.dart';
 
 Future<int> updateDbRemoveWishList(List<int> idProduct) async {
-  String completeUrl = '$url/wishlist/remove';
+  String completeUrl = '$url/wishList/remove';
+  debugPrint(idProduct.toString());
 
-  List<dynamic> requestBody = [
-    {'idProduct': idProduct, 'idUtente': currentUser.id}
-  ];
+  List<Map<String, dynamic>> requestBody = idProduct.map((idProduct) {
+    return {
+      "idProduct": idProduct,
+      "idUtente": currentUser.id,
+    };
+  }).toList();
 
   final headers = {
     'Authorization': 'Bearer $tokenJWT',

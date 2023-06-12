@@ -93,9 +93,10 @@ class Wishlist {
 
     if (removedProductIds.isNotEmpty) {
       _applyDeltaUpdate(); // Apply the delta update (print messages for removed product IDs)
+      final statusCode = await updateDbRemoveWishList(removedProductIds);
+
       removedProductIds.clear(); // Clear the removedProductIds list
       _cancelDebounce(); // Cancel debounce after manual backend update
-      final statusCode = await updateDbRemoveWishList(removedProductIds);
       return statusCode;
     }
 
