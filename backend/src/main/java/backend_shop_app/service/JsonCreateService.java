@@ -1,11 +1,9 @@
 package backend_shop_app.service;
 
 import java.util.List;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
-
 import backend_shop_app.dto.CartDTO;
 import backend_shop_app.dto.ProductDTO;
 import backend_shop_app.dto.UserDTO;

@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CartRequestDTO {
 
-	    private int idProduct; // Identifier for the product associated with the cart
+	    private int idProduct; 
 	    
-	    private int idUtente; // Identifier for the user associated with the cart
+	    private int idUtente; 
 	    
-	    private int quantity; // Identifier for the quantity associated with the cart
+	    private int quantity; 
 }

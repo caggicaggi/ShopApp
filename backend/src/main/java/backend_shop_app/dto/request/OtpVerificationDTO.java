@@ -4,17 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 /*
- * Class for signin request front-end
+ * Class for validated email 
  */
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthRequestDTO {
+public class OtpVerificationDTO {
 
-    private String email; 
-    
-    private String password; 
+	private String email;
 }

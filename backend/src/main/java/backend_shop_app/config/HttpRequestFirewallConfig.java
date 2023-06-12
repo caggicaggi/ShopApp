@@ -23,8 +23,8 @@ public class HttpRequestFirewallConfig {
 	    /* Rejects unauthorized HTTP methods.
 	    * This is specified to block tampering with HTTP verbs and XST attacks.
 	    */
-	    // example: Rejects the call with fetch.;
-	    List<String> allowedMethods = Arrays.asList("POST", "PUT", "DELETE","GET");
+	    
+	    List<String> allowedMethods = Arrays.asList("POST", "PUT", "DELETE");
 	    strictHttpFirewall.setAllowedHttpMethods(allowedMethods);
 	    
 	    /*
@@ -53,20 +53,6 @@ public class HttpRequestFirewallConfig {
 	    // example: http://localhost:9192/signin%25
 	    strictHttpFirewall.setAllowUrlEncodedPercent(false);
 
-	    // Rejects unauthorized hosts. 
-	    // strictHttpFirewall.setAllowedHostnames();
-	    
-	    /*
-	    List<String> allowedHostnames = Arrays.asList("localhost");
-	    Predicate<String> hostnamePredicate = allowedHostnames::contains;
-	    strictHttpFirewall.setAllowedHostnames(hostnamePredicate);
-	    */
-	    
-	    /*
-	    CorsConfiguration corsConfiguration = new CorsConfiguration();
-	    corsConfiguration.setAllowedOrigins(Arrays.asList("http://localhost:9192/signin"));
-	    */
-	    
 	    return strictHttpFirewall;
 	}
 

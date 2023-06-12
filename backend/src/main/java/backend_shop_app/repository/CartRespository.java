@@ -38,9 +38,4 @@ public interface CartRespository extends JpaRepository<CartDTO,Integer>{
 	 *  Deletes all cart items based on the provided product ID
 	 */
 	public void deleteAllByIdutente(int idutente);
-	
-	/*
-	 *  update cart item
-	 */
-	//public void update(CartDTO cartDTO);
 }

@@ -19,7 +19,8 @@ public class JwtUtil {
 	private String secret;
     
     // Expiration time of the JWT in millisecond
-    static int EXPIRATION_IN_MILLISECONDS = 120000;
+	@Value("${jwt.expirtation}")
+    private int EXPIRATION_IN_MILLISECONDS;
     
     /**
      * Extracts the email (subject) from the JWT token.

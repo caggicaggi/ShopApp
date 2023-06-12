@@ -13,6 +13,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CartCheckoutRequest {
 	
-    private int idUtente; // Identifier for the user 
+    private int idUtente;  
 
 }

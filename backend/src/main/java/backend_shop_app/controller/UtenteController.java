@@ -1,11 +1,11 @@
 package backend_shop_app.controller;
 
 import org.springframework.http.ResponseEntity;
-
 import backend_shop_app.dto.UserDTO;
 import backend_shop_app.dto.request.AuthRequestDTO;
 import backend_shop_app.dto.request.AuthRequestGoogleDTO;
 import backend_shop_app.dto.request.ForgotPasswordDTO;
+import backend_shop_app.dto.request.OtpVerificationDTO;
 
 public interface UtenteController {
 	
@@ -45,12 +45,12 @@ public interface UtenteController {
 	 */
     public ResponseEntity<String> singUpGoogle(  AuthRequestGoogleDTO authRequest) throws Exception;
     
-	/**
-	 * Handles the sign-up request.
+    /**
+	 * Verify email
 	 *
-	 * @param userDTO the user DTO containing sign-up information
-	 * @return the response entity indicating the success or failure of the sign-up process
-	 * @throws Exception if an error occurs during sign-up
+	 * @param OtpVerificationDTO the opt DTO containing email
+	 * @return the response entity which indicates whether the mail exists or not
+	 * @throws Exception if an error occurs 
 	 */
-    public ResponseEntity<String> getPhoneNumber(ForgotPasswordDTO forgotPasswordDTO) throws Exception;
+    public ResponseEntity<String> mailForOtp( OtpVerificationDTO otpVerificationDTO) throws Exception;
 }

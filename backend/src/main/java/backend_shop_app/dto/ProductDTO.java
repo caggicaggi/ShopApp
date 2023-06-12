@@ -22,7 +22,7 @@ public class ProductDTO {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private int idproduct; // Identifier for the product 
+	private int idproduct; // Identifier for the product - PK
     
 	private String title; // Identifier for the product's title
 	

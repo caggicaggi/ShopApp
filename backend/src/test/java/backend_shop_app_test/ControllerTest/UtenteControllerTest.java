@@ -76,14 +76,14 @@ public class UtenteControllerTest {
         userDTO.setPassword("bomba");
         JSONObject jsonToSend = new JSONObject();
         when(customUserDetailsService.getUserDTO(any())).thenReturn(userDTO);
-        when(customUserDetailsService.cryptoPassword(any())).thenReturn(userDTO);
+        when(customUserDetailsService.manageCredential(any())).thenReturn(userDTO);
         when(jsonCreateService.createJsonToSendSignIn(any(), any(), any(),
     			any(), any())).thenReturn(jsonToSend);
         when(jsonCreateService.createJsonToSendSignUp(any(), any(),anyInt()))
         	.thenReturn(jsonToSend);
         when(jsonCreateService.createJsonToForgotPassword(anyString())).thenReturn(jsonToSend);
         when(customUserDetailsService.getUserInformation(any())).thenReturn(userDTO);
-        when(customUserDetailsService.cryptoPassword(any())).thenReturn(userDTO);
+        when(customUserDetailsService.manageCredential(any())).thenReturn(userDTO);
 
 	}
 	

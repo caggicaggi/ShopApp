@@ -22,11 +22,11 @@ public class CartDTO {
 	
     @Id // Marks this field as the primary key of the entity
     @GeneratedValue(strategy = GenerationType.AUTO) // Generates the value for the primary key automatically
-    private int idcart; // Unique identifier for the cart
+    private int idcart; // Unique identifier for the cart - PK
 
-    private int idproduct; // Identifier for the product associated with the cart
+    private int idproduct; // Identifier for the product associated with the cart - FK
 
-    private int idutente; // Identifier for the user associated with the cart
+    private int idutente; // Identifier for the user associated with the cart - FK
 
     private int quantity; // Quantity of the product in the cart
 }

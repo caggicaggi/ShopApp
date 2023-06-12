@@ -1,10 +1,8 @@
 package backend_shop_app.service;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import backend_shop_app.dto.ProductDTO;
 import backend_shop_app.repository.ProductRepository;
 

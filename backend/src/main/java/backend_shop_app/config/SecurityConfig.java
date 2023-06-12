@@ -2,7 +2,6 @@ package backend_shop_app.config;
 
 import backend_shop_app.filter.JwtFilter;
 import backend_shop_app.service.CustomUserDetailsService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -57,12 +56,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     	http.csrf().disable().authorizeRequests().antMatchers("/google")
         .permitAll();
     	
-    	// Disable CSRF protection for the /google endpoint
+    	// Disable CSRF protection for the /updatePassword endpoint
     	http.csrf().disable().authorizeRequests().antMatchers("/updatePassword")
         .permitAll();
     	
-    	// Disable CSRF protection for the /getPhoneNumber endpoint
-    	http.csrf().disable().authorizeRequests().antMatchers("/getPhoneNumber")
+    	// Disable CSRF protection for the /mailForOtp endpoint
+    	http.csrf().disable().authorizeRequests().antMatchers("/mailForOtp")
         .permitAll();
     	
         http.csrf().disable().authorizeRequests().antMatchers("/signin")

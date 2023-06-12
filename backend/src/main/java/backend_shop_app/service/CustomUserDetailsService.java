@@ -3,7 +3,6 @@ package backend_shop_app.service;
 import backend_shop_app.dto.UserDTO;
 import backend_shop_app.dto.request.AuthRequestDTO;
 import backend_shop_app.repository.UserRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,9 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import com.google.common.hash.Hashing;
-
 import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
@@ -67,13 +64,14 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
     
     public int getEmail(UserDTO userDTO)  {
-    	// Call the repository to save the userDTO object in the database
+    	// Call the repository to get the userDTO object in the database
     	userDTO = userRepository.findByEmail(userDTO.getEmail());
     	if(userDTO == null)
     		return 0;
     	return 1;
     }
-	public UserDTO cryptoPassword(UserDTO userDTO) throws Exception {
+    
+	public UserDTO manageCredential(UserDTO userDTO) throws Exception {
 		try {
 		String salt = new String();
 		UserDTO user = new UserDTO();

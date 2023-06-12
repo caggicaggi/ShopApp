@@ -22,10 +22,10 @@ import lombok.NoArgsConstructor;
 public class WishListDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private int idwishlist; // Unique identifier for the product in wishList
+	private int idwishlist; // Unique identifier for the product in wishList - PK
     
-	private int idproduct; // Identifier for user's email
+	private int idproduct; // Identifier for user's email - FK
 	
-	private int idutente; // Identifier for user's email
+	private int idutente; // Identifier for user's email -FK
 	
 }

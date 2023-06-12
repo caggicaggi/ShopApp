@@ -23,7 +23,7 @@ import javax.persistence.Table;
 public class UserDTO {
     @Id // Marks this field as the primary key of the entity
     @GeneratedValue(strategy = GenerationType.AUTO) // Generates the value for the primary key automatically
-    private int idutente; // Unique identifier for the user
+    private int idutente; // Unique identifier for the user - PK
     
     private String email; // Identifier for user's email
     

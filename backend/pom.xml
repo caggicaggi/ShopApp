@@ -8,9 +8,9 @@
 		<version>2.2.2.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<artifactId>spring-security-jwt-example</artifactId>
+	<artifactId>ShopApp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-security-jwt-example</name>
+	<name>ShopApp</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
