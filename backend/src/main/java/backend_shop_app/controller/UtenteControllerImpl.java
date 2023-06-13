@@ -21,8 +21,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -30,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
  ************ UTENTE CONTROLLER MANAGEMENT ************
  */
 @RestController
+@RequestMapping(value= "/utente")
 public class UtenteControllerImpl implements UtenteController {
 	
     private static final Logger logger = LoggerFactory.getLogger(UtenteControllerImpl.class);
@@ -59,14 +62,12 @@ public class UtenteControllerImpl implements UtenteController {
  	 * @return ResponseEntity with a confirmation message or an error message if an exception occurs
  	 * @throws Exception if an error occurs while adding the user in db
  	 */
-    @PostMapping("/signin")
-    public ResponseEntity<String> signin(AuthRequestDTO authRequest) throws Exception {
+    public ResponseEntity<String> signin( AuthRequestDTO authRequest) throws Exception {
 		logger.info("START ELABORATION ENDPOINT - signin - /signin");
     	// Declare the lists to include in the return JSON
     	List<ProductDTO> listOfProduct = new ArrayList<>();
     	List<Integer> listOfIdWishList = new ArrayList<>();
     	List<CartDTO> listOfIdCart = new ArrayList<>();
-    	System.out.println(isFieldNull(authRequest));
 		// Check if all required fields are present or correct
 		if ( isFieldNull(authRequest) || !isValidEmail(authRequest.getEmail())) {
 			logger.error("ENDPOINT - signin - invalid email");
@@ -117,7 +118,6 @@ public class UtenteControllerImpl implements UtenteController {
 	 * @return ResponseEntity with a confirmation message or an error message if an exception occurs
 	 * @throws Exception if an error occurs while adding the user in db
 	 */
-    @PostMapping("/google")
     public ResponseEntity<String> singUpGoogle(AuthRequestGoogleDTO authRequest) throws Exception {
 		logger.info("START ELABORATION ENDPOINT - singUpGoogle - /google");
     	// Declare the lists to include in the return JSON
@@ -178,8 +178,7 @@ public class UtenteControllerImpl implements UtenteController {
 	 * @return ResponseEntity with a confirmation message or an error message if an exception occurs
 	 * @throws Exception if an error occurs while adding the user in db
 	 */
-	@PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestBody UserDTO userDTO) throws Exception {
+    public ResponseEntity<String> signup(UserDTO userDTO) throws Exception {
 		logger.info("START ELABORATION ENDPOINT - signup - /signup");
 		// Declare a list of products to generate
 		List<ProductDTO> listOfProduct = new ArrayList<>();
@@ -266,7 +265,6 @@ public class UtenteControllerImpl implements UtenteController {
  	 * @throws Exception if an error occurs while adding the user in db
  	 */
 	
-    @PostMapping("/updatePassword")
     public ResponseEntity<String> updatePassword( ForgotPasswordDTO forgotPasswordDTO) throws Exception {
 		logger.info("START ELABORATION ENDPOINT - updatePassword - /updatePassword");
     	UserDTO userDTO= new UserDTO();
@@ -308,7 +306,6 @@ public class UtenteControllerImpl implements UtenteController {
  	 * @return ResponseEntity with a confirmation message or an error message if an exception occurs
  	 * @throws Exception if an error occurs while adding the user in db
  	 */
-    @PostMapping("/mailForOtp")
     public ResponseEntity<String> mailForOtp( OtpVerificationDTO otpVerificationDTO) throws Exception {
 		logger.info("START ELABORATION ENDPOINT - mailForOtp - /mailForOtp");
 		// Check if all required fields are present or correct

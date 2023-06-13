@@ -1,6 +1,10 @@
 package backend_shop_app.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 import backend_shop_app.dto.UserDTO;
 import backend_shop_app.dto.request.AuthRequestDTO;
 import backend_shop_app.dto.request.AuthRequestGoogleDTO;
@@ -16,7 +20,8 @@ public interface UtenteController {
 	 * @return the response entity with the generated token
 	 * @throws Exception if an error occurs during token generation
 	 */
-	public ResponseEntity<String> signin(AuthRequestDTO authRequest) throws Exception;
+    @PostMapping(value = "/signin", consumes = "application/json", produces = "application/json")
+	public ResponseEntity<String> signin(@RequestBody AuthRequestDTO authRequest) throws Exception;
 	
 	/**
 	 * Handles the sign-up request.
@@ -25,7 +30,8 @@ public interface UtenteController {
 	 * @return the response entity indicating the success or failure of the sign-up process
 	 * @throws Exception if an error occurs during sign-up
 	 */
-	public ResponseEntity<String> signup(UserDTO userDTO) throws Exception;
+    @PostMapping("/signup")
+	public ResponseEntity<String> signup(@RequestBody UserDTO userDTO) throws Exception;
 	
 	/**
 	 * Update password.
@@ -34,7 +40,8 @@ public interface UtenteController {
 	 * @return the response entity indicating the success or failure of the updateProcess process
 	 * @throws Exception if an error occurs
 	 */
-    public ResponseEntity<String> updatePassword( ForgotPasswordDTO forgotPasswordDTO)  throws Exception;
+    @PostMapping("/updatePassword")
+    public ResponseEntity<String> updatePassword(@RequestBody ForgotPasswordDTO forgotPasswordDTO)  throws Exception;
     
 	/**
 	 * Handles the singInGoogle request.
@@ -43,7 +50,8 @@ public interface UtenteController {
 	 * @return the response entity indicating the success or failure of the sign-up process
 	 * @throws Exception if an error occurs during sign-in
 	 */
-    public ResponseEntity<String> singUpGoogle(  AuthRequestGoogleDTO authRequest) throws Exception;
+	@PostMapping("/google")
+    public ResponseEntity<String> singUpGoogle(@RequestBody  AuthRequestGoogleDTO authRequest) throws Exception;
     
     /**
 	 * Verify email
@@ -52,5 +60,6 @@ public interface UtenteController {
 	 * @return the response entity which indicates whether the mail exists or not
 	 * @throws Exception if an error occurs 
 	 */
-    public ResponseEntity<String> mailForOtp( OtpVerificationDTO otpVerificationDTO) throws Exception;
+    @GetMapping("/mailForOtp")
+    public ResponseEntity<String> mailForOtp(@RequestBody OtpVerificationDTO otpVerificationDTO) throws Exception;
 }

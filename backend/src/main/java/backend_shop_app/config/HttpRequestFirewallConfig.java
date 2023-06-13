@@ -7,9 +7,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
-import org.springframework.web.cors.CorsConfiguration;
-
-import com.google.common.base.Predicate;
 
 
 @Configuration
@@ -52,6 +49,8 @@ public class HttpRequestFirewallConfig {
 	    // Rejects URLs that contain an URL-encoded percent.
 	    // example: http://localhost:9192/signin%25
 	    strictHttpFirewall.setAllowUrlEncodedPercent(false);
+	    
+	    strictHttpFirewall.setAllowedHostnames(host -> host.equals("localhost") );
 
 	    return strictHttpFirewall;
 	}

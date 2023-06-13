@@ -49,22 +49,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
     	
     	// Disable CSRF protection for the /signup endpoint
-    	http.csrf().disable().authorizeRequests().antMatchers("/signup")
+    	http.csrf().disable().authorizeRequests().antMatchers("/utente/signup")
         .permitAll();
     	
     	// Disable CSRF protection for the /google endpoint
-    	http.csrf().disable().authorizeRequests().antMatchers("/google")
+    	http.csrf().disable().authorizeRequests().antMatchers("/utente/google")
         .permitAll();
     	
     	// Disable CSRF protection for the /updatePassword endpoint
-    	http.csrf().disable().authorizeRequests().antMatchers("/updatePassword")
+    	http.csrf().disable().authorizeRequests().antMatchers("/utente/updatePassword")
         .permitAll();
     	
     	// Disable CSRF protection for the /mailForOtp endpoint
-    	http.csrf().disable().authorizeRequests().antMatchers("/mailForOtp")
+    	http.csrf().disable().authorizeRequests().antMatchers("/utente/mailForOtp")
         .permitAll();
     	
-        http.csrf().disable().authorizeRequests().antMatchers("/signin")
+        http.csrf().disable().authorizeRequests().antMatchers("/utente/signin")
                 .permitAll().anyRequest().authenticated()
                 .and().exceptionHandling().and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
