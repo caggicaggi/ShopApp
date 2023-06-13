@@ -1,9 +1,7 @@
 package backend_shop_app.controller;
 
 import java.util.List;
-
 import org.springframework.http.ResponseEntity;
-
 import backend_shop_app.dto.request.CartCheckoutRequest;
 import backend_shop_app.dto.request.CartRequestDTO;
 
@@ -16,7 +14,7 @@ public interface CartController {
 	 * @return ResponseEntity with a confirmation message or an error message if an exception occurs
 	 * @throws Exception if an error occurs while adding the products to the cart
 	 */
-	public ResponseEntity<String> addProductInCart(List<CartRequestDTO> cartRequestDTO) 
+	public ResponseEntity<String> addProductInCart( List<CartRequestDTO> cartRequestDTO) 
 			throws Exception ;
 
 	/**
@@ -26,7 +24,7 @@ public interface CartController {
 	 * @return ResponseEntity with a confirmation message or an error message if an exception occurs
 	 * @throws Exception if an error occurs while removing the products from the cart
 	 */
-	public ResponseEntity<String> removeProductFromCart(List<CartRequestDTO> cartRequestDTO) 
+	public ResponseEntity<String> removeProductFromCart( List<CartRequestDTO> cartRequestDTO) 
 			throws Exception ;
 	
 	/**
@@ -36,7 +34,7 @@ public interface CartController {
 	 * @return ResponseEntity with a confirmation message or an error message if an exception occurs
 	 * @throws Exception if an error occurs while removing the products from the cart
 	 */
-	public ResponseEntity<String> removeAllProductFromCart(CartCheckoutRequest idUtente) 
+	public ResponseEntity<String> removeAllProductFromCart( CartCheckoutRequest idUtente) 
 			throws Exception ;
 
 }

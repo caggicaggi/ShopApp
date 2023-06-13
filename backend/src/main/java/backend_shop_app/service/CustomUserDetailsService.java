@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * User Management Class
  */
 @Service
-public class CustomUserDetailsService implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService,CustomUserDetailsServiceImpl {
 	
 	@Value("${password.secret}")
 	private String secret;
@@ -110,6 +110,14 @@ public class CustomUserDetailsService implements UserDetailsService {
 		return userDTO;
 	}
 	
+	public UserDTO getUserDTO(AuthRequestDTO authRequest) {
+		// Create a UserDTO object and set its fields based on the provided AuthRequestDTO
+	    	UserDTO userDTO = new UserDTO();
+	    	userDTO.setEmail(authRequest.getEmail());
+	    	userDTO.setPassword(authRequest.getPassword());
+	    	userDTO.setSalt("Load");
+	    	return userDTO;
+	}
 	
 	private static String getAlphaNumericString(int n)
 	{
@@ -129,12 +137,5 @@ public class CustomUserDetailsService implements UserDetailsService {
 		return Hashing.sha256().hashString(passwordAndSecretAndSalt, StandardCharsets.UTF_8).toString();
 	}
    
-	public UserDTO getUserDTO(AuthRequestDTO authRequest) {
-		// Create a UserDTO object and set its fields based on the provided AuthRequestDTO
-	    	UserDTO userDTO = new UserDTO();
-	    	userDTO.setEmail(authRequest.getEmail());
-	    	userDTO.setPassword(authRequest.getPassword());
-	    	userDTO.setSalt("Load");
-	    	return userDTO;
-	}
+
 }
