@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../main.dart';
 import '../models/CartList.dart';
 import '../models/User.dart';
@@ -11,11 +10,11 @@ Future<dynamic> showSessionExpiredDialog(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Session Expired'),
-        content: Text('Please sign in again.'),
+        title: const Text('Session Expired'),
+        content: const Text('Please sign in again.'),
         actions: [
           TextButton(
-            child: Text('OK'),
+            child: const Text('OK'),
             onPressed: () {
               Navigator.of(context).pop(); // Close the dialog
               currentUser = User();
@@ -37,10 +36,10 @@ Future<dynamic> showAddedDialog(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Product Added'),
+        title: const Text('Product Added'),
         actions: [
           TextButton(
-            child: Text('OK'),
+            child: const Text('OK'),
             onPressed: () {
               Navigator.of(context).pop(); // Close the dialog
               Navigator.of(context).pop(); // Go back to the previous screen
@@ -57,10 +56,10 @@ Future<dynamic> showProductRemoveDialog(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text('Product Removed'),
+        title: const Text('Product Removed'),
         actions: [
           TextButton(
-            child: Text('OK'),
+            child: const Text('OK'),
             onPressed: () {
               Navigator.of(context).pop(); // Close the dialog
             },

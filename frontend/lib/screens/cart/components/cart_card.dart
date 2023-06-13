@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:shop_app/main.dart';
 import '../../../constant.dart';
@@ -54,7 +56,7 @@ class CartCard extends StatelessWidget {
                       fontWeight: FontWeight.w600, color: kPrimaryColor),
                   children: [
                     TextSpan(
-                        text: " x${quantity}",
+                        text: " x$quantity",
                         style: Theme.of(context).textTheme.bodyText1),
                   ],
                 ),

@@ -62,6 +62,7 @@ public class UtenteControllerImpl implements UtenteController {
  	 * @return ResponseEntity with a confirmation message or an error message if an exception occurs
  	 * @throws Exception if an error occurs while adding the user in db
  	 */
+    @Override
     public ResponseEntity<String> signin( AuthRequestDTO authRequest) throws Exception {
 		logger.info("START ELABORATION ENDPOINT - signin - /signin");
     	// Declare the lists to include in the return JSON

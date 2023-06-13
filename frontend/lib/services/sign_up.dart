@@ -6,7 +6,7 @@ import '../../../constant.dart';
 import '../../../models/Product.dart';
 
 Future<int> requestSignUp(Map<String, String> userInfo) async {
-  String completeUrl = '$url/signup'; // API endpoint for sign-in
+  String completeUrl = '$url/utente/signup'; // API endpoint for sign-in
 
   try {
     http.Response response = await http.post(

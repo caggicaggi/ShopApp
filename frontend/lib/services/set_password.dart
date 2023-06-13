@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import '../constant.dart';
 
 Future<int> setNewPassword(String email, String password) async {
-  String completeUrl = '$url/updatePassword';
+  String completeUrl = '$url/utente/updatePassword';
 
   Map<String, String> requestBody = {
     'email': email,

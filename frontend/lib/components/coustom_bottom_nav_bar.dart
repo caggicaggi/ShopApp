@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shop_app/constant.dart';
@@ -52,18 +54,17 @@ class CustomBottomNavBar extends StatelessWidget {
                     Navigator.pushNamed(context, HomeScreen.routeName),
               ),
               IconButton(
-                icon: SvgPicture.asset("assets/icons/Heart Icon.svg",
-                color: MenuState.heart == selectedMenu
+                icon: SvgPicture.asset(
+                  "assets/icons/Heart Icon.svg",
+                  color: MenuState.heart == selectedMenu
                       ? kPrimaryColor
-                      : inActiveIconColor,),
+                      : inActiveIconColor,
+                ),
                 onPressed: () {
-                  List<Product> wishlistProducts =
-                      getInWishlistProducts(listOfProduct, wishlist.productIds);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          WishListDisplayScreen(),
+                      builder: (context) => WishListDisplayScreen(),
                     ),
                   );
                 },

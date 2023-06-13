@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:shop_app/components/default_button.dart';
-import '../../../constant.dart';
 import '../../../size_config.dart';
 
 class CheckoutCard extends StatelessWidget {

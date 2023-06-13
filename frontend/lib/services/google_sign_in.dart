@@ -12,7 +12,7 @@ Future<int> requestGoogleSignIn(
   String name,
   String surname,
 ) async {
-  String completeUrl = '$url/google';
+  String completeUrl = '$url/utente/google';
 
   Map<String, String> requestBody = {
     'email': email,

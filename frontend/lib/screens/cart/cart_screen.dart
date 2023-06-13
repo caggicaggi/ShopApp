@@ -1,8 +1,8 @@
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
 import '../../constant.dart';
-import '../../main.dart';
 import 'components/body.dart';
-import 'components/cart_card.dart';
 import 'components/check_out_card.dart';
 
 class CartScreen extends StatelessWidget {

@@ -1,6 +1,7 @@
+// ignore_for_file: prefer_const_constructors, file_names
+
 import 'dart:async';
 import 'package:flutter/cupertino.dart';
-import 'package:shop_app/main.dart';
 import '../services/add_cart.dart';
 import '../services/remove_cart.dart';
 
@@ -10,7 +11,7 @@ class CartList {
   Map<int, int> removedQuantities = {};
 
   Timer? _debounceTimer;
-  Duration _debounceDuration = Duration(seconds: 2);
+  final Duration _debounceDuration = Duration(seconds: 2);
 
   void initializeFromMap(Map<int, int> initialMap) {
     productQuantities = Map.from(initialMap);
@@ -56,12 +57,6 @@ class CartList {
     return completer.future;
   }
 
-  void _cancelDebounce() {
-    if (_debounceTimer != null && _debounceTimer!.isActive) {
-      _debounceTimer!.cancel();
-    }
-  }
-
   void _applyDeltaUpdate() {
     for (var entry in addedQuantities.entries) {
       var productId = entry.key;
@@ -105,8 +100,7 @@ class CartList {
 
     if (removedQuantities.isNotEmpty) {
       debugPrint('Removed quantities in DB: $removedQuantities');
-      final statusCode =
-          await updateDbRemove(removedQuantities);
+      final statusCode = await updateDbRemove(removedQuantities);
       _applyDeltaUpdate();
       removedQuantities.clear();
       return statusCode;

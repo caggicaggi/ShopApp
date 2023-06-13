@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 class Product {
   int idProduct;
   String title;
@@ -93,7 +95,7 @@ List<Product> demoProducts = [
     category: "Fashion",
     isPopular: false,
   ),
-   Product(
+  Product(
     idProduct: 7,
     images: [
       "https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/b47a303d-f770-430f-9b18-d53c5f059638/nikecourt-advantage-mens-tennis-pants-J1NztZ.png",

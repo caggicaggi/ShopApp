@@ -33,7 +33,7 @@ class Body extends StatelessWidget {
             press: () {},
           ),
           MenuCard(
-            text: "Log Out",
+            text: "Logout",
             icon: "assets/icons/Log out.svg",
             press: () {
               googleSignIn.signOut();

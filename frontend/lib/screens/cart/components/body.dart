@@ -1,12 +1,10 @@
+// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../../components/show_dialog.dart';
 import '../../../main.dart';
-import '../../../models/CartList.dart';
-import '../../../models/User.dart';
-import '../../../models/Wishlist.dart';
 import '../../../size_config.dart';
-import '../../sign_in/sign_in_screen.dart';
 import 'cart_card.dart';
 
 class Body extends StatefulWidget {
@@ -59,7 +57,6 @@ class _BodyState extends State<Body> {
                       debugPrint('Status code: $statusCode');
                   }
                 });
-                ;
               },
               background: Container(
                 padding: EdgeInsets.symmetric(horizontal: 20),

@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../constant.dart';
@@ -60,7 +62,7 @@ class _ProductCardState extends State<ProductCard> {
               const SizedBox(height: 10),
               Text(
                 widget.product.title,
-                style: TextStyle(color: Colors.black),
+                style: const TextStyle(color: Colors.black),
                 maxLines: 2,
               ),
               Row(
@@ -91,7 +93,7 @@ class _ProductCardState extends State<ProductCard> {
                                 debugPrint('Status code: $statusCode');
                             }
                           });
-                          ;
+
                           isFavorite = false;
                         } else {
                           wishlist
@@ -106,7 +108,7 @@ class _ProductCardState extends State<ProductCard> {
                                 debugPrint('Status code: $statusCode');
                             }
                           });
-                          ;
+
                           isFavorite = true;
                         }
                       });
@@ -124,8 +126,8 @@ class _ProductCardState extends State<ProductCard> {
                       child: SvgPicture.asset(
                         "assets/icons/Heart Icon_2.svg",
                         color: wishlist.isIdInWishList(widget.product.idProduct)
-                            ? Color(0xFFFF4848)
-                            : Color(0xFFDBDEE4),
+                            ? const Color(0xFFFF4848)
+                            : const Color(0xFFDBDEE4),
                       ),
                     ),
                   ),

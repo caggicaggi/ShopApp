@@ -50,7 +50,7 @@ public class HttpRequestFirewallConfig {
 	    // example: http://localhost:9192/signin%25
 	    strictHttpFirewall.setAllowUrlEncodedPercent(false);
 	    
-	    strictHttpFirewall.setAllowedHostnames(host -> host.equals("localhost") );
+	    //strictHttpFirewall.setAllowedHostnames(host -> host.equals("localhost") );
 
 	    return strictHttpFirewall;
 	}

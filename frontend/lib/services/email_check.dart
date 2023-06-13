@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import '../constant.dart';
 
 Future<int> checkEmailDb(String email) async {
-  String completeUrl = '$url/mailForOtp';
+  String completeUrl = '$url/utente/mailForOtp';
 
   Map<String, String> requestBody = {
     "email": email,

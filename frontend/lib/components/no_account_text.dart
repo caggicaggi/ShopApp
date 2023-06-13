@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../constant.dart';
 import '../screens/sign_up/sign_up_screen.dart';
 import '../size_config.dart';

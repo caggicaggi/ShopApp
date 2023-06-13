@@ -1,4 +1,7 @@
+// ignore_for_file: file_names
+
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:shop_app/services/remove_wishlist.dart';
 import '../services/add_wishlist.dart';
 
@@ -8,7 +11,8 @@ class Wishlist {
   List<int> removedProductIds = []; // List to track removed product IDs
 
   Timer? _debounceTimer; // Timer for debounce functionality
-  Duration _debounceDuration = Duration(seconds: 2); // Debounce duration
+  final Duration _debounceDuration =
+      const Duration(seconds: 2); // Debounce duration
 
   bool isIdInWishList(int id) {
     return productIds.contains(id);
@@ -46,12 +50,12 @@ class Wishlist {
 
   void _applyDeltaUpdate() {
     for (var productId in addedProductIds) {
-      print(
+      debugPrint(
           '$productId added to the wishlist'); // Print message for each added product ID
     }
 
     for (var productId in removedProductIds) {
-      print(
+      debugPrint(
           '$productId removed from the wishlist'); // Print message for each removed product ID
     }
   }
@@ -98,7 +102,7 @@ class Wishlist {
     }
 
     if (addedProductIds.isEmpty && removedProductIds.isEmpty) {
-      print('No changes since the last update');
+      debugPrint('No changes since the last update');
       // Print message if there are no changes
       return -1;
     }

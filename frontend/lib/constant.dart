@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:shop_app/size_config.dart';
 import 'dart:io';
@@ -60,4 +62,4 @@ OutlineInputBorder outlineInputBorder() {
 InternetAddress localhost = InternetAddress.loopbackIPv4;
 //String url = 'http://${localhost.address}:8080';
 //String url = 'http://192.168.0.6:9192';
-String url = 'http://192.168.178.62:9192';
+String url = 'http://192.168.178.104:9192';
