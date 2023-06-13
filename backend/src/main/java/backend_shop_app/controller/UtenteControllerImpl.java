@@ -66,7 +66,7 @@ public class UtenteControllerImpl implements UtenteController {
     	List<ProductDTO> listOfProduct = new ArrayList<>();
     	List<Integer> listOfIdWishList = new ArrayList<>();
     	List<CartDTO> listOfIdCart = new ArrayList<>();
-    	
+    	System.out.println(isFieldNull(authRequest));
 		// Check if all required fields are present or correct
 		if ( isFieldNull(authRequest) || !isValidEmail(authRequest.getEmail())) {
 			logger.error("ENDPOINT - signin - invalid email");

@@ -32,7 +32,7 @@ public class UtenteControllerTest {
 	public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
 			MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
 	
-	private static final String ENDPOINT_LOGIN = "/signin";
+	private static final String ENDPOINT_SIGNIN= "/signin";
 	
 	private static final String ENDPOINT_GOOGLE = "/google";
 
@@ -68,8 +68,7 @@ public class UtenteControllerTest {
 	@Before
 	public void init() throws Exception {
 		MockitoAnnotations.initMocks(this);
-		//mockMvc = MockMvcBuilders.standaloneSetup(controller).setControllerAdvice(new ErrorHandler()).build();
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(controller).setControllerAdvice().build();
      // Define the behavior of the mock object
         UserDTO userDTO = new UserDTO();
         userDTO.setEmail("bomba@gmail.com");
@@ -93,20 +92,22 @@ public class UtenteControllerTest {
 		try {			
 			// Create an JSONobject for email
 			JSONObject JSONObject = new JSONObject();
-			JSONObject.put("email", "bombagmail.com");
 			JSONObject.put("password", "bomba");
+			JSONObject.put("email", "prova@gmail");
 			
-			MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(ENDPOINT_LOGIN).contentType(APPLICATION_JSON_UTF8)
+			System.out.println(JSONObject);
+			System.out.println();
+			MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(ENDPOINT_SIGNIN).contentType(APPLICATION_JSON_UTF8)
 					.content(JSONObject.toString());
 				
 			mockMvc.perform(request)
 			.andExpect(MockMvcResultMatchers.status().is(400));	
 			
-			JSONObject.put("email", "bombagmail.com");
+			JSONObject.put("email", "provagmail.com");
 			JSONObject.put("password", "");
 			
-			MockHttpServletRequestBuilder requestBadPassword  = MockMvcRequestBuilders.post(ENDPOINT_LOGIN).contentType(APPLICATION_JSON_UTF8)
-					.content(JSONObject.toString());
+			MockHttpServletRequestBuilder requestBadPassword  = MockMvcRequestBuilders.post(ENDPOINT_SIGNIN).contentType(APPLICATION_JSON_UTF8)
+					.content("["+JSONObject+"]");
 				
 			mockMvc.perform(requestBadPassword)
 			.andExpect(MockMvcResultMatchers.status().is(400));	
@@ -114,8 +115,8 @@ public class UtenteControllerTest {
 			JSONObject.put("email", "");
 			JSONObject.put("password", "bomba");
 			
-			MockHttpServletRequestBuilder requestBadEmail = MockMvcRequestBuilders.post(ENDPOINT_LOGIN).contentType(APPLICATION_JSON_UTF8)
-					.content(JSONObject.toString());
+			MockHttpServletRequestBuilder requestBadEmail = MockMvcRequestBuilders.post(ENDPOINT_SIGNIN).contentType(APPLICATION_JSON_UTF8)
+					.content("["+JSONObject+"]");
 				
 			mockMvc.perform(requestBadEmail)
 			.andExpect(MockMvcResultMatchers.status().is(400));	
@@ -133,7 +134,7 @@ public class UtenteControllerTest {
 			JSONObject.put("email", "bomba@gmail.com");
 			JSONObject.put("password", "bomba");
 			
-			MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(ENDPOINT_LOGIN).contentType(APPLICATION_JSON_UTF8)
+			MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(ENDPOINT_SIGNIN).contentType(APPLICATION_JSON_UTF8)
 					.content(JSONObject.toString());
 				
 			mockMvc.perform(request)
@@ -198,7 +199,6 @@ public class UtenteControllerTest {
 			JSONObject.put("address", "via bomba 13");
 			JSONObject.put("phonenumber", "3920872956");
 
-			System.out.println(JSONObject.toString());
 			MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(ENDPOINT_SIGNUP).contentType(APPLICATION_JSON_UTF8)
 					.content(JSONObject.toString());
 				
@@ -209,6 +209,29 @@ public class UtenteControllerTest {
 		}
 	}
 	
+	@Test
+	public void testsingUpEndpoint_Error2() {
+		
+        when(customUserDetailsService.getEmail(any())).thenReturn(1);
+		try {			
+			// Create an JSONobject for email
+			JSONObject JSONObject = new JSONObject();
+			JSONObject.put("email", "bomba@gmail.com");
+			JSONObject.put("password", "bomba");
+			JSONObject.put("name", "Marco");
+			JSONObject.put("surname", "Verdi");
+			JSONObject.put("address", "via bomba 13");
+			JSONObject.put("phonenumber", "3920872956");
+
+			MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(ENDPOINT_SIGNUP).contentType(APPLICATION_JSON_UTF8)
+					.content(JSONObject.toString());
+				
+			mockMvc.perform(request)
+			.andExpect(MockMvcResultMatchers.status().is(400));	
+		
+		}catch(Exception e) {
+		}
+	}
 	@Test
 	public void testsingUpEndpoint_Error() {
 
@@ -359,7 +382,7 @@ public class UtenteControllerTest {
 		try {			
 			// Create an JSONobject for email
 			JSONObject JSONObject = new JSONObject();
-			JSONObject.put("email", "bomba@gmail.com");
+			JSONObject.put("email", "prova@gmail.com");
 			
 			MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(ENDPOINT_MAILFOROTP).contentType(APPLICATION_JSON_UTF8)
 					.content(JSONObject.toString());
