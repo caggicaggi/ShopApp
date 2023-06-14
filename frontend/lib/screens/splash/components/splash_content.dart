@@ -14,7 +14,7 @@ class SplashContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Spacer(),
+        const Spacer(),
         Text(
           "App",
           style: TextStyle(
@@ -27,7 +27,7 @@ class SplashContent extends StatelessWidget {
           text!,
           textAlign: TextAlign.center,
         ),
-        Spacer(flex: 2),
+        const Spacer(flex: 2),
         Image.asset(
           image!,
           height: getProportionateScreenHeight(265),

@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:shop_app/main.dart';
 import 'package:shop_app/screens/sign_in/components/sign_form.dart';
@@ -28,7 +30,7 @@ class Body extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text(
+                const Text(
                   "Sign in with your email and password  \nor continue with social media",
                   textAlign: TextAlign.center,
                 ),

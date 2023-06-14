@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: use_key_in_widget_constructors
 
+import 'package:flutter/material.dart';
 import 'components/body.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -8,7 +9,7 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sign Up"),
+        title: const Text("Sign Up"),
       ),
       body: Body(),
     );

@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, prefer_const_constructors_in_immutables
 
 import 'package:flutter/material.dart';
 import '../../components/coustom_bottom_nav_bar.dart';
@@ -9,7 +9,7 @@ import 'components/body.dart';
 
 class ProductDisplayScreen extends StatelessWidget {
   static String routeName = "/product_display";
-  
+
   final List<Product> productList;
 
   ProductDisplayScreen({required this.productList});

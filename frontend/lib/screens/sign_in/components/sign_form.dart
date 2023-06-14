@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, library_private_types_in_public_api, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import '../../../components/custom_surfix_icon.dart';
@@ -25,17 +25,19 @@ class _SignFormState extends State<SignForm> {
   int resp = -1;
 
   void addError({String? error}) {
-    if (!errors.contains(error))
+    if (!errors.contains(error)) {
       setState(() {
         errors.add(error);
       });
+    }
   }
 
   void removeError({String? error}) {
-    if (errors.contains(error))
+    if (errors.contains(error)) {
       setState(() {
         errors.remove(error);
       });
+    }
   }
 
   @override
@@ -80,8 +82,9 @@ class _SignFormState extends State<SignForm> {
                 _formKey.currentState!.save();
                 KeyboardUtil.hideKeyboard(context);
                 resp = await requestSignIn(email!, password!);
-                if (resp == 200)
+                if (resp == 200) {
                   Navigator.pushNamed(context, HomeScreen.routeName);
+                }
               }
             },
           ),
@@ -100,7 +103,7 @@ class _SignFormState extends State<SignForm> {
         } else if (value.length >= 8) {
           removeError(error: kShortPassError);
         }
-        return null;
+        return;
       },
       validator: (value) {
         if (value!.isEmpty) {
@@ -131,7 +134,7 @@ class _SignFormState extends State<SignForm> {
         } else if (emailValidatorRegExp.hasMatch(value)) {
           removeError(error: kInvalidEmailError);
         }
-        return null;
+        return;
       },
       validator: (value) {
         if (value!.isEmpty) {

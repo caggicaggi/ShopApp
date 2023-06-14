@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:shop_app/components/default_button.dart';
 import 'package:shop_app/main.dart';
@@ -62,7 +64,7 @@ class _OtpFormState extends State<OtpForm> {
                 child: TextFormField(
                   autofocus: true,
                   obscureText: true,
-                  style: TextStyle(fontSize: 24),
+                  style: const TextStyle(fontSize: 24),
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   decoration: otpInputDecoration,
@@ -77,7 +79,7 @@ class _OtpFormState extends State<OtpForm> {
                 child: TextFormField(
                   focusNode: pin2FocusNode,
                   obscureText: true,
-                  style: TextStyle(fontSize: 24),
+                  style: const TextStyle(fontSize: 24),
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   decoration: otpInputDecoration,
@@ -92,7 +94,7 @@ class _OtpFormState extends State<OtpForm> {
                 child: TextFormField(
                   focusNode: pin3FocusNode,
                   obscureText: true,
-                  style: TextStyle(fontSize: 24),
+                  style: const TextStyle(fontSize: 24),
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   decoration: otpInputDecoration,
@@ -107,7 +109,7 @@ class _OtpFormState extends State<OtpForm> {
                 child: TextFormField(
                   focusNode: pin4FocusNode,
                   obscureText: true,
-                  style: TextStyle(fontSize: 24),
+                  style: const TextStyle(fontSize: 24),
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   decoration: otpInputDecoration,
@@ -122,7 +124,7 @@ class _OtpFormState extends State<OtpForm> {
                 child: TextFormField(
                   focusNode: pin5FocusNode,
                   obscureText: true,
-                  style: TextStyle(fontSize: 24),
+                  style: const TextStyle(fontSize: 24),
                   keyboardType: TextInputType.number,
                   textAlign: TextAlign.center,
                   decoration: otpInputDecoration,
@@ -130,7 +132,6 @@ class _OtpFormState extends State<OtpForm> {
                     if (value.length == 1) {
                       otp += value;
                       pin5FocusNode!.unfocus();
-                      // Then you need to check is the code is correct or not
                     }
                   },
                 ),

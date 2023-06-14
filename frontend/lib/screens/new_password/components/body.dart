@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, use_key_in_widget_constructors, non_constant_identifier_names, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 import 'package:shop_app/components/custom_surfix_icon.dart';
@@ -57,17 +57,19 @@ class _NewPasswordState extends State<NewPasswordForm> {
   final List<String?> errors = [];
 
   void addError({String? error}) {
-    if (!errors.contains(error))
+    if (!errors.contains(error)) {
       setState(() {
         errors.add(error);
       });
+    }
   }
 
   void removeError({String? error}) {
-    if (errors.contains(error))
+    if (errors.contains(error)) {
       setState(() {
         errors.remove(error);
       });
+    }
   }
 
   @override

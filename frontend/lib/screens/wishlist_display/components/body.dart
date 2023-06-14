@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors_in_immutables, library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:shop_app/screens/details/details_screen.dart';
 import 'package:shop_app/components/product_list_item.dart';
@@ -37,7 +39,8 @@ class _BodyState extends State<Body> {
                 child: ProductListItem(
                   imageUrl: product.images[0],
                   name: product.title,
-                  information: '${product.price} € | ${product.category} | ${product.rating}',
+                  information:
+                      '${product.price} € | ${product.category} | ${product.rating}',
                 ),
               ),
           ],

@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors_in_immutables, deprecated_member_use
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../../constant.dart';
@@ -8,7 +10,6 @@ class CustomAppBar extends StatelessWidget {
 
   CustomAppBar({required this.rating});
 
-  @override
   // AppBar().preferredSize.height provide us the height that appy on our app bar
   Size get preferredSize => Size.fromHeight(AppBar().preferredSize.height);
 
@@ -39,7 +40,7 @@ class CustomAppBar extends StatelessWidget {
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
               decoration: BoxDecoration(
