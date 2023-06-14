@@ -12,7 +12,7 @@ import backend_shop_app.repository.WishListRepository;
  * WishList management class
  */
 @Service
-public class WishListService {
+public class WishListService implements WishListServiceImpl{
 	
 	@Autowired
 	WishListRepository wishListRepository;

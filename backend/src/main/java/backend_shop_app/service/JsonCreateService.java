@@ -12,7 +12,7 @@ import backend_shop_app.dto.UserDTO;
  * JSON management class
  */
 @Service
-public class JsonCreateService {
+public class JsonCreateService implements JsonCreateServiceImpl {
 	
 	/**
 	 * Creates a JSON object to send for sign-up.

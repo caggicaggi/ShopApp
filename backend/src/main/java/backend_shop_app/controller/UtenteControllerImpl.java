@@ -8,10 +8,15 @@ import backend_shop_app.dto.request.AuthRequestGoogleDTO;
 import backend_shop_app.dto.request.ForgotPasswordDTO;
 import backend_shop_app.dto.request.OtpVerificationDTO;
 import backend_shop_app.service.CartService;
+import backend_shop_app.service.CartServiceImpl;
 import backend_shop_app.service.CustomUserDetailsService;
+import backend_shop_app.service.CustomUserDetailsServiceImpl;
 import backend_shop_app.service.JsonCreateService;
+import backend_shop_app.service.JsonCreateServiceImpl;
 import backend_shop_app.service.ProductService;
+import backend_shop_app.service.ProductServiceImpl;
 import backend_shop_app.service.WishListService;
+import backend_shop_app.service.WishListServiceImpl;
 import backend_shop_app.util.JwtUtil;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,19 +46,19 @@ public class UtenteControllerImpl implements UtenteController {
     private JwtUtil jwtUtil;
     
     @Autowired
-    private ProductService productService;
+    private ProductServiceImpl productServiceImpl;
     
     @Autowired
-    private WishListService wishListService;
+    private WishListServiceImpl wishListServiceImpl;
     
     @Autowired
-    private CartService cartService;
+    private CartServiceImpl cartServiceImpl;
     
     @Autowired
-    private JsonCreateService jsonCreateService;
+    private JsonCreateServiceImpl jsonCreateServiceImpl;
     
     @Autowired
-    private CustomUserDetailsService customUserDetailsService;
+    private CustomUserDetailsServiceImpl customUserDetailsServiceImpl;
     
     /**
  	 * Endpoint to singin in application.
@@ -76,14 +81,14 @@ public class UtenteControllerImpl implements UtenteController {
 		}
 		
     	// Retrieve the user
-    	UserDTO userDTO = customUserDetailsService.getUserDTO(authRequest);
+    	UserDTO userDTO = customUserDetailsServiceImpl.getUserDTO(authRequest);
     	
     	// Set the Salt to indicate that the salt should be generated
     	userDTO.setSalt("Load");
     	
     	// Retrieve the lists and check if the password is correct
     	try {
-			userDTO = customUserDetailsService.manageCredential(userDTO);
+			userDTO = customUserDetailsServiceImpl.manageCredential(userDTO);
 		} catch (Exception e) {
 			logger.error("ENDPOINT - signin - incorrect email");
     		return new ResponseEntity<String>("Incorrect Email", HttpStatus.BAD_REQUEST);
@@ -95,16 +100,16 @@ public class UtenteControllerImpl implements UtenteController {
     	}
     	
     	// Retrieve the list of products
-    	listOfProduct = productService.getListOfProduct();
+    	listOfProduct = productServiceImpl.getListOfProduct();
     	
     	// Retrieve the list of wish list items for the user
-    	listOfIdWishList = wishListService.getListOfWishList(userDTO.getIdutente());
+    	listOfIdWishList = wishListServiceImpl.getListOfWishList(userDTO.getIdutente());
     	
     	// Retrieve the list of cart items for the user
-    	listOfIdCart = cartService.getListOfIdCart(userDTO.getIdutente());
+    	listOfIdCart = cartServiceImpl.getListOfIdCart(userDTO.getIdutente());
     	
     	// Create the JSON to be sent as the return value
-    	JSONObject jsonToSend = jsonCreateService.createJsonToSendSignIn(
+    	JSONObject jsonToSend = jsonCreateServiceImpl.createJsonToSendSignIn(
     			jwtUtil.generateToken(userDTO.getEmail()), listOfProduct, userDTO,
     			listOfIdWishList, listOfIdCart);
 
@@ -119,7 +124,7 @@ public class UtenteControllerImpl implements UtenteController {
 	 * @return ResponseEntity with a confirmation message or an error message if an exception occurs
 	 * @throws Exception if an error occurs while adding the user in db
 	 */
-    public ResponseEntity<String> singUpGoogle(AuthRequestGoogleDTO authRequest) throws Exception {
+    public ResponseEntity<String> singUpGoogle(  AuthRequestGoogleDTO authRequest) throws Exception {
 		logger.info("START ELABORATION ENDPOINT - singUpGoogle - /google");
     	// Declare the lists to include in the return JSON
     	List<ProductDTO> listOfProduct = new ArrayList<>();
@@ -134,7 +139,7 @@ public class UtenteControllerImpl implements UtenteController {
     	
     	// check if the email exists or is to be inserted in the db
     	try {
-			 userDTO = customUserDetailsService.getUserInformation(authRequest.getEmail());
+			 userDTO = customUserDetailsServiceImpl.getUserInformation(authRequest.getEmail());
 			 
 			 if ( isFieldNull(userDTO) ) {
 				 	 userDTO = new UserDTO();
@@ -146,7 +151,7 @@ public class UtenteControllerImpl implements UtenteController {
 					 userDTO.setSurname(authRequest.getSurname());
 					 userDTO.setName(authRequest.getName());
 				 	// Save the user in the table
-		        	customUserDetailsService.signup(userDTO);
+		        	customUserDetailsServiceImpl.signup(userDTO);
 				}
 		} catch (Exception e) {
 			logger.error("ENDPOINT - singUpGoogle - an error was occured " + e.toString());
@@ -155,16 +160,16 @@ public class UtenteControllerImpl implements UtenteController {
     	
     	
     	// Retrieve the list of products
-    	listOfProduct = productService.getListOfProduct();
+    	listOfProduct = productServiceImpl.getListOfProduct();
     	
     	// Retrieve the list of wish list items for the user
-    	listOfIdWishList = wishListService.getListOfWishList(userDTO.getIdutente());
+    	listOfIdWishList = wishListServiceImpl.getListOfWishList(userDTO.getIdutente());
     	
     	// Retrieve the list of cart items for the user
-    	listOfIdCart = cartService.getListOfIdCart(userDTO.getIdutente());
+    	listOfIdCart = cartServiceImpl.getListOfIdCart(userDTO.getIdutente());
     	
     	// Create the JSON to be sent as the return value
-    	JSONObject jsonToSend = jsonCreateService.createJsonToSendSignIn(
+    	JSONObject jsonToSend = jsonCreateServiceImpl.createJsonToSendSignIn(
     			jwtUtil.generateToken(userDTO.getEmail()), listOfProduct, userDTO,
     			listOfIdWishList, listOfIdCart);
     	
@@ -179,7 +184,7 @@ public class UtenteControllerImpl implements UtenteController {
 	 * @return ResponseEntity with a confirmation message or an error message if an exception occurs
 	 * @throws Exception if an error occurs while adding the user in db
 	 */
-    public ResponseEntity<String> signup(UserDTO userDTO) throws Exception {
+    public ResponseEntity<String> signup( UserDTO userDTO) throws Exception {
 		logger.info("START ELABORATION ENDPOINT - signup - /signup");
 		// Declare a list of products to generate
 		List<ProductDTO> listOfProduct = new ArrayList<>();
@@ -226,7 +231,7 @@ public class UtenteControllerImpl implements UtenteController {
 	    }
 	    
 		//check if email already exist
-		int checkEmail = customUserDetailsService.getEmail(userDTO);
+		int checkEmail = customUserDetailsServiceImpl.getEmail(userDTO);
 		
 		if(checkEmail == 1) {
 			logger.error("ENDPOINT - signup - email already exist");
@@ -237,20 +242,20 @@ public class UtenteControllerImpl implements UtenteController {
         	userDTO.setSalt("Generate");
         	
         	// Manage credential 
-        	UserDTO user = customUserDetailsService.manageCredential(userDTO);
+        	UserDTO user = customUserDetailsServiceImpl.manageCredential(userDTO);
         	
         	// Save the user in the table
-        	customUserDetailsService.signup(user);
+        	customUserDetailsServiceImpl.signup(user);
         	
         	// Retrieve the list of products to be sent as the return value
-        	listOfProduct = productService.getListOfProduct();
+        	listOfProduct = productServiceImpl.getListOfProduct();
         } catch (Exception ex) {
 			logger.error("ENDPOINT - signup - error in call to services: " + ex.toString());
             return new ResponseEntity<String>("An error was occured", HttpStatus.INTERNAL_SERVER_ERROR);
         }
         
         // Create the JSON to be sent as the return value
-        JSONObject jsonToSend = jsonCreateService.createJsonToSendSignUp(
+        JSONObject jsonToSend = jsonCreateServiceImpl.createJsonToSendSignUp(
         		jwtUtil.generateToken(userDTO.getEmail()), listOfProduct, userDTO.getIdutente());
         
 		logger.info("END ELABORATION ENDPOINT - signup - /signup");
@@ -266,7 +271,7 @@ public class UtenteControllerImpl implements UtenteController {
  	 * @throws Exception if an error occurs while adding the user in db
  	 */
 	
-    public ResponseEntity<String> updatePassword( ForgotPasswordDTO forgotPasswordDTO) throws Exception {
+    public ResponseEntity<String> updatePassword(  ForgotPasswordDTO forgotPasswordDTO) throws Exception {
 		logger.info("START ELABORATION ENDPOINT - updatePassword - /updatePassword");
     	UserDTO userDTO= new UserDTO();
     	System.out.println(forgotPasswordDTO.getEmail());
@@ -282,9 +287,9 @@ public class UtenteControllerImpl implements UtenteController {
     		userDTO.setEmail(forgotPasswordDTO.getEmail());
     		userDTO.setPassword(forgotPasswordDTO.getPassword());
     		userDTO.setSalt("Generate");
-			userDTO = customUserDetailsService.manageCredential(userDTO);
+			userDTO = customUserDetailsServiceImpl.manageCredential(userDTO);
 			// Save the user in the table
-        	customUserDetailsService.updatePassword(userDTO);
+        	customUserDetailsServiceImpl.updatePassword(userDTO);
         	
 		} catch (Exception e) {
     		logger.error("ENDPOINT - updatePassword - This email is not correct ");
@@ -307,7 +312,7 @@ public class UtenteControllerImpl implements UtenteController {
  	 * @return ResponseEntity with a confirmation message or an error message if an exception occurs
  	 * @throws Exception if an error occurs while adding the user in db
  	 */
-    public ResponseEntity<String> mailForOtp( OtpVerificationDTO otpVerificationDTO) throws Exception {
+    public ResponseEntity<String> mailForOtp(  OtpVerificationDTO otpVerificationDTO) throws Exception {
 		logger.info("START ELABORATION ENDPOINT - mailForOtp - /mailForOtp");
 		// Check if all required fields are present or correct
 		if ( isFieldNull(otpVerificationDTO) || !isValidEmail(otpVerificationDTO.getEmail())) {
@@ -316,7 +321,7 @@ public class UtenteControllerImpl implements UtenteController {
 		}
 		
     	// Retrieve the user
-    	UserDTO userDTO = customUserDetailsService.getUserInformation(otpVerificationDTO.getEmail());
+    	UserDTO userDTO = customUserDetailsServiceImpl.getUserInformation(otpVerificationDTO.getEmail());
     	
     	// check if the email is present
     	if (userDTO==null) {

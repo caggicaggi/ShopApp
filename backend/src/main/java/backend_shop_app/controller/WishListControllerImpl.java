@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import backend_shop_app.dto.request.CartCheckoutRequest;
 import backend_shop_app.dto.request.WishListRequestDTO;
 import backend_shop_app.service.WishListService;
+import backend_shop_app.service.WishListServiceImpl;
 
 
 /*
@@ -27,7 +28,7 @@ public class WishListControllerImpl implements WishListController {
     private static final Logger logger = LoggerFactory.getLogger(WishListControllerImpl.class);
 
 	@Autowired
-	WishListService wishListService;
+	WishListServiceImpl wishListServiceImpl;
 	
 	/**
 	 * Endpoint to add one or more products to the wishlist.
@@ -51,7 +52,7 @@ public class WishListControllerImpl implements WishListController {
 		}
 		
 		// Call the service to add products to the wishlist
-		int countElement = wishListService.addProductInWishList(wishListRequestDTO);
+		int countElement = wishListServiceImpl.addProductInWishList(wishListRequestDTO);
 		
 		//check if front-end send element but it not added
 		if(countElement==0 && wishListRequestDTO.size()>0) {
@@ -84,7 +85,7 @@ public class WishListControllerImpl implements WishListController {
 			}
 		}
 		// Call the service to remove products from the wishlist
-		int countElement = wishListService.removeProductInWishList(wishListRequestDTO);
+		int countElement = wishListServiceImpl.removeProductInWishList(wishListRequestDTO);
 		
 		//check if front-end sent element but it not added
 		if(countElement==0 && wishListRequestDTO.size()>0) {
@@ -112,7 +113,7 @@ public class WishListControllerImpl implements WishListController {
 			return new ResponseEntity<String>("IdUtente are missing", HttpStatus.BAD_REQUEST);
 		}
 		// Call the cartService to remove the products from the cart
-		int countElement = wishListService.removeAllProductInWishList(cartCheckoutRequest.getIdUtente());
+		int countElement = wishListServiceImpl.removeAllProductInWishList(cartCheckoutRequest.getIdUtente());
 
 		if (countElement == 0) {
 			logger.info("ENDPOINT - removeAllProductFromWishList - with this IdUtente there are no products in the wishList");

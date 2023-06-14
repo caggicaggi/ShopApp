@@ -1,9 +1,7 @@
 package backend_shop_app.controller;
 
 import java.util.List;
-
 import org.springframework.http.ResponseEntity;
-
 import backend_shop_app.dto.request.CartCheckoutRequest;
 import backend_shop_app.dto.request.WishListRequestDTO;
 
@@ -16,7 +14,7 @@ public interface WishListController {
 	 * @return ResponseEntity with a confirmation message or an error message if an exception occurs
 	 * @throws Exception if an error occurs while adding the products to the wishList
 	 */
-	public ResponseEntity<String> addProductInWishList(List<WishListRequestDTO> wishListRequestDTO) 
+	public ResponseEntity<String> addProductInWishList( List<WishListRequestDTO> wishListRequestDTO) 
 			throws Exception ;
 	
 	/**
@@ -26,7 +24,7 @@ public interface WishListController {
 	 * @return ResponseEntity with a confirmation message or an error message if an exception occurs
 	 * @throws Exception if an error occurs while adding the products to the wish List
 	 */
-	public ResponseEntity<String> removeProductInWishList(List<WishListRequestDTO> wishListRequestDTO) 
+	public ResponseEntity<String> removeProductInWishList( List<WishListRequestDTO> wishListRequestDTO) 
 			throws Exception ;
 	
 	/**
@@ -36,7 +34,7 @@ public interface WishListController {
 	 * @return ResponseEntity with a confirmation message or an error message if an exception occurs
 	 * @throws Exception if an error occurs while removing the products from wish List
 	 */
-	public ResponseEntity<String> removeAllProductFromWishList(CartCheckoutRequest idUtente) 
+	public ResponseEntity<String> removeAllProductFromWishList( CartCheckoutRequest idUtente) 
 			throws Exception ;
 
 }

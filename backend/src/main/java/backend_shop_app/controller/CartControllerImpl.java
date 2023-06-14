@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import backend_shop_app.dto.request.CartCheckoutRequest;
 import backend_shop_app.dto.request.CartRequestDTO;
 import backend_shop_app.service.CartService;
+import backend_shop_app.service.CartServiceImpl;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +28,7 @@ public class CartControllerImpl implements CartController {
     private static final Logger logger = LoggerFactory.getLogger(CartControllerImpl.class);
 
 	@Autowired
-	CartService cartService;
+	CartServiceImpl cartServiceImpl;
 
 	/**
 	 * Endpoint to add one or more products to the shopping cart.
@@ -51,7 +53,7 @@ public class CartControllerImpl implements CartController {
 			}
 		}
 		// Call the cartService to add the products to the cart
-		int countElement = cartService.addProductInCart(cartRequestDTO);
+		int countElement = cartServiceImpl.addProductInCart(cartRequestDTO);
 
 		//check if front-end send element but it not added
 		if (countElement == 0 && cartRequestDTO.size()>0) {
@@ -86,7 +88,7 @@ public class CartControllerImpl implements CartController {
 			}
 		}
 		// Call the cartService to remove the products from the cart
-		int countElement = cartService.removeProductInCart(cartRequestDTO);
+		int countElement = cartServiceImpl.removeProductInCart(cartRequestDTO);
 
 		//check if front-end send element but it not added
 		if (countElement == 0 && cartRequestDTO.size()>0) {
@@ -114,7 +116,7 @@ public class CartControllerImpl implements CartController {
 			return new ResponseEntity<String>("IdUtente are missing or incorrect", HttpStatus.BAD_REQUEST);
 		}
 		// Call the cartService to remove the products from the cart
-		int countElement = cartService.removeAllProductInCart(cartCheckoutRequest.getIdUtente());
+		int countElement = cartServiceImpl.removeAllProductInCart(cartCheckoutRequest.getIdUtente());
 
 		if (countElement == 0) {
 			logger.info("ENDPOINT - removeProductFromCart - with this IdUtente there are no products in the cart");

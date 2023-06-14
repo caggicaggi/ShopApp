@@ -11,7 +11,7 @@ import backend_shop_app.repository.CartRespository;
  * Cart Management Class
  */
 @Service
-public class CartService {
+public class CartService implements CartServiceImpl {
 	
 	@Autowired
 	CartRespository cartRepository;

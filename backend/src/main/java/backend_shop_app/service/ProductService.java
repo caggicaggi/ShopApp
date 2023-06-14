@@ -10,7 +10,7 @@ import backend_shop_app.repository.ProductRepository;
  * Product Management Class
  */
 @Service
-public class ProductService {
+public class ProductService implements ProductServiceImpl{
 	
 	@Autowired
 	ProductRepository productRepository;
