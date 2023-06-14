@@ -37,7 +37,6 @@ public class CartControllerImpl implements CartController {
 	 * @return ResponseEntity with a confirmation message or an error message if an exception occurs
 	 * @throws Exception if an error occurs while adding the products to the cart
 	 */
-	@PutMapping("/add")
 	public ResponseEntity<String> addProductInCart(@RequestBody List<CartRequestDTO> cartRequestDTO) throws Exception {
 		logger.info("START ELABORATION ENDPOINT - addPrductInCart - /cart/add");
 		// Check if all required fields are present
@@ -71,7 +70,6 @@ public class CartControllerImpl implements CartController {
 	 * @return ResponseEntity with a confirmation message or an error message if an exception occurs
 	 * @throws Exception if an error occurs while removing the products from the cart
 	 */
-	@DeleteMapping("/remove")
 	public ResponseEntity<String> removeProductFromCart(@RequestBody List<CartRequestDTO> cartRequestDTO)
 			throws Exception {
 		logger.info("START ELABORATION ENDPOINT - removeProductFromCart - /cart/remove");
@@ -106,7 +104,6 @@ public class CartControllerImpl implements CartController {
 	 * @return ResponseEntity with a confirmation message or an error message if an exception occurs
 	 * @throws Exception if an error occurs while removing the products from the cart
 	 */
-	@DeleteMapping("/checkout")
 	public ResponseEntity<String> removeAllProductFromCart(@RequestBody CartCheckoutRequest cartCheckoutRequest)
 			throws Exception {
 		logger.info("START ELABORATION ENDPOINT - removeProductFromCart - /cart/checkout");

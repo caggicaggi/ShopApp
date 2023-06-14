@@ -7,14 +7,13 @@ import lombok.NoArgsConstructor;
 /*
  * Class for cart request from front-end 
  */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class CartRequestDTO {
 
 	    private int idProduct; 
-	    
 	    private int idUtente; 
-	    
 	    private int quantity; 
 }

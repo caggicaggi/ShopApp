@@ -6,5 +6,10 @@ import backend_shop_app.dto.ProductDTO;
 
 public interface ProductServiceImpl {
 	
+	/**
+	 *  Get list of all products in db
+	 *
+	 * @return  the list of products 
+	 */
 	public List<ProductDTO> getListOfProduct() throws Exception;
 }

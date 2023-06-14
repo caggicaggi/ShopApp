@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 public class WishListRequestDTO {
 	
     private int idProduct;
-    
     private int idUtente;
     
 }

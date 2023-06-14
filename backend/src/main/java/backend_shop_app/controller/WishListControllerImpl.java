@@ -22,7 +22,6 @@ import backend_shop_app.service.WishListServiceImpl;
  ************ WISHLIST CONTROLLER MANAGEMENT ************ 
  */
 @RestController
-@RequestMapping(value= "/wishList")
 public class WishListControllerImpl implements WishListController {
 	
     private static final Logger logger = LoggerFactory.getLogger(WishListControllerImpl.class);
@@ -37,7 +36,6 @@ public class WishListControllerImpl implements WishListController {
 	 * @return ResponseEntity with a confirmation message or an error message if an exception occurs
 	 * @throws Exception if an error occurs while adding the products to the wishlist
 	 */
-    @PutMapping("/add")
 	public ResponseEntity<String> addProductInWishList(@RequestBody List<WishListRequestDTO> wishListRequestDTO) throws Exception {
 		logger.info("START ELABORATION ENDPOINT - addProductInWishList - /wishList/add");
     	// Check if all required fields are present or correct
@@ -70,7 +68,6 @@ public class WishListControllerImpl implements WishListController {
 	 * @return ResponseEntity with a confirmation message or an error message if an exception occurs
 	 * @throws Exception if an error occurs while adding the products to the wishlist
 	 */
-    @DeleteMapping("/remove")
 	public ResponseEntity<String> removeProductInWishList(@RequestBody List<WishListRequestDTO> wishListRequestDTO)
 			throws Exception {
 	    logger.info("START ELABORATION ENDPOINT - removeProductInWishList - /wishList/remove");
@@ -103,7 +100,6 @@ public class WishListControllerImpl implements WishListController {
 	 * @return ResponseEntity with a confirmation message or an error message if an exception occurs
 	 * @throws Exception if an error occurs while removing the products from the wish list
 	 */
-	@DeleteMapping("/checkout")
 	public ResponseEntity<String> removeAllProductFromWishList(@RequestBody CartCheckoutRequest cartCheckoutRequest)
 			throws Exception {
 	    logger.info("START ELABORATION ENDPOINT - removeAllProductFromWishList - /wishList/checkout");

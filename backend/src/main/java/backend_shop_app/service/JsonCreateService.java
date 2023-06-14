@@ -142,6 +142,12 @@ public class JsonCreateService implements JsonCreateServiceImpl {
 		return json;
 	}
 	
+	/**
+	 * Creates a JSON object to send for sign-in.
+	 *
+	 * @param email              the email of user
+	 * @return                   the JSON object to send
+	 */
 	public JSONObject createJsonToForgotPassword(String email) {
 		// Create the JSON object
 		JSONObject json = new JSONObject();

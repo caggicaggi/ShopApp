@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 public class ForgotPasswordDTO {
 	
 	private String email;
-	
 	private String password;
 
 }

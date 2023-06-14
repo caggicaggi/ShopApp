@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 /*
  * Class for validated email 
  */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
