@@ -37,9 +37,9 @@ class DiscountBanner extends StatelessWidget {
         ),
         child: Text.rich(
           TextSpan(
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
             children: [
-              TextSpan(text: "See all the products\n"),
+              const TextSpan(text: "See all the products\n"),
               TextSpan(
                 text: "Let's shop !",
                 style: TextStyle(

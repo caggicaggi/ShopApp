@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, must_be_immutable, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import '../../../components/menu_card.dart';
 import '../../../main.dart';
@@ -29,8 +31,8 @@ class Body extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          ProductDisplayScreen(productList: listCategoryProducts),
+                      builder: (context) => ProductDisplayScreen(
+                          productList: listCategoryProducts),
                     ),
                   );
                 },
@@ -44,7 +46,7 @@ class Body extends StatelessWidget {
 }
 
 List<String> getCategoryList(List<Product> products) {
-  Set<String> categorySet = Set<String>();
+  Set<String> categorySet = <String>{};
 
   for (var product in products) {
     if (!categorySet.contains(product.category)) {

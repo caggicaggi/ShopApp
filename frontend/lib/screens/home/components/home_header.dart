@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: prefer_const_constructors
 
-import '../../../main.dart';
+import 'package:flutter/material.dart';
 import '../../../size_config.dart';
 import '../../cart/cart_screen.dart';
 import 'icon_btn_with_counter.dart';

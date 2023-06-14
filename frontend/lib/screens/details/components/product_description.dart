@@ -1,14 +1,11 @@
+// ignore_for_file: library_private_types_in_public_api, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shop_app/components/show_dialog.dart';
 import 'package:shop_app/main.dart';
 import 'package:shop_app/models/Product.dart';
-import '../../../constant.dart';
-import '../../../models/CartList.dart';
-import '../../../models/User.dart';
-import '../../../models/Wishlist.dart';
 import '../../../size_config.dart';
-import '../../sign_in/sign_in_screen.dart';
 
 class ProductDescription extends StatefulWidget {
   const ProductDescription({
@@ -106,7 +103,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
             right: getProportionateScreenWidth(64),
           ),
           child: Text(
-            widget.product.price.toString() + '€',
+            '${widget.product.price}€',
             style: TextStyle(fontSize: 20),
           ),
         ),

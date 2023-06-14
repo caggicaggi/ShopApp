@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 import 'package:shop_app/size_config.dart';
 import '../../../components/social_card.dart';
@@ -16,9 +18,8 @@ class Body extends StatelessWidget {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                //SizedBox(height: SizeConfig.screenHeight * 0.02), 
                 Text("Register Account", style: headingStyle),
-                Text(
+                const Text(
                   "Complete your details or continue \nwith social media",
                   textAlign: TextAlign.center,
                 ),
@@ -40,7 +41,6 @@ class Body extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.caption,
                 ),
-                
               ],
             ),
           ),

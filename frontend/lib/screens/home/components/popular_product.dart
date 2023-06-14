@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 import 'package:shop_app/main.dart';
 import '../../../components/product_card.dart';
@@ -13,7 +15,8 @@ class PopularProducts extends StatelessWidget {
         .where((product) => product.isPopular)
         .toList(); // Create a list of popular products
 
-    int maxProductCount = 3; // Maximum number of random product cards to display
+    int maxProductCount =
+        3; // Maximum number of random product cards to display
 
     popularProducts.shuffle(); // Shuffle the list of popular products
 

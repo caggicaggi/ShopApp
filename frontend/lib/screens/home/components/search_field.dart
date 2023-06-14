@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import '../../../constant.dart';
 import '../../../main.dart';
@@ -33,11 +35,12 @@ class _SearchFieldState extends State<SearchField> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('No Results Found'),
-            content: Text('No products matching your search query were found.'),
+            title: const Text('No Results Found'),
+            content: const Text(
+                'No products matching your search query were found.'),
             actions: <Widget>[
               TextButton(
-                child: Text('OK'),
+                child: const Text('OK'),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -76,7 +79,7 @@ class _SearchFieldState extends State<SearchField> {
           focusedBorder: InputBorder.none,
           enabledBorder: InputBorder.none,
           hintText: "Search product",
-          prefixIcon: Icon(Icons.search),
+          prefixIcon: const Icon(Icons.search),
         ),
       ),
     );

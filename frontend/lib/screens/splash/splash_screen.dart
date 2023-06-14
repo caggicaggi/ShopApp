@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors
+
 import 'package:flutter/material.dart';
 import 'package:shop_app/screens/splash/components/body.dart';
 import 'package:shop_app/size_config.dart';

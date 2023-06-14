@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_if_null_operators, unnecessary_null_comparison, unnecessary_type_check
+
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -100,11 +102,11 @@ Future<int> requestGoogleSignIn(
 
       return response.statusCode;
     } else {
-      print('Request failed with status: ${response.statusCode}');
+      debugPrint('Request failed with status: ${response.statusCode}');
       return response.statusCode;
     }
   } catch (e) {
-    print('Error: $e');
+    debugPrint('Error: $e');
     return -1;
   }
 }
@@ -119,9 +121,9 @@ bool processStatus(String i) {
 
 void debugPrintAllProducts(List<Product> products) {
   debugPrint('--- List of Products ---');
-  products.forEach((product) {
+  for (var product in products) {
     debugPrint('Product: ${product.title} id: ${product.idProduct}');
-  });
+  }
   debugPrint('-------------------------');
 }
 
@@ -135,8 +137,8 @@ void debugPrintCartContents(Map<int, int> cart) {
 
 void debugPrintWishlistContents(List<int> wishlist) {
   debugPrint('--- Wishlist Contents ---');
-  wishlist.forEach((productId) {
+  for (var productId in wishlist) {
     debugPrint('Product ID: $productId');
-  });
+  }
   debugPrint('-------------------------');
 }

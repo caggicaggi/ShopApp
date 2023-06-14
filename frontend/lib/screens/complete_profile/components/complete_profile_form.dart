@@ -1,3 +1,5 @@
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors_in_immutables, library_private_types_in_public_api, use_build_context_synchronously, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:shop_app/components/custom_surfix_icon.dart';
 import 'package:shop_app/components/default_button.dart';
@@ -29,17 +31,19 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
   // Use widget.email and widget.password to access the passed variables
 
   void addError({String? error}) {
-    if (!errors.contains(error))
+    if (!errors.contains(error)) {
       setState(() {
         errors.add(error);
       });
+    }
   }
 
   void removeError({String? error}) {
-    if (errors.contains(error))
+    if (errors.contains(error)) {
       setState(() {
         errors.remove(error);
       });
+    }
   }
 
   @override
@@ -61,12 +65,12 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
             text: "continue",
             press: () async {
               if (_formKey.currentState!.validate()) {
-                debugPrint('email. ' + widget.email);
-                debugPrint('pass. ' + widget.password);
-                debugPrint('name. ' + firstName);
-                debugPrint('surname. ' + lastName);
-                debugPrint('address. ' + address);
-                debugPrint('phone. ' + phoneNumber);
+                debugPrint('email. ${widget.email}');
+                debugPrint('pass. ${widget.password}');
+                debugPrint('name. $firstName');
+                debugPrint('surname. $lastName');
+                debugPrint('address. $address');
+                debugPrint('phone. $phoneNumber');
 
                 Map<String, String> requestBody = {
                   'email': widget.email,
@@ -101,7 +105,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           removeError(error: kAddressNullError);
           address = value;
         }
-        return null;
+        return;
       },
       validator: (value) {
         if (value!.isEmpty) {
@@ -131,7 +135,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
           removeError(error: kPhoneNumberNullError);
           phoneNumber = value;
         }
-        return null;
+        return;
       },
       validator: (value) {
         if (value!.isEmpty) {
@@ -177,7 +181,7 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
 
           firstName = value;
         }
-        return null;
+        return;
       },
       validator: (value) {
         if (value!.isEmpty) {

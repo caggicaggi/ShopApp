@@ -1,7 +1,8 @@
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors_in_immutables
+
 import 'package:flutter/material.dart';
 import 'package:shop_app/screens/details/details_screen.dart';
 import 'package:shop_app/components/product_list_item.dart';
-
 import '../../../models/Product.dart';
 
 class Body extends StatelessWidget {
@@ -32,7 +33,8 @@ class Body extends StatelessWidget {
                 child: ProductListItem(
                   imageUrl: product.images[0],
                   name: product.title,
-                  information: '${product.price} € | ${product.category} | ${product.rating}',
+                  information:
+                      '${product.price} € | ${product.category} | ${product.rating}',
                 ),
               ),
           ],

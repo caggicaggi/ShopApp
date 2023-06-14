@@ -69,7 +69,7 @@ Future<int> requestSignUp(Map<String, String> userInfo) async {
         }).toList();
       }
 
-      listOfProduct.forEach((product) {
+      for (var product in listOfProduct) {
         debugPrint('Product ID: ${product.idProduct}');
         debugPrint('Title: ${product.title}');
         debugPrint('Description: ${product.description}');
@@ -80,7 +80,7 @@ Future<int> requestSignUp(Map<String, String> userInfo) async {
         debugPrint('Is Popular: ${product.isPopular}');
         debugPrint('Category: ${product.category}');
         debugPrint('-------------------------');
-      });
+      }
 
       return response.statusCode;
     } else {

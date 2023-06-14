@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:shop_app/components/default_button.dart';
 import 'package:shop_app/main.dart';
@@ -6,10 +8,6 @@ import 'package:shop_app/size_config.dart';
 import '../../../components/rounded_icon_btn.dart';
 import '../../../components/show_dialog.dart';
 import '../../../constant.dart';
-import '../../../models/CartList.dart';
-import '../../../models/User.dart';
-import '../../../models/Wishlist.dart';
-import '../../sign_in/sign_in_screen.dart';
 import 'product_description.dart';
 import 'top_rounded_container.dart';
 import 'product_images.dart';

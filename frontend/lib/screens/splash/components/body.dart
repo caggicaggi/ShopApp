@@ -1,10 +1,9 @@
+// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
-import 'package:shop_app/models/Product.dart';
-import 'package:shop_app/screens/home/home_screen.dart';
 import 'package:shop_app/size_config.dart';
 import '../../../components/default_button.dart';
 import '../../../constant.dart';
-import '../../../main.dart';
 import '../../sign_in/sign_in_screen.dart';
 import '../components/splash_content.dart';
 
