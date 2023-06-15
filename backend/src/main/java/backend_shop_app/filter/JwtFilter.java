@@ -1,6 +1,6 @@
 package backend_shop_app.filter;
 
-import backend_shop_app.service.CustomUserDetailsService;
+import backend_shop_app.service.CustomUserDetailsServiceImpl;
 import backend_shop_app.util.JwtUtil;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class JwtFilter extends OncePerRequestFilter {
     private JwtUtil jwtUtil;
     
     @Autowired
-    private CustomUserDetailsService service;
+    private CustomUserDetailsServiceImpl service;
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {

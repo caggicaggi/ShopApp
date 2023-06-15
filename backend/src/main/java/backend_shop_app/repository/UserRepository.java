@@ -15,8 +15,11 @@ import backend_shop_app.dto.UserDTO;
 @Transactional
 public interface UserRepository extends JpaRepository<UserDTO,Integer> {
 	
-	/*
+	/**
 	 *  Search user given an email
+	 *  
+	 *  @param  idUtente       the user ID
+	 *  @return if exist, the user in db
 	 */
     UserDTO findByEmail(String email);
 

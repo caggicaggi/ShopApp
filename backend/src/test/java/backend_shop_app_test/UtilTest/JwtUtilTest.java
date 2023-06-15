@@ -31,7 +31,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import backend_shop_app.controller.CartControllerImpl;
 import backend_shop_app.controller.UtenteControllerImpl;
-import backend_shop_app.service.CartService;
+import backend_shop_app.service.CartServiceImpl;
 import backend_shop_app.util.JwtUtil;
 
 
@@ -50,7 +50,7 @@ public class JwtUtilTest {
 	  CartControllerImpl cartControllerImpl;
 	  
 	  @Mock
-	  CartService cartService;
+	  CartServiceImpl cartService;
 		
 	  @Before
 		public void init() throws Exception {

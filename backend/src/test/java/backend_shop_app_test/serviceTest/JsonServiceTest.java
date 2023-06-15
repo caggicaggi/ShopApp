@@ -12,12 +12,12 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import backend_shop_app.dto.CartDTO;
 import backend_shop_app.dto.ProductDTO;
 import backend_shop_app.dto.UserDTO;
-import backend_shop_app.service.JsonCreateService;
+import backend_shop_app.service.JsonCreateServiceImpl;
 
 public class JsonServiceTest {
 	 	
 	 	@InjectMocks
-	 	private JsonCreateService jsonCreateService;
+	 	private JsonCreateServiceImpl jsonCreateService;
 	 	
 		@Before
 		public void init() throws Exception {

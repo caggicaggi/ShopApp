@@ -15,7 +15,7 @@ import org.mockito.MockitoAnnotations;
 
 import backend_shop_app.dto.ProductDTO;
 import backend_shop_app.repository.ProductRepository;
-import backend_shop_app.service.ProductService;
+import backend_shop_app.service.ProductServiceImpl;
 
 public class ProductServiceTest {
 
@@ -23,7 +23,7 @@ public class ProductServiceTest {
 	ProductRepository productRepository;
 	
 	@InjectMocks
-	ProductService productService;
+	ProductServiceImpl productService;
 	
 	@Before
 	public void init() throws Exception {

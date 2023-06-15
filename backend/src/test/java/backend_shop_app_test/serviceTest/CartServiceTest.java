@@ -15,7 +15,7 @@ import org.mockito.MockitoAnnotations;
 import backend_shop_app.dto.CartDTO;
 import backend_shop_app.dto.request.CartRequestDTO;
 import backend_shop_app.repository.CartRespository;
-import backend_shop_app.service.CartService;
+import backend_shop_app.service.CartServiceImpl;
 
 public class CartServiceTest {
 	
@@ -23,7 +23,7 @@ public class CartServiceTest {
     private CartRespository cartRepository;
 	
 	@InjectMocks
-	CartService cartService;
+	CartServiceImpl cartService;
 	
 	@Before
 	public void init() throws Exception {

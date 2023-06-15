@@ -15,7 +15,7 @@ import org.mockito.MockitoAnnotations;
 import backend_shop_app.dto.WishListDTO;
 import backend_shop_app.dto.request.WishListRequestDTO;
 import backend_shop_app.repository.WishListRepository;
-import backend_shop_app.service.WishListService;
+import backend_shop_app.service.WishListServiceImpl;
 
 public class WishListServiceTest {
 	
@@ -23,7 +23,7 @@ public class WishListServiceTest {
     private WishListRepository wishListRepository;
 	
 	@InjectMocks
-	WishListService wishListService;
+	WishListServiceImpl wishListService;
 	
 	@Before
 	public void init() throws Exception {

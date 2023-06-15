@@ -17,8 +17,10 @@ import backend_shop_app.dto.ProductDTO;
 @Transactional
 public interface ProductRepository extends JpaRepository<ProductDTO,Integer>{
 	
-	/*
+	/**
 	 *  Retrieves the list of information about products 
+	 *  
+	 *  @return the list of Product in db
 	 */
     List<ProductDTO> findAll();
 

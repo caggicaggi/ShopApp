@@ -5,15 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import backend_shop_app.dto.request.CartCheckoutRequest;
 import backend_shop_app.dto.request.CartRequestDTO;
 import backend_shop_app.service.CartService;
-import backend_shop_app.service.CartServiceImpl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,13 +19,12 @@ import org.slf4j.LoggerFactory;
  ************ CART CONTROLLER MANAGEMENT  ************ 
  */
 @RestController
-@RequestMapping(value= "/cart")
 public class CartControllerImpl implements CartController {
 	
     private static final Logger logger = LoggerFactory.getLogger(CartControllerImpl.class);
 
 	@Autowired
-	CartServiceImpl cartServiceImpl;
+	CartService cartService;
 
 	/**
 	 * Endpoint to add one or more products to the shopping cart.
@@ -52,7 +48,7 @@ public class CartControllerImpl implements CartController {
 			}
 		}
 		// Call the cartService to add the products to the cart
-		int countElement = cartServiceImpl.addProductInCart(cartRequestDTO);
+		int countElement = cartService.addProductInCart(cartRequestDTO);
 
 		//check if front-end send element but it not added
 		if (countElement == 0 && cartRequestDTO.size()>0) {
@@ -86,7 +82,7 @@ public class CartControllerImpl implements CartController {
 			}
 		}
 		// Call the cartService to remove the products from the cart
-		int countElement = cartServiceImpl.removeProductInCart(cartRequestDTO);
+		int countElement = cartService.removeProductInCart(cartRequestDTO);
 
 		//check if front-end send element but it not added
 		if (countElement == 0 && cartRequestDTO.size()>0) {
@@ -113,7 +109,7 @@ public class CartControllerImpl implements CartController {
 			return new ResponseEntity<String>("IdUtente are missing or incorrect", HttpStatus.BAD_REQUEST);
 		}
 		// Call the cartService to remove the products from the cart
-		int countElement = cartServiceImpl.removeAllProductInCart(cartCheckoutRequest.getIdUtente());
+		int countElement = cartService.removeAllProductInCart(cartCheckoutRequest.getIdUtente());
 
 		if (countElement == 0) {
 			logger.info("ENDPOINT - removeProductFromCart - with this IdUtente there are no products in the cart");
