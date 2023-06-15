@@ -1,13 +1,18 @@
 package backend_shop_app.controller;
 
 import java.util.List;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import backend_shop_app.dto.request.CartCheckoutRequest;
 import backend_shop_app.dto.request.CartRequestDTO;
 
+@RequestMapping(value= "/cart")
+@CrossOrigin("*")
 public interface CartController {
 	
 	/**

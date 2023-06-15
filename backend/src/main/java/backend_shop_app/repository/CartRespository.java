@@ -19,23 +19,34 @@ import backend_shop_app.dto.CartDTO;
 @Transactional
 public interface CartRespository extends JpaRepository<CartDTO,Integer>{
 	
-	/*
+	/**
 	 *  Retrieves the list of products in the cart for the given user ID
+	 *  @param  idUtente       the user ID
+	 *  @return the list of products in cart
 	 */
 	public List<CartDTO> findAllByIdutente(int idutente);
 	
-	/*
+	/**
 	 *  Deletes all cart items based on the provided product ID, user ID, and quantity
+	 *  
+	 *  @param  idUtente        the user ID
+	 *  @param  idproduct       the idproduct ID
 	 */
 	public void deleteAllByIdproductAndIdutente(int idproduct, int idutente);
 	
-	/*
+	/**
 	 *  Get determinate product with idProduct and idUtente
+	 *  
+	 *  @param  idUtente        the user ID
+	 *  @param  idproduct       the idproduct ID
+	 *  @return the list of products in cart
 	 */
 	public CartDTO findAllByIdproductAndIdutente (int idproduct, int idutente);
 	
-	/*
+	/**
 	 *  Deletes all cart items based on the provided product ID
+	 *  
+	 *  @param  idUtente        the user ID
 	 */
 	public void deleteAllByIdutente(int idutente);
 }

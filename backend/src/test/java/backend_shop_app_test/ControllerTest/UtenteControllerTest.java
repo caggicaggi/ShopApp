@@ -19,11 +19,11 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import backend_shop_app.controller.UtenteControllerImpl;
 import backend_shop_app.dto.UserDTO;
-import backend_shop_app.service.CartService;
-import backend_shop_app.service.CustomUserDetailsService;
-import backend_shop_app.service.JsonCreateService;
-import backend_shop_app.service.ProductService;
-import backend_shop_app.service.WishListService;
+import backend_shop_app.service.CartServiceImpl;
+import backend_shop_app.service.CustomUserDetailsServiceImpl;
+import backend_shop_app.service.JsonCreateServiceImpl;
+import backend_shop_app.service.ProductServiceImpl;
+import backend_shop_app.service.WishListServiceImpl;
 import backend_shop_app.util.JwtUtil;
 
 
@@ -48,19 +48,19 @@ public class UtenteControllerTest {
 	private UtenteControllerImpl controller;
 	
 	@Mock
-    private CustomUserDetailsService customUserDetailsService;
+    private CustomUserDetailsServiceImpl customUserDetailsService;
 	
 	@Mock
-    private ProductService productService;
+    private ProductServiceImpl productService;
     
 	@Mock
-    private WishListService wishListService;
+    private WishListServiceImpl wishListService;
     
 	@Mock
-    private CartService cartService;
+    private CartServiceImpl cartService;
     
 	@Mock
-    private JsonCreateService jsonCreateService;
+    private JsonCreateServiceImpl jsonCreateService;
 	
 	@Mock
 	private JwtUtil jwtUtil;

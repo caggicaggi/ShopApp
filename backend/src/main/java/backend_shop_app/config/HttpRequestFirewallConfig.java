@@ -21,7 +21,7 @@ public class HttpRequestFirewallConfig {
 	    * This is specified to block tampering with HTTP verbs and XST attacks.
 	    */
 	    
-	    List<String> allowedMethods = Arrays.asList("POST", "PUT", "DELETE");
+	    List<String> allowedMethods = Arrays.asList("GET","POST", "PUT", "DELETE");
 	    strictHttpFirewall.setAllowedHttpMethods(allowedMethods);
 	    
 	    /*

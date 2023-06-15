@@ -1,14 +1,20 @@
 package backend_shop_app.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+
 import backend_shop_app.dto.UserDTO;
 import backend_shop_app.dto.request.AuthRequestDTO;
 import backend_shop_app.dto.request.AuthRequestGoogleDTO;
 import backend_shop_app.dto.request.ForgotPasswordDTO;
 import backend_shop_app.dto.request.OtpVerificationDTO;
 
+@RequestMapping(value= "/utente")
+@CrossOrigin("*")
 public interface UtenteController {
 	
 	/**
@@ -19,7 +25,7 @@ public interface UtenteController {
 	 * @throws Exception if an error occurs during token generation
 	 */
     @PostMapping(value = "/signin")
-	public ResponseEntity<String> signin( AuthRequestDTO authRequest) throws Exception;
+	public ResponseEntity<String> signin(@RequestBody AuthRequestDTO authRequest) throws Exception;
 	
 	/**
 	 * Handles the sign-up request.

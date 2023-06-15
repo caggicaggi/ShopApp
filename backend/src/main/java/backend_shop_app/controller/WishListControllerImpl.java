@@ -7,27 +7,25 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import backend_shop_app.dto.request.CartCheckoutRequest;
 import backend_shop_app.dto.request.WishListRequestDTO;
 import backend_shop_app.service.WishListService;
-import backend_shop_app.service.WishListServiceImpl;
 
 
 /*
  ************ WISHLIST CONTROLLER MANAGEMENT ************ 
  */
 @RestController
+@CrossOrigin("*")
 public class WishListControllerImpl implements WishListController {
 	
     private static final Logger logger = LoggerFactory.getLogger(WishListControllerImpl.class);
 
 	@Autowired
-	WishListServiceImpl wishListServiceImpl;
+	WishListService wishListServiceImpl;
 	
 	/**
 	 * Endpoint to add one or more products to the wishlist.
@@ -119,10 +117,8 @@ public class WishListControllerImpl implements WishListController {
 		return new ResponseEntity<String>("All products correctly removed from the wish list", HttpStatus.OK);
 	}
 	
-	/*
+	/**
 	 * check if input is valid integer
-	 * @param String 
-	 * @return true if is a string or false if are not
 	 */
 	private static boolean isInteger(String input) {
 	    try {

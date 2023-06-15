@@ -3,7 +3,7 @@ package backend_shop_app_test.serviceTest;
 import backend_shop_app.dto.UserDTO;
 import backend_shop_app.dto.request.AuthRequestDTO;
 import backend_shop_app.repository.UserRepository;
-import backend_shop_app.service.CustomUserDetailsService;
+import backend_shop_app.service.CustomUserDetailsServiceImpl;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -25,7 +25,7 @@ public class CustomUserDetailsServiceTest {
     private AuthenticationManager authenticationManager;
 
     @InjectMocks
-    private CustomUserDetailsService userDetailsService;
+    private CustomUserDetailsServiceImpl userDetailsService;
 
     public CustomUserDetailsServiceTest() {
         MockitoAnnotations.openMocks(this);

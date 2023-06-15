@@ -17,19 +17,27 @@ import backend_shop_app.dto.WishListDTO;
 @Transactional
 public interface WishListRepository extends JpaRepository<WishListDTO,Integer>{
 	
-	/*
+	/**
 	 *  Find wishlist items by user ID
+	 *  
+	 *  @param idUtente       the user ID
+	 *  @return the list of products in wishList
 	 */
 	public List<WishListDTO> findIdproductByIdutente(int idutente);
 	
-	/*
+	/**
 	 *  Delete wishlist items by product ID and user ID
+	 *  @param idUtente       the user ID
+	 *  @param idproduct      the product ID
 	 */
 	public void deleteAllByIdproductAndIdutente(int idproduct, int idutente);
 	
 	
-	/*
+	/**
 	 *  Deletes all wish list items based on the provided user ID
+	 *  
+	 *	@param idUtente       the user ID
+	 *	@return  an integer representing the number of products deleted
 	 */
 	public int deleteAllByIdutente(int idutente);
 }

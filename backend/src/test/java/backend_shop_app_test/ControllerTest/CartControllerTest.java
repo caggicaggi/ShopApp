@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import backend_shop_app.controller.CartControllerImpl;
-import backend_shop_app.service.CartService;
+import backend_shop_app.service.CartServiceImpl;
 
 public class CartControllerTest {
 
@@ -34,7 +34,7 @@ public class CartControllerTest {
 	private MockMvc mockMvc;
 	
 	@Mock
-    private CartService cartService;
+    private CartServiceImpl cartService;
 	
 	@InjectMocks
 	CartControllerImpl controller;

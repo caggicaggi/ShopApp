@@ -20,7 +20,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import backend_shop_app.controller.WishListControllerImpl;
-import backend_shop_app.service.WishListService;
+import backend_shop_app.service.WishListServiceImpl;
 
 public class WishListControllerTest {
 	
@@ -36,7 +36,7 @@ public class WishListControllerTest {
 	private MockMvc mockMvc;
 	
 	@Mock
-    private WishListService wishListService;
+    private WishListServiceImpl wishListService;
 	
 	@InjectMocks
 	WishListControllerImpl controller;
