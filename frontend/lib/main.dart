@@ -15,7 +15,7 @@ import 'models/User.dart';
 // Global variables
 List<Product> listOfProduct = [];
 Wishlist wishlist = Wishlist();
-CartList demoCartList = CartList();
+CartList cart = CartList();
 User currentUser = User();
 String tokenJWT = '';
 GoogleSignIn googleSignIn = GoogleSignIn();

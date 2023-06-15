@@ -90,7 +90,6 @@ class _ForgotPassFormState extends State<ForgotPassForm> {
                 currentUser.email = email!;
                 //Check if existing mail
                 if (await checkEmailDb(email!) == 200) {
-                  debugPrint("Dopo");
                   //Configurazione per OTP
                   myauth.setConfig(
                       appEmail: "shopApp@otp.com",

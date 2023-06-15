@@ -18,7 +18,7 @@ class _BodyState extends State<Body> {
   @override
   void initState() {
     super.initState();
-    localProductQuantities = Map.from(demoCartList.productQuantities);
+    localProductQuantities = Map.from(cart.productQuantities);
   }
 
   @override
@@ -42,7 +42,7 @@ class _BodyState extends State<Body> {
                   localProductQuantities.remove(productId);
                 });
 
-                demoCartList
+                cart
                     .removeProduct(productId, quantity)
                     .then((int statusCode) {
                   switch (statusCode) {

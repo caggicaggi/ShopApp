@@ -50,8 +50,7 @@ class Body extends StatelessWidget {
                           String surname = parts[1];
 
                           String email = value.email;
-                          debugPrint(value.email);
-                          debugPrint(value.displayName);
+
                           requestGoogleSignIn(
                             email,
                             name,

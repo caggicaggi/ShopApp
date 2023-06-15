@@ -6,8 +6,6 @@ import '../main.dart';
 
 Future<int> updateDbRemoveWishList(List<int> idProduct) async {
   String completeUrl = '$url/wishList/remove';
-  debugPrint(idProduct.toString());
-
   List<Map<String, dynamic>> requestBody = idProduct.map((idProduct) {
     return {
       "idProduct": idProduct,

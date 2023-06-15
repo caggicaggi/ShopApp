@@ -29,7 +29,7 @@ class ProductDisplayScreen extends StatelessWidget {
       ),
       extendBodyBehindAppBar: true,
       body: Body(productList: productList),
-      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.heart),
+      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.home),
     );
   }
 }

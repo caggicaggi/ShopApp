@@ -86,13 +86,13 @@ Future<int> requestSignIn(String email, String password) async {
             int quantity = item['quantity'] as int;
             cartDTO[idProduct] = quantity;
           }
-          demoCartList.initializeFromMap(cartDTO);
+          cart.initializeFromMap(cartDTO);
         } else {
-          demoCartList = CartList(); // Initialize as an empty cart list
+          cart = CartList(); // Initialize as an empty cart list
         }
       }
       debugPrintAllProducts(listOfProduct);
-      debugPrintCartContents(demoCartList.productQuantities);
+      debugPrintCartContents(cart.productQuantities);
       debugPrintWishlistContents(wishlist.productIds);
 
       return response.statusCode;

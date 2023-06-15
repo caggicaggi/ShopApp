@@ -94,7 +94,7 @@ class _BodyState extends State<Body> {
                   child: DefaultButton(
                       text: "Add To Cart",
                       press: () {
-                        demoCartList
+                        cart
                             .addProduct(widget.product.idProduct, quantity)
                             .then((int statusCode) {
                           switch (statusCode) {

@@ -94,7 +94,6 @@ class CartList {
       _applyDeltaUpdate();
       final statusCode = await updateDbAdd(addedQuantities);
       addedQuantities.clear();
-      debugPrint(productQuantities.toString());
       return statusCode;
     }
 

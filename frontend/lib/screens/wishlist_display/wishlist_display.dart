@@ -1,5 +1,3 @@
-// ignore_for_file: use_key_in_widget_constructors, library_private_types_in_public_api, prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import '../../components/coustom_bottom_nav_bar.dart';
 import '../../constant.dart';
@@ -13,28 +11,36 @@ class WishListDisplayScreen extends StatefulWidget {
 
   @override
   _WishListDisplayScreenState createState() => _WishListDisplayScreenState();
+
+  static void refreshWishlist() {
+    _WishListDisplayScreenState? state =
+        _WishListDisplayScreenState.currentState;
+    state?.updateProductList();
+  }
 }
 
 class _WishListDisplayScreenState extends State<WishListDisplayScreen> {
-  late Future<List<Product>> productListFuture;
+  List<Product> productList = [];
+  static _WishListDisplayScreenState? currentState;
 
   @override
   void initState() {
     super.initState();
-    productListFuture = fetchProductList();
+    currentState = this;
+    updateProductList();
   }
 
-  Future<List<Product>> fetchProductList() async {
-    List<Product> wishlistProducts =
-        getInWishlistProducts(listOfProduct, wishlist.productIds);
-    return wishlistProducts;
+  void updateProductList() {
+    setState(() {
+      productList = getInWishlistProducts(listOfProduct, wishlist.productIds);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Your Wishlist",
           style: TextStyle(
             color: kPrimaryColor,
@@ -44,20 +50,8 @@ class _WishListDisplayScreenState extends State<WishListDisplayScreen> {
         ),
       ),
       extendBodyBehindAppBar: true,
-      body: FutureBuilder<List<Product>>(
-        future: productListFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else {
-            final productList = snapshot.data ?? [];
-            return Body(productList: productList);
-          }
-        },
-      ),
-      bottomNavigationBar: CustomBottomNavBar(selectedMenu: MenuState.heart),
+      body: Body(productList: productList),
+      bottomNavigationBar: const CustomBottomNavBar(selectedMenu: MenuState.heart),
     );
   }
 }

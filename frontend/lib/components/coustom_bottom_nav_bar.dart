@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shop_app/constant.dart';
+import 'package:shop_app/screens/cart/cart_screen.dart';
 import 'package:shop_app/screens/home/home_screen.dart';
 import 'package:shop_app/screens/product_display/product_display.dart';
 import '../enums.dart';
@@ -70,15 +71,15 @@ class CustomBottomNavBar extends StatelessWidget {
                 },
               ),
               IconButton(
-                icon: SvgPicture.asset("assets/icons/Chat bubble Icon.svg"),
-                color: MenuState.message == selectedMenu
+                icon: SvgPicture.asset("assets/icons/Cart Icon.svg"),
+                color: MenuState.cart == selectedMenu
                     ? kPrimaryColor
                     : inActiveIconColor,
                 onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) =>
-                        ProductDisplayScreen(productList: listOfProduct),
+                        CartScreen(),
                   ),
                 ),
               ),

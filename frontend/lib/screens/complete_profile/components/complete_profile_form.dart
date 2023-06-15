@@ -65,13 +65,6 @@ class _CompleteProfileFormState extends State<CompleteProfileForm> {
             text: "continue",
             press: () async {
               if (_formKey.currentState!.validate()) {
-                debugPrint('email. ${widget.email}');
-                debugPrint('pass. ${widget.password}');
-                debugPrint('name. $firstName');
-                debugPrint('surname. $lastName');
-                debugPrint('address. $address');
-                debugPrint('phone. $phoneNumber');
-
                 Map<String, String> requestBody = {
                   'email': widget.email,
                   'password': widget.password,

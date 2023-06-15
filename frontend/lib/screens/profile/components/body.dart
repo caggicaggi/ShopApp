@@ -40,7 +40,7 @@ class Body extends StatelessWidget {
               googleSignIn.signOut();
               currentUser = User();
               wishlist = Wishlist();
-              demoCartList = CartList();
+              cart = CartList();
               tokenJWT = '';
               Navigator.pushNamed(context, SplashScreen.routeName);
             },

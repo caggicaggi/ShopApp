@@ -16,7 +16,6 @@ Future<int> setNewPassword(String email, String password) async {
       body: requestBody,
     );
 
-    debugPrint(requestBody.toString());
     if (response.statusCode == 200) {
       debugPrint('Request success: ${response.statusCode}');
       return response.statusCode;

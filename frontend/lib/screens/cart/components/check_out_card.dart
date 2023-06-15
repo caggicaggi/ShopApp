@@ -2,6 +2,10 @@
 
 import 'package:flutter/material.dart';
 import 'package:shop_app/components/default_button.dart';
+import 'package:shop_app/main.dart';
+import '../../../components/show_dialog.dart';
+import '../../../models/Product.dart';
+import '../../../services/checkout_cart.dart';
 import '../../../size_config.dart';
 
 class CheckoutCard extends StatelessWidget {
@@ -44,7 +48,34 @@ class CheckoutCard extends StatelessWidget {
                   width: getProportionateScreenWidth(190),
                   child: DefaultButton(
                     text: "Check Out",
-                    press: () {},
+                    press: () {
+                      if (cart.productQuantities.isNotEmpty) {
+                      ProductCheckResult result = checkAllProductsAvailable(
+                          cart.productQuantities, listOfProduct);
+                      if (result.allAvailable) {
+                        // Empty the cart when all products are available
+                        cart.productQuantities.clear();
+                        cart.addedQuantities.clear();
+                        cart.removedQuantities.clear();
+                        updateDbCheckout().then((int statusCode) {
+                          switch (statusCode) {
+                            case 200:
+                              showCheckoutDialog(context);
+                              break;
+                            case 403:
+                              showSessionExpiredDialog(context);
+                              break;
+                            default:
+                              // Perform other actions for different status codes
+                              debugPrint('Status code: $statusCode');
+                          }
+                        });
+                      } else {
+                        showNoAvailableDialog(context, result.nonAvailableIds);
+                      }}else{
+                        showNoProductCartDialog(context);
+                      }
+                    },
                   ),
                 ),
               ],
@@ -54,4 +85,32 @@ class CheckoutCard extends StatelessWidget {
       ),
     );
   }
+}
+
+class ProductCheckResult {
+  bool allAvailable;
+  List<int> nonAvailableIds;
+
+  ProductCheckResult(this.allAvailable, this.nonAvailableIds);
+}
+
+ProductCheckResult checkAllProductsAvailable(
+    Map<int, int> productQuantities, List<Product> listOfProduct) {
+  List<int> nonAvailableIds = [];
+
+  for (var entry in productQuantities.entries) {
+    int productId = entry.key;
+    int quantity = entry.value;
+
+    Product? product =
+        listOfProduct.firstWhere((p) => p.idProduct == productId);
+
+    if (product == null || !product.isAvailable) {
+      nonAvailableIds.add(productId);
+    }
+  }
+
+  bool allAvailable = nonAvailableIds.isEmpty;
+
+  return ProductCheckResult(allAvailable, nonAvailableIds);
 }

@@ -16,6 +16,15 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+
+  void navigateToDetailsScreen(Product product) {
+  Navigator.pushNamed(
+    context,
+    DetailsScreen.routeName,
+    arguments: ProductDetailsArguments(product: product),
+  );
+}
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -31,11 +40,7 @@ class _BodyState extends State<Body> {
             // Create a ProductListItem for each product in the productList
             for (final product in widget.productList)
               InkWell(
-                onTap: () => Navigator.pushNamed(
-                  context,
-                  DetailsScreen.routeName,
-                  arguments: ProductDetailsArguments(product: product),
-                ),
+                onTap: () => navigateToDetailsScreen(product),
                 child: ProductListItem(
                   imageUrl: product.images[0],
                   name: product.title,
