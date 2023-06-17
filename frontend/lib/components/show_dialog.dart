@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_app/screens/home/home_screen.dart';
 import '../main.dart';
 import '../models/CartList.dart';
 import '../models/Product.dart';
@@ -83,7 +84,8 @@ Future<dynamic> showCheckoutDialog(BuildContext context) {
             child: const Text('OK'),
             onPressed: () {
               Navigator.of(context).pop(); // Close the dialog
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => CartScreen()));
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (context) => CartScreen()));
             },
           ),
         ],
@@ -97,12 +99,13 @@ Future<dynamic> showNoProductCartDialog(BuildContext context) {
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text('There are no products in the cart'),
+        title: const Text("There are no products in the cart.\nLet's shop!"),
         actions: [
           TextButton(
             child: const Text('OK'),
             onPressed: () {
               Navigator.of(context).pop(); // Close the dialog
+              Navigator.pushNamed(context, HomeScreen.routeName);
             },
           ),
         ],
@@ -111,16 +114,22 @@ Future<dynamic> showNoProductCartDialog(BuildContext context) {
   );
 }
 
-Future<dynamic> showNoAvailableDialog(BuildContext context, List<int> nonAvailableIds) {
+Future<dynamic> showNoAvailableDialog(
+    BuildContext context, List<int> nonAvailableIds) {
   return showDialog(
     context: context,
     builder: (BuildContext context) {
-      List<String> nonAvailableTitles = nonAvailableIds.map((id) {
-        Product? product = listOfProduct.firstWhere((p) => p.idProduct== id);
-        return product != null ? product.title : 'Product $id';
-      }).toList().cast<String>();
+      List<String> nonAvailableTitles = nonAvailableIds
+          .map((id) {
+            Product? product =
+                listOfProduct.firstWhere((p) => p.idProduct == id);
+            return product != null ? product.title : 'Product $id';
+          })
+          .toList()
+          .cast<String>();
 
-      String dialogContent = "The following products are no longer available:\n\n${nonAvailableTitles.join('\n')}";
+      String dialogContent =
+          "The following products are no longer available:\n\n${nonAvailableTitles.join('\n')}";
 
       return AlertDialog(
         title: const Text('Products Not Available'),
@@ -137,4 +146,3 @@ Future<dynamic> showNoAvailableDialog(BuildContext context, List<int> nonAvailab
     },
   );
 }
-

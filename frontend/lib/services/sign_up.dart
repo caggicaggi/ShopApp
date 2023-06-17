@@ -8,10 +8,15 @@ import '../../../models/Product.dart';
 Future<int> requestSignUp(Map<String, String> userInfo) async {
   String completeUrl = '$url/utente/signup'; // API endpoint for sign-in
 
+  final headers = {
+    'Content-Type': 'application/json',
+  };
+
   try {
     http.Response response = await http.post(
       Uri.parse(completeUrl),
-      body: userInfo,
+      headers: headers,
+      body: jsonEncode(userInfo),
     );
 
     debugPrint('Response status code: ${response.statusCode}');

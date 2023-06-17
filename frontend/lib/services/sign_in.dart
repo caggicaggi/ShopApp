@@ -17,12 +17,17 @@ Future<int> requestSignIn(String email, String password) async {
     'password': password,
   };
 
+  final headers = {
+    'Content-Type': 'application/json',
+  };
+
   try {
     http.Response response = await http.post(
       Uri.parse(completeUrl),
-      body: requestBody,
+      headers: headers,
+      body: jsonEncode(requestBody),
     );
-
+    debugPrint(jsonEncode(requestBody).toString());
     debugPrint(response.statusCode.toString());
     debugPrint(response.body);
 

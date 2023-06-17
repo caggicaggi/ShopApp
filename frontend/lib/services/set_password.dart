@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../constant.dart';
@@ -10,10 +12,15 @@ Future<int> setNewPassword(String email, String password) async {
     'password': password,
   };
 
+  final headers = {
+    'Content-Type': 'application/json',
+  };
+
   try {
     http.Response response = await http.post(
       Uri.parse(completeUrl),
-      body: requestBody,
+      headers: headers,
+      body: jsonEncode(requestBody),
     );
 
     if (response.statusCode == 200) {

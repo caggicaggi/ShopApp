@@ -22,10 +22,15 @@ Future<int> requestGoogleSignIn(
     'surname': surname,
   };
 
+  final headers = {
+    'Content-Type': 'application/json',
+  };
+
   try {
     http.Response response = await http.post(
       Uri.parse(completeUrl),
-      body: requestBody,
+      headers: headers,
+      body: jsonEncode(requestBody),
     );
 
     debugPrint(response.statusCode.toString());

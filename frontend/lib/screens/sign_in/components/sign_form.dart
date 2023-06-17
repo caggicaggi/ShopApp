@@ -84,6 +84,8 @@ class _SignFormState extends State<SignForm> {
                 resp = await requestSignIn(email!, password!);
                 if (resp == 200) {
                   Navigator.pushNamed(context, HomeScreen.routeName);
+                } else if (resp == 400) {
+                  addError(error: "Invalid User or Password");
                 }
               }
             },

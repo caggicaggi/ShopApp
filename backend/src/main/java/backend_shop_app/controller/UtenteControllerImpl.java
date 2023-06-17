@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -53,14 +54,14 @@ public class UtenteControllerImpl implements UtenteController {
     private CustomUserDetailsService customUserDetailsService;
     
     /**
- 	 * Endpoint to singin in application.
+ 	 * Endpoint to signin in application.
  	 * 
  	 * @param AuthRequestDTO contains the params to do check in db
  	 * @return ResponseEntity with a confirmation message or an error message if an exception occurs
  	 * @throws Exception if an error occurs while adding the user in db
  	 */
     @Override
-    public ResponseEntity<String> signin( AuthRequestDTO authRequest) throws Exception {
+    public ResponseEntity<String> signin(AuthRequestDTO authRequest) throws Exception {
 		logger.info("START ELABORATION ENDPOINT - signin - /signin");
     	// Declare the lists to include in the return JSON
     	List<ProductDTO> listOfProduct = new ArrayList<>();
@@ -266,8 +267,6 @@ public class UtenteControllerImpl implements UtenteController {
     public ResponseEntity<String> updatePassword(  ForgotPasswordDTO forgotPasswordDTO) throws Exception {
 		logger.info("START ELABORATION ENDPOINT - updatePassword - /updatePassword");
     	UserDTO userDTO= new UserDTO();
-    	System.out.println(forgotPasswordDTO.getEmail());
-    	System.out.println(forgotPasswordDTO.getPassword());
 		// Check if all required fields are present or correct
 		if ( isFieldNull(forgotPasswordDTO) ) {
     		logger.error("ENDPOINT - updatePassword - This email is not valid ");
