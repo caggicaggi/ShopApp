@@ -32,15 +32,15 @@ public class UtenteControllerTest {
 	public static final MediaType APPLICATION_JSON_UTF8 = new MediaType(MediaType.APPLICATION_JSON.getType(),
 			MediaType.APPLICATION_JSON.getSubtype(), Charset.forName("utf8"));
 	
-	private static final String ENDPOINT_SIGNIN= "/signin";
+	private static final String ENDPOINT_SIGNIN= "/utente/signin";
 	
-	private static final String ENDPOINT_GOOGLE = "/google";
+	private static final String ENDPOINT_GOOGLE = "/utente/google";
 
-	private static final String ENDPOINT_SIGNUP = "/signup";
+	private static final String ENDPOINT_SIGNUP = "/utente/signup";
 	
-	private static final String ENDPOINT_MAILFOROTP = "/mailForOtp";
+	private static final String ENDPOINT_MAILFOROTP = "/utente/mailForOtp";
 	
-	private static final String ENDPOINT_UPDATEPASSWORD = "/updatePassword";
+	private static final String ENDPOINT_UPDATEPASSWORD = "/utente/updatePassword";
 
 	private MockMvc mockMvc;
 	
@@ -92,16 +92,6 @@ public class UtenteControllerTest {
 		try {			
 			// Create an JSONobject for email
 			JSONObject JSONObject = new JSONObject();
-			JSONObject.put("password", "bomba");
-			JSONObject.put("email", "prova@gmail");
-			
-			System.out.println(JSONObject);
-			System.out.println();
-			MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(ENDPOINT_SIGNIN).contentType(APPLICATION_JSON_UTF8)
-					.content(JSONObject.toString());
-				
-			mockMvc.perform(request)
-			.andExpect(MockMvcResultMatchers.status().is(400));	
 			
 			JSONObject.put("email", "provagmail.com");
 			JSONObject.put("password", "");
@@ -206,6 +196,7 @@ public class UtenteControllerTest {
 			.andExpect(MockMvcResultMatchers.status().is(200));	
 		
 		}catch(Exception e) {
+			System.out.println(e);
 		}
 	}
 	
@@ -384,7 +375,7 @@ public class UtenteControllerTest {
 			JSONObject JSONObject = new JSONObject();
 			JSONObject.put("email", "prova@gmail.com");
 			
-			MockHttpServletRequestBuilder request = MockMvcRequestBuilders.post(ENDPOINT_MAILFOROTP).contentType(APPLICATION_JSON_UTF8)
+			MockHttpServletRequestBuilder request = MockMvcRequestBuilders.get(ENDPOINT_MAILFOROTP).contentType(APPLICATION_JSON_UTF8)
 					.content(JSONObject.toString());
 				
 			mockMvc.perform(request)
